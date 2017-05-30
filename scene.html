@@ -34,7 +34,6 @@
 
 	
 		<div id="container"></div>
-		<div id="info">(left click: forward, right click: backward)</div>
 
 		<script src="build/three.js"></script>
 		<script src="build/three.min.js"></script>
@@ -70,18 +69,42 @@
 			//var loader;
 			//var mesh2= new THREE.Mesh();
 
+			var planeWidth = 20000;
+			var planeHeight = 20000;
+
 			var firstPlayerControls = {
 				moveLeft: false,
 				moveRight: false,
 				leftClicked: 0,
-				rightClicked: 0
+				rightClicked: 0,
+				color: 0xff3399
 			};
-			var secondPlayer = {
+			var secondPlayerControls = {
 				moveLeft: false,
 				moveRight: false,
 				leftClicked: 0,
-				rightClicked: 0
+				rightClicked: 0,
+				color: 0x0bdd43
 			};
+
+			var thirdPlayerControls = {
+				moveLeft: false,
+				moveRight: false,
+				leftClicked: 0,
+				rightClicked: 0,
+				color: 0x0033cc
+			};
+			var fourthPlayerControls = {
+				moveLeft: false,
+				moveRight: false,
+				leftClicked: 0,
+				rightClicked: 0,
+				color: 0xfff316
+			};
+			
+			playersControl = [firstPlayerControls, secondPlayerControls, thirdPlayerControls, fourthPlayerControls];
+			players = [];
+			nPlayer = 4;
 
 			var clock = new THREE.Clock();
 			var gui, shadowCameraHelper, shadowConfig = {
@@ -122,25 +145,79 @@
 			//KEYBOARD CONTROLS
 				var onKeyDown = function ( event ) {
 					switch ( event.keyCode ) {
-						case 65: // a
+						case 81: // a
 							firstPlayerControls.moveLeft = true;
 							firstPlayerControls.leftClicked++;
 							break;
-						case 68: // d
+						case 87: // d
 							firstPlayerControls.moveRight = true;
 							firstPlayerControls.rightClicked++;
+							break;
+
+						case 104: // a
+							secondPlayerControls.moveLeft = true;
+							secondPlayerControls.leftClicked++;
+							break;
+						case 105: // d
+							secondPlayerControls.moveRight = true;
+							secondPlayerControls.rightClicked++;
+							break;
+						
+						case 67: // a
+							thirdPlayerControls.moveLeft = true;
+							thirdPlayerControls.leftClicked++;
+							break;
+						case 86: // d
+							thirdPlayerControls.moveRight = true;
+							thirdPlayerControls.rightClicked++;
+							break;
+													
+						case 190: // a
+							fourthPlayerControls.moveLeft = true;
+							fourthPlayerControls.leftClicked++;
+							break;
+						case 173: // d
+							fourthPlayerControls.moveRight = true;
+							fourthPlayerControls.rightClicked++;
 							break;
 					}
 				};
 				var onKeyUp = function ( event ) {
 					switch( event.keyCode ) {
-						case 65: // a
+						case 81: // a
 							firstPlayerControls.moveLeft = false;
 							firstPlayerControls.leftClicked = 0;
 							break;
-						case 68: // d
+						case 87: // d
 							firstPlayerControls.moveRight = false;
 							firstPlayerControls.rightClicked = 0;
+							break;
+
+						case 104: // a
+							secondPlayerControls.moveLeft = false;
+							secondPlayerControls.leftClicked = 0;
+							break;
+						case 105: // d
+							secondPlayerControls.moveRight = false;
+							secondPlayerControls.rightClicked = 0;
+							break;
+						
+						case 67: // a
+							thirdPlayerControls.moveLeft = false;
+							thirdPlayerControls.leftClicked = 0;
+							break;
+						case 86: // d
+							thirdPlayerControls.moveRight = false;
+							thirdPlayerControls.rightClicked = 0;
+							break;
+													
+						case 190: // a
+							fourthPlayerControls.moveLeft = false;
+							fourthPlayerControls.leftClicked = 0;
+							break;
+						case 173: // d
+							fourthPlayerControls.moveRight = false;
+							fourthPlayerControls.rightClicked = 0;
 							break;
 					}
 				};
@@ -167,7 +244,7 @@
 				document.addEventListener( 'keyup', onKeyUp, false );
 
 
-				renderer = new THREE.WebGLRenderer();
+				renderer = new THREE.WebGLRenderer({antialias:true});
 				//renderer.setClearColor( 0xaaccff );
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
@@ -195,13 +272,13 @@
 				scene.add( ground );*/
 
 
-				geometry = new THREE.PlaneGeometry( 20000, 20000, worldWidth - 1, worldDepth - 1 );
+				geometry = new THREE.PlaneGeometry( planeWidth, planeHeight, worldWidth - 1, worldDepth - 1 );
 				geometry.rotateX( - Math.PI / 2 );
 				//geometry.rotateY( - Math.PI / 4 );
 
-				var texture = new THREE.TextureLoader().load( "textures/Tron_Background.jpg" );
+				var texture = new THREE.TextureLoader().load( "textures/Tron_Background1024.jpg" );
 				//var texture = new THREE.TextureLoader().load( "textures/patterns/bright_squares256.png" );
-				texture.repeat.set( 50, 50 );
+				texture.repeat.set( 5, 5 );
 				texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 				texture.magFilter = THREE.NearestFilter;
 				texture.format = THREE.RGBFormat;
@@ -292,12 +369,11 @@
 				sphere.receiveShadow = true;
 
 				scene.add( sphere );
-*/
-				first = new THREE.Player();
-				first.Player(scene);
-
-
-
+*/			
+				for (var i = 0; i < nPlayer; i++)
+					players[i] = new THREE.Player( playersControl[i],planeWidth, planeHeight, i);
+				
+				
 				//sphereControls = new THREE.DeviceOrientationControls(sphere);
 
 
@@ -404,15 +480,21 @@
 						case 2: // right
 							sphere.position.x+=10; break;
 					}*/
-				first.updatePlayerModel(firstPlayerControls);
+
+				for (var i = 0; i < nPlayer; i++) {
+					players[i].updatePlayerModel(playersControl[i], scene);
+
+					//players[i].circleRender(scene,playersControl[i]);
+				}
+
 
 	/*			options.position.x = sphere.position.x;
 				options.position.y = sphere.position.y;
 				options.position.z = sphere.position.z;*/
 
-				var delta = clock.getDelta() ;
-				tick += delta;
-				if ( tick < 0 ) tick = 0;
+				//var delta = clock.getDelta() ;
+				//tick += delta;
+				//if ( tick < 0 ) tick = 0;
 				//if ( delta > 0 ) {
 				/*	particleOptions.position.x = first.sphere.position.x;
 					particleOptions.position.y = 0;
@@ -425,20 +507,24 @@
 				//}
 				particleSystem.update( tick );
 */
+
 				render();
 				stats.update();
 			}
 			function render() {
-				var delta = clock.getDelta(),
-					time = clock.getElapsedTime() * 10;
+
+
+
+				var delta = clock.getDelta();
+					//time = clock.getElapsedTime() * 10;
 
 				//mesh.geometry.verticesNeedUpdate = true;
 				controls.update( delta );
 				//sphereControls.update( delta );
 			// render cube map
 
-				
-				first.cubeRender(renderer, scene);
+				//for (var i = 0; i < nPlayer; i++) 
+					//players[i].cubeRender(renderer, scene);
 
 			/*	mesh2.visible = false;
 				cubeCamera.position.copy( mesh2.position );
