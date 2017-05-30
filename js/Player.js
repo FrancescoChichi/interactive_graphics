@@ -17,11 +17,13 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 
 
 		//SFERA COLORATA	
-			this.sphere = new THREE.SphereGeometry( 100, 64, 64 );
-			this.light = new THREE.PointLight( controls.color, 0.2, 5000 );
+		this.sphere = new THREE.SphereBufferGeometry( 1, 64, 64 );
+		this.light = new THREE.PointLight( controls.color, 0.2, 5000,2 );
 
-			this.light.add( new THREE.Mesh( this.sphere, new THREE.MeshBasicMaterial( { color: controls.color } ) ) );
-			scene.add( this.light );
+		this.light.add( new THREE.Mesh( this.sphere, new THREE.MeshBasicMaterial( { color: controls.color } ) ) );
+		scene.add( this.light );
+
+		this.light.position.y = 1;
 
 
 		//this.sphere = new THREE.Mesh( new THREE.IcosahedronBufferGeometry( 500, 3 ), this.mirrorMaterial );
@@ -33,7 +35,6 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 
 
 
-		this.light.position.y = 100;
 
 		switch( playerN ) {
 			case 0: // player 1
@@ -74,12 +75,6 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 		this.ryt = new mat3(0.0, 0.0, 1.0,
 		    							0.0, 1.0, 0.0,
 		    							-1.0, 0.0,  0.0);
-		
-		this.vel = 10;
-
-
-
-
 
 	/*this.cubeRender = function(renderer, scene) {
 					// render cube map
@@ -89,7 +84,10 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 				this.sphere.visible = true;
 			};
 	*/
-	this.updatePlayerModel = function ( controls, scene ) {
+	this.getPosition = function (){
+		return this.light.position;
+	}
+	this.updatePlayerModel = function ( controls, scene, planeWidth, planeHeight ) {
 
 		// speed and wheels based on controls
 
@@ -109,29 +107,29 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 		}
 
 
-			this.light.position.x=this.light.position.x+(this.orientation[0]*this.vel);
-			this.light.position.z=this.light.position.z+(this.orientation[2]*this.vel);
+			this.light.position.x=this.light.position.x+(this.orientation[0]*controls.velocity);
+			this.light.position.z=this.light.position.z+(this.orientation[2]*controls.velocity);
 
-					//line = new THREE.Line( this.poseBK,  this.light.position );
-
-				var material = new THREE.LineBasicMaterial({
-					color: controls.color,
-					opacity: 1, 
-					linewidth: 10
-				});
-
-				var geometry = new THREE.Geometry();
-				geometry.vertices.push(
-					new THREE.Vector3( this.poseBK.x, 0, this.poseBK.z ),
-					new THREE.Vector3( this.light.position.x, 0, this.light.position.z),
-					new THREE.Vector3( this.poseBK.x, this.poseBK.y, this.poseBK.z ),
-					new THREE.Vector3( this.light.position.x, this.light.position.y, this.light.position.z)
-				);
-
-				var line = new THREE.Line( geometry, material );
-				scene.add( line );
-
-			this.poseBK = this.light.position.clone();
+			if (Math.abs(this.light.position.x)>planeWidth/2 || Math.abs(this.light.position.z)>planeHeight/2 )
+			{
+				controls.alive=false;
+				scene.remove(this.light);
+				for (var i = 0; i < controls.walls.length; i++) {
+					scene.remove(controls.walls[i]);
+				}
+			}
+			else
+				{
+				var geometry = new THREE.BoxBufferGeometry(controls.velocity,1,controls.velocity);
+				var material = new THREE.MeshBasicMaterial( {color: controls.color, opacity: 100} );
+				var cube = new THREE.Mesh( geometry, material);
+				cube.position.x= this.poseBK.x;
+				cube.position.y= this.poseBK.y;
+				cube.position.z= this.poseBK.z;
+				scene.add(cube);
+				controls.walls.push(cube);
+				this.poseBK = this.light.position.clone();
+			}
 	};
 
 };

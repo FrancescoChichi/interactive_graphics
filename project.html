@@ -62,44 +62,64 @@
 			var container, stats;
 			var camera, controls, scene, renderer;
 			var mesh, texture, geometry, material;
-			var worldWidth = 128, worldDepth = 128,
-			worldHalfWidth = worldWidth / 2, worldHalfDepth = worldDepth / 2;
-			//var cubeCamera;
-			var sphereControls;
+			var worldWidth = 128, worldDepth = 128;
+			var cubeCamera;
+			var walls = [];
+			//var cubeMesh;
+			//var sphereControls;
+			//var sphere;
 			//var loader;
 			//var mesh2= new THREE.Mesh();
 
-			var planeWidth = 20000;
-			var planeHeight = 20000;
+			var planeWidth = 100;
+			var planeHeight = 100;
+
+			var pause = false;
 
 			var firstPlayerControls = {
+				number: 1,
 				moveLeft: false,
 				moveRight: false,
 				leftClicked: 0,
 				rightClicked: 0,
-				color: 0xff3399
+				color: 0xff3399,
+				alive: true,
+				velocity: 0.4,
+				walls: []
 			};
 			var secondPlayerControls = {
+				number: 2,
 				moveLeft: false,
 				moveRight: false,
 				leftClicked: 0,
 				rightClicked: 0,
-				color: 0x0bdd43
+				color: 0x0bdd43,
+				alive: true,
+				velocity: 0.4,
+				walls: []
 			};
 
 			var thirdPlayerControls = {
+				number: 3,
 				moveLeft: false,
 				moveRight: false,
 				leftClicked: 0,
 				rightClicked: 0,
-				color: 0x0033cc
+				color: 0x0033cc,
+				alive: true,
+				velocity: 0.4,
+				walls: []
 			};
 			var fourthPlayerControls = {
+				number: 4,
 				moveLeft: false,
 				moveRight: false,
 				leftClicked: 0,
 				rightClicked: 0,
-				color: 0xfff316
+				color: 0xfff316,
+				alive: true,
+				velocity: 0.4,
+				walls: []
 			};
 			
 			playersControl = [firstPlayerControls, secondPlayerControls, thirdPlayerControls, fourthPlayerControls];
@@ -180,6 +200,9 @@
 							fourthPlayerControls.moveRight = true;
 							fourthPlayerControls.rightClicked++;
 							break;
+						case 27:
+							pause = !pause;
+							break;
 					}
 				};
 				var onKeyUp = function ( event ) {
@@ -226,10 +249,10 @@
 
 
 			//CAMERA SETTINGS
-				camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 45, 20000 );
+				camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 1000 );
 				
 				camera.position.x = 10;
-				camera.position.y = 10000;
+				camera.position.y = 50;
 				camera.position.z = 10;
 
 				//camera.rotateY(  - Math.PI / 4 );
@@ -272,30 +295,32 @@
 				scene.add( ground );*/
 
 
-				geometry = new THREE.PlaneGeometry( planeWidth, planeHeight, worldWidth - 1, worldDepth - 1 );
-				geometry.rotateX( - Math.PI / 2 );
+				groundGeometry = new THREE.PlaneBufferGeometry( planeWidth, planeHeight );
+				groundGeometry.rotateX( - Math.PI / 2 );
 				//geometry.rotateY( - Math.PI / 4 );
 
-				var texture = new THREE.TextureLoader().load( "textures/Tron_Background1024.jpg" );
+				var groundTexture = new THREE.TextureLoader().load( "textures/Tron_Background256.jpg" );
 				//var texture = new THREE.TextureLoader().load( "textures/patterns/bright_squares256.png" );
-				texture.repeat.set( 5, 5 );
-				texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-				texture.magFilter = THREE.NearestFilter;
-				texture.format = THREE.RGBFormat;
+				groundTexture.repeat.set( 5, 5 );
+				groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
+				groundTexture.magFilter = THREE.NearestFilter;
+				groundTexture.format = THREE.RGBFormat;
 
 				// GROUND
 				var groundMaterial = new THREE.MeshPhongMaterial( {
 					shininess: 80,
 					color: 0xffffff,
 					specular: 0xffffff,
-					map: texture
+					map: groundTexture
 				} );
 
-				material = new THREE.MeshBasicMaterial( { color: 0xffffff, map: texture } ); 
-				mesh = new THREE.Mesh( geometry, groundMaterial );
-				mesh.receiveShadow = true;
+				material = new THREE.MeshBasicMaterial( { color: 0xffffff, map: groundTexture } ); 
+				ground = new THREE.Mesh( groundGeometry, groundMaterial );
+				//ground.scale.set( 1000, 1000, 1000 );
 
-				scene.add( mesh );
+				ground.receiveShadow = true;
+
+				scene.add( ground );
 
 
 
@@ -358,18 +383,21 @@
 */
 
 			//SFERA RIFLETTENTE
-	/*			cubeCamera = new THREE.CubeCamera( 1, 10000, 128 );
-				scene.add(cubeCamera);
+
+
+/*				cubeCamera = new THREE.CubeCamera( 1, 10000, 128 );
+
 				var mirrorMaterial = new THREE.MeshBasicMaterial( { color: 0xffffff, envMap: cubeCamera.renderTarget } );
 				//var mirrorMaterial = new THREE.MeshPhongMaterial( { emissive: 0xffffff, envMap: cubeCamera.renderTarget } );
+				//scene.add(cubeCamera);
 
-				sphere = new THREE.Mesh( new THREE.IcosahedronBufferGeometry( 100, 3 ), mirrorMaterial );
+				sphere = new THREE.Mesh( new THREE.IcosahedronBufferGeometry( 10, 3 ), mirrorMaterial );
 
-				sphere.position.y=100;
+				sphere.position.y=10;
 				sphere.receiveShadow = true;
-
+				sphere.add(cubeCamera);
 				scene.add( sphere );
-*/			
+		*/
 				for (var i = 0; i < nPlayer; i++)
 					players[i] = new THREE.Player( playersControl[i],planeWidth, planeHeight, i);
 				
@@ -378,26 +406,58 @@
 
 
 
-		/*		cubeCamera = new THREE.CubeCamera( 1, 10000, 128 );
-				scene.add(cubeCamera);
-				var mirrorMaterial = new THREE.MeshBasicMaterial( { color: 0xffffff, envMap: cubeCamera.renderTarget } );
+		//		cubeCamera = new THREE.CubeCamera( 1, 10000, 128 );
+	/*			var mirrorMaterial = new THREE.MeshBasicMaterial( { color: 0xffffff, envMap: cubeCamera.renderTarget } );
 
+SWTOR_Spy.stl
 				loader = new THREE.STLLoader();
-				loader.load( 'stl/SWTOR_Spy.stl', function ( geometry ) {
-					var mesh = new THREE.Mesh( geometry, mirrorMaterial );
-					mesh.position.set( 1000, 0, 100);
-					mesh.rotation.set( - Math.PI / 2, 0, 0 );
-					mesh.scale.set( 2,2,2 );
-					mesh.castShadow = true;
-					mesh.receiveShadow = true;
-					mesh2=mesh;
-					scene.add( mesh );
-				}  );*/
+				loader.load( 'stl/hilbertCube/Hilbert3.stl', function ( geometry ) {
+					
+					var cubeMesh = new THREE.Mesh( geometry, mirrorMaterial );
+					cubeMesh.position.set( 0, 5, 0);
+					cubeMesh.rotation.set( - Math.PI / 2, 0, 0 );
+					cubeMesh.scale.set( 0.25, 0.25, 0.25 );
+					cubeMesh.castShadow = true;
+					cubeMesh.receiveShadow = true;
+					cubeMesh.add(cubeCamera);
+
+					scene.add( cubeMesh );
+				}  );
+
+*/
 
 
 
+				var cubeTexture = new THREE.TextureLoader().load( "textures/mozzarellona.jpeg" );
+				//var texture = new THREE.TextureLoader().load( "textures/patterns/bright_squares256.png" );
+				groundTexture.repeat.set( 5, 5 );
+				groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
+				groundTexture.magFilter = THREE.NearestFilter;
+				groundTexture.format = THREE.RGBFormat;
+
+				// GROUND
+				var groundMaterial = new THREE.MeshPhongMaterial( {
+					shininess: 80,
+					color: 0xffffff,
+					specular: 0xffffff,
+					map: groundTexture
+				} );
+
+				material = new THREE.MeshBasicMaterial( { color: 0xffffff, map: groundTexture } ); 
+				ground = new THREE.Mesh( groundGeometry, groundMaterial );
+				//ground.scale.set( 1000, 1000, 1000 );
+
+				ground.receiveShadow = true;
+
+				scene.add( ground );
 
 
+			/*	light1 = new THREE.PointLight( 0xff0040, 2, 5000 );
+				//console.log(cubeCamera.position);
+				light1.position.x = 0;
+				light1.position.y = 10;
+				light1.position.z = 0;
+				scene.add( light1 );*/
 			/*	var loader2 = new THREE.OBJLoader(  );
 
 					loader.load( 'stl/LIGHT_BIKE_03.obj', function ( geometry ) {
@@ -415,11 +475,7 @@
 				scene.add( pointLight );*/
 
 
-				/*// SHADOW CAMERA HELPER
-
-				shadowCameraHelper = new THREE.CameraHelper( sunLight.shadow.camera );
-				shadowCameraHelper.visible = shadowConfig.shadowCameraVisible;
-				scene.add( shadowCameraHelper );*/
+			
 				//******renderer******
 				container.innerHTML = "";
 				container.appendChild( renderer.domElement );
@@ -467,75 +523,51 @@
 			
 			function animate() {
 				requestAnimationFrame( animate );
-			/*	if ( firstPlayerControls.moveForward ) 	direction = 1;//sphere.position.z-=10;
-				else if ( firstPlayerControls.moveLeft ) direction = 0;//sphere.position.x-=10;
-				else if ( firstPlayerControls.moveRight ) direction = 2;//sphere.position.x+=10;
 
+				if (!pause)
+				{
 
-				switch ( direction ) {
-						case 0: // left
-							sphere.position.z-=10; break;
-						case 1: // front
-							sphere.position.x-=10; break;
-						case 2: // right
-							sphere.position.x+=10; break;
-					}*/
-
-				for (var i = 0; i < nPlayer; i++) {
-					players[i].updatePlayerModel(playersControl[i], scene);
-
-					//players[i].circleRender(scene,playersControl[i]);
-				}
-
-
-	/*			options.position.x = sphere.position.x;
-				options.position.y = sphere.position.y;
-				options.position.z = sphere.position.z;*/
-
-				//var delta = clock.getDelta() ;
-				//tick += delta;
-				//if ( tick < 0 ) tick = 0;
-				//if ( delta > 0 ) {
-				/*	particleOptions.position.x = first.sphere.position.x;
-					particleOptions.position.y = 0;
-					particleOptions.position.z = first.sphere.position.z;
-					for ( var x = 0; x < particleSpawnerOptions.spawnRate * delta; x++ ) {
-						// Yep, that's really it.	Spawning particles is super cheap, and once you spawn them, the rest of
-						// their lifecycle is handled entirely on the GPU, driven by a time uniform updated below
-						particleSystem.spawnParticle( particleOptions );
+					for (var i = 0; i < nPlayer; i++)
+					{
+						if (playersControl[i].alive)
+							players[i].updatePlayerModel(playersControl[i], scene, planeWidth, planeHeight);
+						else
+						{
+							nPlayer--;
+							players.splice(i,1);
+							playersControl.splice(i,1);
+						}
 					}
-				//}
-				particleSystem.update( tick );
-*/
+					if(nPlayer == 1){
+						console.log("player "+playersControl[0].number+" win ");
+						playersControl[0].velocity = 0.0;
+						/*camera.position.set(players[0].getPosition().x+20,players[0].getPosition().y,players[0].getPosition().z+20);
+						camera.up = new THREE.Vector3(0,0,1);
+						camera.lookAt(new THREE.Vector3(players[0].getPosition().x,players[0].getPosition().y,players[0].getPosition().z));*/
 
-				render();
-				stats.update();
+/*
+						camera.position.x = players[0].getPosition().x;
+						camera.position.y = players[0].getPosition().y +10;
+						camera.position.z = players[0].getPosition().z;*/
+						//camera.lookAt(players[0].getPosition().x,players[0].getPosition().y,players[0].getPosition().z);
+
+						nPlayer--;
+					}
+
+					render();
+					stats.update();
+				}
 			}
 			function render() {
 
-
-
 				var delta = clock.getDelta();
-					//time = clock.getElapsedTime() * 10;
-
-				//mesh.geometry.verticesNeedUpdate = true;
 				controls.update( delta );
-				//sphereControls.update( delta );
-			// render cube map
 
-				//for (var i = 0; i < nPlayer; i++) 
-					//players[i].cubeRender(renderer, scene);
 
-			/*	mesh2.visible = false;
-				cubeCamera.position.copy( mesh2.position );
-				cubeCamera.updateCubeMap( renderer, scene );
-				mesh2.visible = true;*/
-/*
-				sphere.visible = false;
-				cubeCamera.position.copy( sphere.position );
-				cubeCamera.updateCubeMap( renderer, scene );
-				sphere.visible = true;
-*/
+				//cubeMesh.visible = false;
+				//cubeCamera.updateCubeMap( renderer, scene );
+				//cubeMesh.visible = true;
+
 
 			// render scene
 				renderer.render( scene, camera );
