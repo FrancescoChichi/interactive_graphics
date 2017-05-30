@@ -22,29 +22,36 @@
 
 			var firstPlayerControls = {
 				number: 1,
+				dimension: 1,
 				moveLeft: false,
 				moveRight: false,
 				leftClicked: 0,
 				rightClicked: 0,
 				color: 0xff3399,
 				alive: true,
-				velocity: 0.4,
-				walls: []
+				velocity: 0.1,
+				boxWall: [],
+				walls: [],
+				wallThickness: 0.3
 			};
 			var secondPlayerControls = {
 				number: 2,
+				dimension: 1,
 				moveLeft: false,
 				moveRight: false,
 				leftClicked: 0,
 				rightClicked: 0,
 				color: 0x0bdd43,
 				alive: true,
-				velocity: 0.4,
-				walls: []
+				velocity: 0.0,
+				boxWall: [],
+				walls: [],
+				wallThickness: 1.0
 			};
 
 			var thirdPlayerControls = {
 				number: 3,
+				dimension: 1,
 				moveLeft: false,
 				moveRight: false,
 				leftClicked: 0,
@@ -52,10 +59,13 @@
 				color: 0x0033cc,
 				alive: true,
 				velocity: 0.4,
-				walls: []
+				boxWall: [],
+				walls: [],
+				wallThickness: 1.0
 			};
 			var fourthPlayerControls = {
 				number: 4,
+				dimension: 1,
 				moveLeft: false,
 				moveRight: false,
 				leftClicked: 0,
@@ -63,12 +73,14 @@
 				color: 0xfff316,
 				alive: true,
 				velocity: 0.4,
-				walls: []
+				boxWall: [],
+				walls: [],
+				wallThickness: 1.0
 			};
 			
 			playersControl = [firstPlayerControls, secondPlayerControls, thirdPlayerControls, fourthPlayerControls];
 			players = [];
-			nPlayer = 4;
+			nPlayer = 2;
 
 			var clock = new THREE.Clock();
 			var gui, shadowCameraHelper, shadowConfig = {
@@ -215,6 +227,7 @@
 				//renderer.setClearColor( 0xaaccff );
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
+
 				//controls = new THREE.FirstPersonControls( camera );
 				controls = new THREE.OrbitControls( camera, renderer.domElement );
 
@@ -225,7 +238,7 @@
 				} );
 				scene.add( particleSystem );*/
 	
-				//scene.fog = new THREE.FogExp2( 0xaaccff, 0.0007 );
+				//scene.fog = new THREE.FogExp2( 0xaaccff, 0.007 );
 				//scene.fog = new THREE.Fog( 0, 1000, 10000 );
 				
 
@@ -372,7 +385,7 @@ SWTOR_Spy.stl
 
 
 
-				var cubeTexture = new THREE.TextureLoader().load( "textures/mozzarellona.jpeg" );
+			/*	var cubeTexture = new THREE.TextureLoader().load( "textures/mozzarellona.jpeg" );
 				//var texture = new THREE.TextureLoader().load( "textures/patterns/bright_squares256.png" );
 				groundTexture.repeat.set( 5, 5 );
 				groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
@@ -393,7 +406,7 @@ SWTOR_Spy.stl
 
 				ground.receiveShadow = true;
 
-				scene.add( ground );
+				scene.add( ground );*/
 
 
 			/*	light1 = new THREE.PointLight( 0xff0040, 2, 5000 );
@@ -470,6 +483,19 @@ SWTOR_Spy.stl
 
 				if (!pause)
 				{
+
+					for (var i = 0; i < nPlayer; i++){
+						if(playersControl[i].boxWall.length==1)
+							playersControl[i].boxWall.push(new THREE.Box2(new THREE.Vector2(-10,-10),
+															new THREE.Vector2(10,10)));
+						for (var j = 1; j < playersControl[i].boxWall.length; j++){
+							if (playersControl[i].boxWall[j].intersectsBox(playersControl[i].boxWall[0])){
+								console.log("player "+playersControl[0].number+" collide ");
+								playersControl[i].velocity = 0.0;
+
+						}
+							}
+					}
 
 					for (var i = 0; i < nPlayer; i++)
 					{

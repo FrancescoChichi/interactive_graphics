@@ -9,7 +9,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 
 
 	//SFERA RIFLETTENTE
-		//this.cubeCamera = new THREE.CubeCamera( 1, 10000, 128 );
+		this.cubeCamera = new THREE.CubeCamera( 1, 10000, 128 );
 
 
 		//this.mirrorMaterial = new THREE.MeshBasicMaterial( { color: controls.color, envMap: this.cubeCamera.renderTarget } );
@@ -17,22 +17,30 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 
 
 		//SFERA COLORATA	
-		this.sphere = new THREE.SphereBufferGeometry( 1, 64, 64 );
+		this.sphere = new THREE.SphereBufferGeometry( controls.dimension, 64, 64 );
 		this.light = new THREE.PointLight( controls.color, 0.2, 5000,2 );
 
-		this.light.add( new THREE.Mesh( this.sphere, new THREE.MeshBasicMaterial( { color: controls.color } ) ) );
+		this.light.add( new THREE.Mesh( this.sphere, new THREE.MeshToonMaterial( { 
+				color: controls.color,
+				specular:0xFFFFFF,
+				reflectivity: 1 } ) ) );
 		scene.add( this.light );
 
 		this.light.position.y = 1;
 
+		this.wallMaterial = new THREE.MeshBasicMaterial( {
+							color: controls.color, 
+							opacity: 0.8,
+							transparent: true,
+							specular:0xFFFFFF,
+							reflectivity: 1 } 
+						);
 
 		//this.sphere = new THREE.Mesh( new THREE.IcosahedronBufferGeometry( 500, 3 ), this.mirrorMaterial );
-
+		this.turn = false;
 		this.orientation = new vec3(1,0,0);
 		//scene.add( this.cubeCamera );
 		//scene.add( this.sphere );
-		this.wallPoses=[];
-
 
 
 
@@ -61,7 +69,15 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 				this.orientation = new vec3(0,0,1);
 				break;
 		}
-		
+
+		controls.boxWall.push(new THREE.Box2(
+			new THREE.Vector2(
+					this.light.position.x-controls.dimension,
+					this.light.position.z-controls.dimension),
+			new THREE.Vector2(
+					this.light.position.x+controls.dimension,
+					this.light.position.z+controls.dimension)));
+
 		this.poseBK = this.light.position.clone();
 
 		this.sphere.receiveShadow = true;
@@ -96,14 +112,16 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 		if ( controls.leftClicked == 1 && controls.moveLeft ) {
 			this.orientation = math.multiply(this.orientation, this.ry) ;
 			controls.leftClicked++;
-
+			this.poseBK = this.light.position.clone();
+			this.turn = true;
 
 		}
 
-		if ( controls.rightClicked == 1 && controls.moveRight ) {
+		else if ( controls.rightClicked == 1 && controls.moveRight ) {
 			this.orientation = math.multiply(this.orientation, this.ryt) ;
 			controls.rightClicked++;
-
+			this.poseBK = this.light.position.clone();
+			this.turn = true;
 		}
 
 
@@ -114,21 +132,100 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 			{
 				controls.alive=false;
 				scene.remove(this.light);
-				for (var i = 0; i < controls.walls.length; i++) {
+				for (var i = 0; i < controls.walls.length; i++) 
 					scene.remove(controls.walls[i]);
-				}
 			}
 			else
 				{
-				var geometry = new THREE.BoxBufferGeometry(controls.velocity,1,controls.velocity);
-				var material = new THREE.MeshBasicMaterial( {color: controls.color, opacity: 100} );
-				var cube = new THREE.Mesh( geometry, material);
-				cube.position.x= this.poseBK.x;
-				cube.position.y= this.poseBK.y;
-				cube.position.z= this.poseBK.z;
-				scene.add(cube);
-				controls.walls.push(cube);
-				this.poseBK = this.light.position.clone();
+
+					if ( this.turn ) 
+					{
+						if(this.orientation[2]!=0)//mi muovo sull'asse z
+							var geometry = new THREE.BoxBufferGeometry(
+									controls.wallThickness,
+									1,
+									Math.abs(this.light.position.z - this.poseBK.z)+controls.wallThickness
+								);
+						else
+							var geometry = new THREE.BoxBufferGeometry(
+									Math.abs(this.light.position.x - this.poseBK.x)+controls.wallThickness,
+									1,
+									controls.wallThickness
+								);
+									
+
+						var cube = new THREE.Mesh( geometry, this.wallMaterial);
+
+						scene.add(cube);
+						controls.walls.push(cube);
+
+					}
+
+					else{
+						scene.remove(controls.walls.pop());
+
+						if(this.orientation[2]!=0)//mi muovo sull'asse z
+							var geometry = new THREE.BoxBufferGeometry(
+									controls.wallThickness,
+									1,
+									Math.abs(this.light.position.z - this.poseBK.z)+controls.wallThickness
+								);
+						else
+							var geometry = new THREE.BoxBufferGeometry(
+									Math.abs(this.light.position.x - this.poseBK.x)+controls.wallThickness,
+									1,
+									controls.wallThickness
+								);
+
+						//var geometry = new THREE.BoxBufferGeometry(controls.velocity,1,controls.velocity);
+
+						var cube = new THREE.Mesh( geometry, this.wallMaterial);
+						if(this.orientation[2]<0)//mi muovo sull'asse z
+						{
+							cube.position.x= this.poseBK.x;
+							cube.position.y= this.poseBK.y;
+							cube.position.z= this.poseBK.z-Math.abs(this.light.position.z - this.poseBK.z)/2;
+						}
+						if(this.orientation[2]>0)//mi muovo sull'asse z
+						{
+							cube.position.x= this.poseBK.x;
+							cube.position.y= this.poseBK.y;
+							cube.position.z= this.poseBK.z+Math.abs(this.light.position.z - this.poseBK.z)/2;
+						}
+						else if(this.orientation[0]<0)
+						{
+							cube.position.x= this.poseBK.x-Math.abs(this.light.position.x - this.poseBK.x)/2;
+							cube.position.y= this.poseBK.y;
+							cube.position.z= this.poseBK.z;
+						}
+						else if (this.orientation[0]>0)
+						{
+							cube.position.x= this.poseBK.x+Math.abs(this.light.position.x - this.poseBK.x)/2;
+							cube.position.y= this.poseBK.y;
+							cube.position.z= this.poseBK.z;
+						}
+						scene.add(cube);
+						controls.walls.push(cube);
+
+					}
+			this.turn = false;
+				if(controls.number==1){
+					console.log(this.orientation);
+					console.log(this.light.position);
+				}
+			/*		var geometry = new THREE.BoxBufferGeometry(controls.velocity,1,controls.velocity);
+
+					//controls.boxWall.push(new THREE.Box2(new THREE.Vector2(this.poseBK.x,this.poseBK.z),
+					//											new THREE.Vector2(this.light.position.x,this.light.position.z)));
+					
+					
+					var cube = new THREE.Mesh( geometry, this.wallMaterial);
+					cube.position.x= this.poseBK.x;
+					cube.position.y= this.poseBK.y;
+					cube.position.z= this.poseBK.z;
+					scene.add(cube);
+					controls.walls.push(cube);
+*/
 			}
 	};
 
