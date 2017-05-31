@@ -100,15 +100,19 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 				this.sphere.visible = true;
 			};
 	*/
+
+	this.stira = function(controls)
+	{
+		controls.alive=false;
+		scene.remove(this.light);
+		for (var i = 0; i < controls.walls.length; i++) 
+			scene.remove(controls.walls[i]);
+	}
 	this.getPosition = function (){
 		return this.light.position;
 	}
 	this.updatePlayerModel = function ( controls, scene, planeWidth, planeHeight ) {
-
-		// speed and wheels based on controls
-
-
-
+		//GIRA A SINISTRA
 		if ( controls.leftClicked == 1 && controls.moveLeft ) {
 			this.orientation = math.multiply(this.orientation, this.ry) ;
 			controls.leftClicked++;
@@ -117,6 +121,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 
 		}
 
+		//GIRA A DESTRA
 		else if ( controls.rightClicked == 1 && controls.moveRight ) {
 			this.orientation = math.multiply(this.orientation, this.ryt) ;
 			controls.rightClicked++;
@@ -124,109 +129,176 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 			this.turn = true;
 		}
 
+		//AVANZA NELLA DIREZIONE AGGIORNATA
+		this.light.position.x=this.light.position.x+(this.orientation[0]*controls.velocity);
+		this.light.position.z=this.light.position.z+(this.orientation[2]*controls.velocity);
 
-			this.light.position.x=this.light.position.x+(this.orientation[0]*controls.velocity);
-			this.light.position.z=this.light.position.z+(this.orientation[2]*controls.velocity);
+		//SE IL GIOCATORE È USCITO, MUORE
+		if (Math.abs(this.light.position.x)>planeWidth/2 || Math.abs(this.light.position.z)>planeHeight/2 )
+		{
+			this.stira(controls);
+		}
+		else
+		{
 
-			if (Math.abs(this.light.position.x)>planeWidth/2 || Math.abs(this.light.position.z)>planeHeight/2 )
+			if ( this.turn ) 
 			{
-				controls.alive=false;
-				scene.remove(this.light);
-				for (var i = 0; i < controls.walls.length; i++) 
-					scene.remove(controls.walls[i]);
-			}
-			else
+				//MI STO MUOVENDO LUNGO L'ASSE Z
+				if(this.orientation[2]!=0)
 				{
-
-					if ( this.turn ) 
-					{
-						if(this.orientation[2]!=0)//mi muovo sull'asse z
-							var geometry = new THREE.BoxBufferGeometry(
-									controls.wallThickness,
-									1,
-									Math.abs(this.light.position.z - this.poseBK.z)+controls.wallThickness
-								);
-						else
-							var geometry = new THREE.BoxBufferGeometry(
-									Math.abs(this.light.position.x - this.poseBK.x)+controls.wallThickness,
-									1,
-									controls.wallThickness
-								);
-									
-
-						var cube = new THREE.Mesh( geometry, this.wallMaterial);
-
-						scene.add(cube);
-						controls.walls.push(cube);
-
-					}
-
-					else{
-						scene.remove(controls.walls.pop());
-
-						if(this.orientation[2]!=0)//mi muovo sull'asse z
-							var geometry = new THREE.BoxBufferGeometry(
-									controls.wallThickness,
-									1,
-									Math.abs(this.light.position.z - this.poseBK.z)+controls.wallThickness
-								);
-						else
-							var geometry = new THREE.BoxBufferGeometry(
-									Math.abs(this.light.position.x - this.poseBK.x)+controls.wallThickness,
-									1,
-									controls.wallThickness
-								);
-
-						//var geometry = new THREE.BoxBufferGeometry(controls.velocity,1,controls.velocity);
-
-						var cube = new THREE.Mesh( geometry, this.wallMaterial);
-						if(this.orientation[2]<0)//mi muovo sull'asse z
-						{
-							cube.position.x= this.poseBK.x;
-							cube.position.y= this.poseBK.y;
-							cube.position.z= this.poseBK.z-Math.abs(this.light.position.z - this.poseBK.z)/2;
-						}
-						if(this.orientation[2]>0)//mi muovo sull'asse z
-						{
-							cube.position.x= this.poseBK.x;
-							cube.position.y= this.poseBK.y;
-							cube.position.z= this.poseBK.z+Math.abs(this.light.position.z - this.poseBK.z)/2;
-						}
-						else if(this.orientation[0]<0)
-						{
-							cube.position.x= this.poseBK.x-Math.abs(this.light.position.x - this.poseBK.x)/2;
-							cube.position.y= this.poseBK.y;
-							cube.position.z= this.poseBK.z;
-						}
-						else if (this.orientation[0]>0)
-						{
-							cube.position.x= this.poseBK.x+Math.abs(this.light.position.x - this.poseBK.x)/2;
-							cube.position.y= this.poseBK.y;
-							cube.position.z= this.poseBK.z;
-						}
-						scene.add(cube);
-						controls.walls.push(cube);
-
-					}
-			this.turn = false;
-				if(controls.number==1){
-					console.log(this.orientation);
-					console.log(this.light.position);
+					var geometry = new THREE.BoxBufferGeometry(
+							controls.wallThickness,
+							1,
+							Math.abs(this.light.position.z - this.poseBK.z)+controls.wallThickness
+						);
+					controls.boxWall.push(new THREE.Box2(
+							new THREE.Vector2(this.poseBK.x-controls.wallThickness,this.poseBK.z),
+							new THREE.Vector2(this.light.position.x+controls.wallThickness,this.light.position.z)
+						));
 				}
-			/*		var geometry = new THREE.BoxBufferGeometry(controls.velocity,1,controls.velocity);
+				//MI STO MUOVENDO LUNGO L'ASSE X
+				else
+				{
+					var geometry = new THREE.BoxBufferGeometry(
+							Math.abs(this.light.position.x - this.poseBK.x)+controls.wallThickness,
+							1,
+							controls.wallThickness
+						);
+					controls.boxWall.push(new THREE.Box2(
+							new THREE.Vector2(this.poseBK.x,this.poseBK.z-controls.wallThickness),
+							new THREE.Vector2(this.light.position.x,this.light.position.z+controls.wallThickness)
+						));
+				}
+							
+
+				var cube = new THREE.Mesh( geometry, this.wallMaterial);
+
+				if(this.orientation[2]<0)//mi muovo sull'asse z
+				{
+					cube.position.x= this.poseBK.x;
+					cube.position.y= this.poseBK.y;
+					cube.position.z= this.poseBK.z-Math.abs(this.light.position.z - this.poseBK.z)/2;
+				}
+				if(this.orientation[2]>0)//mi muovo sull'asse z
+				{
+					cube.position.x= this.poseBK.x;
+					cube.position.y= this.poseBK.y;
+					cube.position.z= this.poseBK.z+Math.abs(this.light.position.z - this.poseBK.z)/2;
+				}
+				else if(this.orientation[0]<0)
+				{
+					cube.position.x= this.poseBK.x-Math.abs(this.light.position.x - this.poseBK.x)/2;
+					cube.position.y= this.poseBK.y;
+					cube.position.z= this.poseBK.z;
+				}
+				else if (this.orientation[0]>0)
+				{
+					cube.position.x= this.poseBK.x+Math.abs(this.light.position.x - this.poseBK.x)/2;
+					cube.position.y= this.poseBK.y;
+					cube.position.z= this.poseBK.z;
+				}
+				scene.add(cube);
+				controls.walls.push(cube);
+
+			}
+
+			else
+			{
+				scene.remove(controls.walls.pop());
+				if(controls.boxWall.length > 1)
+					controls.boxWall.pop();
+
+				//MI STO MUOVENDO LUNGO L'ASSE Z
+				if(this.orientation[2]!=0)
+				{
+					var geometry = new THREE.BoxBufferGeometry(
+							controls.wallThickness,
+							1,
+							Math.abs(this.light.position.z - this.poseBK.z)+controls.wallThickness
+						);
+						controls.boxWall.push(new THREE.Box2(
+								new THREE.Vector2(this.poseBK.x-controls.wallThickness,this.poseBK.z),
+								new THREE.Vector2(this.light.position.x+controls.wallThickness,this.light.position.z)
+							));
+				}
+
+				//MI STO MUOVENDO LUNGO L'ASSE X
+				else
+				{
+					var geometry = new THREE.BoxBufferGeometry(
+							Math.abs(this.light.position.x - this.poseBK.x)+controls.wallThickness,
+							1,
+							controls.wallThickness
+						);
+			//		console.log("ciao");
+					//console.log(controls.boxWall);
+					controls.boxWall.push(new THREE.Box2(
+						new THREE.Vector2(this.poseBK.x,this.poseBK.z-controls.wallThickness),
+						new THREE.Vector2(this.light.position.x,this.light.position.z+controls.wallThickness)));
+					//console.log(box.containsBox(box));
+					//console.log(controls.boxWall);
+
+				}
+
+				//var geometry = new THREE.BoxBufferGeometry(controls.velocity,1,controls.velocity);
+
+				var cube = new THREE.Mesh( geometry, this.wallMaterial);
+				if(this.orientation[2]<0)//mi muovo sull'asse z
+				{
+					cube.position.x= this.poseBK.x;
+					cube.position.y= this.poseBK.y;
+					cube.position.z= this.poseBK.z-Math.abs(this.light.position.z - this.poseBK.z)/2;
+				}
+				if(this.orientation[2]>0)//mi muovo sull'asse z
+				{
+					cube.position.x= this.poseBK.x;
+					cube.position.y= this.poseBK.y;
+					cube.position.z= this.poseBK.z+Math.abs(this.light.position.z - this.poseBK.z)/2;
+				}
+				else if(this.orientation[0]<0)
+				{
+					cube.position.x= this.poseBK.x-Math.abs(this.light.position.x - this.poseBK.x)/2;
+					cube.position.y= this.poseBK.y;
+					cube.position.z= this.poseBK.z;
+				}
+				else if (this.orientation[0]>0)
+				{
+					cube.position.x= this.poseBK.x+Math.abs(this.light.position.x - this.poseBK.x)/2;
+					cube.position.y= this.poseBK.y;
+					cube.position.z= this.poseBK.z;
+				}
+				scene.add(cube);
+				controls.walls.push(cube);
+
+			}
+
+/*			if(controls.number==1)
+			{
+				console.log(this.orientation);
+				console.log(this.light.position);
+			}
+*/
+
+			this.turn = false;
+
+		
+
+
+			controls.boxWall[0] = new THREE.Box2(
+			new THREE.Vector2(
+					this.light.position.x-controls.dimension,
+					this.light.position.z-controls.dimension),
+			new THREE.Vector2(
+					this.light.position.x+controls.dimension,
+					this.light.position.z+controls.dimension));
+
+		//	console.log(controls.boxWall);
 
 					//controls.boxWall.push(new THREE.Box2(new THREE.Vector2(this.poseBK.x,this.poseBK.z),
 					//											new THREE.Vector2(this.light.position.x,this.light.position.z)));
 					
-					
-					var cube = new THREE.Mesh( geometry, this.wallMaterial);
-					cube.position.x= this.poseBK.x;
-					cube.position.y= this.poseBK.y;
-					cube.position.z= this.poseBK.z;
-					scene.add(cube);
-					controls.walls.push(cube);
-*/
-			}
+
+		}
 	};
 
 };

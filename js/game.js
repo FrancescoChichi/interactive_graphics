@@ -29,7 +29,7 @@
 				rightClicked: 0,
 				color: 0xff3399,
 				alive: true,
-				velocity: 0.1,
+				velocity: 0.4,
 				boxWall: [],
 				walls: [],
 				wallThickness: 0.3
@@ -43,7 +43,7 @@
 				rightClicked: 0,
 				color: 0x0bdd43,
 				alive: true,
-				velocity: 0.0,
+				velocity: 0.3,
 				boxWall: [],
 				walls: [],
 				wallThickness: 1.0
@@ -80,7 +80,8 @@
 			
 			playersControl = [firstPlayerControls, secondPlayerControls, thirdPlayerControls, fourthPlayerControls];
 			players = [];
-			nPlayer = 2;
+			nPlayer = 1;
+			alive = nPlayer;
 
 			var clock = new THREE.Clock();
 			var gui, shadowCameraHelper, shadowConfig = {
@@ -94,24 +95,7 @@
 			var direction = 1; //0=left 1=front 2=right
 			var tick=0;
 			var click=0;
-			/*var particleOptions = {
-				position: new THREE.Vector3(),
-				//positionRandomness: .3,
-				velocity: new THREE.Vector3(),
-				//velocityRandomness: .5,
-				color: 0xff0040,
-				//colorRandomness: .2,
-				//turbulence: .5,
-				//lifetime: 2,
-				size: 50,
-				//sizeRandomness: 1
-			};
-			var particleSpawnerOptions = {
-				spawnRate: 1500000,
-				horizontalSpeed: 1.5,
-				verticalSpeed: 1.33,
-				timeScale: 1
-			};*/
+
 
 			init();
 			animate();
@@ -211,10 +195,6 @@
 				camera.position.y = 50;
 				camera.position.z = 10;
 
-				//camera.rotateY(  - Math.PI / 4 );
-				//camera.lookAt( scene.position )camera.rotate.y = 90 * Math.PI / 180
-				//camera.position.z = 100;
-
 
 
 
@@ -232,24 +212,7 @@
 				controls = new THREE.OrbitControls( camera, renderer.domElement );
 
 				scene = new THREE.Scene();
-		/*	//PARTICLE
-				particleSystem = new THREE.GPUParticleSystem( {
-					maxParticles: 250000
-				} );
-				scene.add( particleSystem );*/
-	
-				//scene.fog = new THREE.FogExp2( 0xaaccff, 0.007 );
-				//scene.fog = new THREE.Fog( 0, 1000, 10000 );
-				
 
-
-	/*			var planeGeometry = new THREE.PlaneBufferGeometry( 100, 100 );
-				var ground = new THREE.Mesh( planeGeometry, groundMaterial );
-				ground.position.set( 0, 0, 0 );
-				ground.rotation.x = - Math.PI / 2;
-				ground.scale.set( 1000, 1000, 1000 );
-				ground.receiveShadow = true;
-				scene.add( ground );*/
 
 
 				groundGeometry = new THREE.PlaneBufferGeometry( planeWidth, planeHeight );
@@ -285,154 +248,10 @@
 		   // LIGHTS
 		    scene.add(new THREE.AmbientLight(0xffffff,2));
 
-		  /*  var light;
 
-		    light = new THREE.DirectionalLight(0xdfebff, 1.75);
-		    light.position.set(300, 400, 50);
-		    light.position.multiplyScalar(1.3);
-
-		    light.castShadow = true;
-		    light.shadowCameraVisible = true;
-
-		    light.shadowMapWidth = 512;
-		    light.shadowMapHeight = 512;
-
-		    var d = 200;
-
-		    light.shadowCameraLeft = -d;
-		    light.shadowCameraRight = d;
-		    light.shadowCameraTop = d;
-		    light.shadowCameraBottom = -d;
-
-		    light.shadowCameraFar = 1000;
-		    light.shadowDarkness = 0.2;
-
-		    scene.add(light);*/
-
-				/*var spotLight = new THREE.SpotLight( 0xffffff );
-				spotLight.position.set( 100, 1000, 100 );
-
-				spotLight.castShadow = true;
-
-				spotLight.shadow.mapSize.width = 1024;
-				spotLight.shadow.mapSize.height = 1024;
-
-				spotLight.shadow.camera.near = 500;
-				spotLight.shadow.camera.far = 4000;
-				spotLight.shadow.camera.fov = 30;
-
-				scene.add( spotLight );
-*/
-
-
-
-
-
-
-		/*	//SFERA COLORATA	
-				var littleSphere = new THREE.SphereGeometry( 10, 64, 64 );
-				light1 = new THREE.PointLight( 0xff0040, 2, 5000 );
-				light1.position.x = 100;
-				light1.position.y = 100;
-				light1.position.z = 100;
-				light1.add( new THREE.Mesh( littleSphere, new THREE.MeshBasicMaterial( { color: 0xff0040 } ) ) );
-				scene.add( light1 );
-*/
-
-			//SFERA RIFLETTENTE
-
-
-/*				cubeCamera = new THREE.CubeCamera( 1, 10000, 128 );
-
-				var mirrorMaterial = new THREE.MeshBasicMaterial( { color: 0xffffff, envMap: cubeCamera.renderTarget } );
-				//var mirrorMaterial = new THREE.MeshPhongMaterial( { emissive: 0xffffff, envMap: cubeCamera.renderTarget } );
-				//scene.add(cubeCamera);
-
-				sphere = new THREE.Mesh( new THREE.IcosahedronBufferGeometry( 10, 3 ), mirrorMaterial );
-
-				sphere.position.y=10;
-				sphere.receiveShadow = true;
-				sphere.add(cubeCamera);
-				scene.add( sphere );
-		*/
-				for (var i = 0; i < nPlayer; i++)
+				for (var i = 0; i < alive; i++)
 					players[i] = new THREE.Player( playersControl[i],planeWidth, planeHeight, i);
-				
-				
-				//sphereControls = new THREE.DeviceOrientationControls(sphere);
-
-
-
-		//		cubeCamera = new THREE.CubeCamera( 1, 10000, 128 );
-	/*			var mirrorMaterial = new THREE.MeshBasicMaterial( { color: 0xffffff, envMap: cubeCamera.renderTarget } );
-
-SWTOR_Spy.stl
-				loader = new THREE.STLLoader();
-				loader.load( 'stl/hilbertCube/Hilbert3.stl', function ( geometry ) {
-					
-					var cubeMesh = new THREE.Mesh( geometry, mirrorMaterial );
-					cubeMesh.position.set( 0, 5, 0);
-					cubeMesh.rotation.set( - Math.PI / 2, 0, 0 );
-					cubeMesh.scale.set( 0.25, 0.25, 0.25 );
-					cubeMesh.castShadow = true;
-					cubeMesh.receiveShadow = true;
-					cubeMesh.add(cubeCamera);
-
-					scene.add( cubeMesh );
-				}  );
-
-*/
-
-
-
-			/*	var cubeTexture = new THREE.TextureLoader().load( "textures/mozzarellona.jpeg" );
-				//var texture = new THREE.TextureLoader().load( "textures/patterns/bright_squares256.png" );
-				groundTexture.repeat.set( 5, 5 );
-				groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
-				groundTexture.magFilter = THREE.NearestFilter;
-				groundTexture.format = THREE.RGBFormat;
-
-				// GROUND
-				var groundMaterial = new THREE.MeshPhongMaterial( {
-					shininess: 80,
-					color: 0xffffff,
-					specular: 0xffffff,
-					map: groundTexture
-				} );
-
-				material = new THREE.MeshBasicMaterial( { color: 0xffffff, map: groundTexture } ); 
-				ground = new THREE.Mesh( groundGeometry, groundMaterial );
-				//ground.scale.set( 1000, 1000, 1000 );
-
-				ground.receiveShadow = true;
-
-				scene.add( ground );*/
-
-
-			/*	light1 = new THREE.PointLight( 0xff0040, 2, 5000 );
-				//console.log(cubeCamera.position);
-				light1.position.x = 0;
-				light1.position.y = 10;
-				light1.position.z = 0;
-				scene.add( light1 );*/
-			/*	var loader2 = new THREE.OBJLoader(  );
-
-					loader.load( 'stl/LIGHT_BIKE_03.obj', function ( geometry ) {
-					mesh = new THREE.Mesh( geometry, mirrorMaterial2 );
-					mesh.position.set( 100, 0, 100);
-					mesh.rotation.set( - Math.PI / 2, 0, 0 );
-					mesh.scale.set( 0.1,0.1,0.1 );
-					mesh.castShadow = true;
-					mesh.receiveShadow = true;
-					scene.add( mesh );
-				} );*/
-				/*
-				pointLight = new THREE.PointLight( 0xff0000, 10, 5000 );
-				pointLight.position.set( sphere.position.x, 100, sphere.position.z );
-				scene.add( pointLight );*/
-
-
-			
+						
 				//******renderer******
 				container.innerHTML = "";
 				container.appendChild( renderer.domElement );
@@ -440,34 +259,6 @@ SWTOR_Spy.stl
 				container.appendChild( stats.dom );
 				//
 				window.addEventListener( 'resize', onWindowResize, false );
-
-
-/*
-				gui = new dat.GUI( { width: 400 } );
-				// SHADOW
-				var shadowGUI = gui.addFolder( "Shadow" );
-    		shadowGUI.add( shadowConfig, 'shadowCameraVisible' ).onChange( function() {
-					shadowCameraHelper.visible = shadowConfig.shadowCameraVisible;
-				});
-				shadowGUI.add( shadowConfig, 'shadowCameraNear', 1, 1500 ).onChange( function() {
-					sunLight.shadow.camera.near = shadowConfig.shadowCameraNear;
-					sunLight.shadow.camera.updateProjectionMatrix();
-					shadowCameraHelper.update();
-				});
-				shadowGUI.add( shadowConfig, 'shadowCameraFar', 1501, 5000 ).onChange( function() {
-					sunLight.shadow.camera.far = shadowConfig.shadowCameraFar;
-					sunLight.shadow.camera.updateProjectionMatrix();
-					shadowCameraHelper.update();
-				});
-				shadowGUI.add( shadowConfig, 'shadowCameraFov', 1, 120 ).onChange( function() {
-					sunLight.shadow.camera.fov = shadowConfig.shadowCameraFov;
-					sunLight.shadow.camera.updateProjectionMatrix();
-					shadowCameraHelper.update();
-				});
-				shadowGUI.add( shadowConfig, 'shadowBias', -0.01, 0.01 ).onChange( function() {
-					sunLight.shadow.bias = shadowConfig.shadowBias;
-				});
-				shadowGUI.open();*/
 
 			}
 
@@ -483,45 +274,63 @@ SWTOR_Spy.stl
 
 				if (!pause)
 				{
+					for (var i = 0; i < alive; i++){
 
-					for (var i = 0; i < nPlayer; i++){
-						if(playersControl[i].boxWall.length==1)
-							playersControl[i].boxWall.push(new THREE.Box2(new THREE.Vector2(-10,-10),
-															new THREE.Vector2(10,10)));
-						for (var j = 1; j < playersControl[i].boxWall.length; j++){
-							if (playersControl[i].boxWall[j].intersectsBox(playersControl[i].boxWall[0])){
-								console.log("player "+playersControl[0].number+" collide ");
-								playersControl[i].velocity = 0.0;
+						var playerBox = playersControl[i].boxWall[0];
+						for (var o = 0; o < alive; o++)
+						{
 
-						}
+							if (i==o)
+							{
+								var lunghezza = playersControl[o].boxWall.length - 2;
+								var j = 1;
 							}
+							else
+							{
+								var lunghezza = playersControl[o].boxWall.length;
+								var j = 0;
+							}
+
+							for (; j<lunghezza; j++){			
+								
+								console.log(playersControl[o].boxWall);
+
+									if (playersControl[o].boxWall[j].intersectsBox(playerBox)) {
+										console.log("player "+playersControl[i].number+" collide ");
+										playersControl[i].velocity = 0.0;
+										players[i].stira(playersControl[i]);
+									}
+							}
+						}
 					}
 
-					for (var i = 0; i < nPlayer; i++)
+					for (var i = 0; i < alive; i++)
 					{
 						if (playersControl[i].alive)
 							players[i].updatePlayerModel(playersControl[i], scene, planeWidth, planeHeight);
 						else
 						{
-							nPlayer--;
+							alive--;
 							players.splice(i,1);
 							playersControl.splice(i,1);
 						}
 					}
-					if(nPlayer == 1){
+					if(alive == 1 && nPlayer>alive)
+					{
 						console.log("player "+playersControl[0].number+" win ");
 						playersControl[0].velocity = 0.0;
-						/*camera.position.set(players[0].getPosition().x+20,players[0].getPosition().y,players[0].getPosition().z+20);
-						camera.up = new THREE.Vector3(0,0,1);
-						camera.lookAt(new THREE.Vector3(players[0].getPosition().x,players[0].getPosition().y,players[0].getPosition().z));*/
-
-/*
-						camera.position.x = players[0].getPosition().x;
-						camera.position.y = players[0].getPosition().y +10;
-						camera.position.z = players[0].getPosition().z;*/
-						//camera.lookAt(players[0].getPosition().x,players[0].getPosition().y,players[0].getPosition().z);
-
-						nPlayer--;
+						alive = -1;
+						//alive--;						
+					}
+					else if (alive == 0)
+					{
+						if (nPlayer>1)
+						{
+							console.log(" draw ");
+							playersControl[0].velocity = 0.0;
+						}
+						else
+							console.log("GAME OVER!");
 					}
 
 					render();
@@ -532,12 +341,6 @@ SWTOR_Spy.stl
 
 				var delta = clock.getDelta();
 				controls.update( delta );
-
-
-				//cubeMesh.visible = false;
-				//cubeCamera.updateCubeMap( renderer, scene );
-				//cubeMesh.visible = true;
-
 
 			// render scene
 				renderer.render( scene, camera );
