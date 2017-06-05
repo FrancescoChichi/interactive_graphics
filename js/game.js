@@ -22,17 +22,18 @@
 
 			var firstPlayerControls = {
 				number: 1,
-				dimension: 1,
+				dimension: 1.0,
 				moveLeft: false,
 				moveRight: false,
 				leftClicked: 0,
 				rightClicked: 0,
 				color: 0xff3399,
 				alive: true,
-				velocity: 0.4,
+				velocity: 0.1,
 				boxWall: [],
 				walls: [],
-				wallThickness: 0.3
+				wallThickness: 0.3,
+				boxTesta: 0,
 			};
 			var secondPlayerControls = {
 				number: 2,
@@ -43,10 +44,11 @@
 				rightClicked: 0,
 				color: 0x0bdd43,
 				alive: true,
-				velocity: 0.3,
+				velocity: 0.1,
 				boxWall: [],
 				walls: [],
-				wallThickness: 1.0
+				wallThickness: 0.3,
+				boxTesta: new  THREE.Box3(),
 			};
 
 			var thirdPlayerControls = {
@@ -58,10 +60,11 @@
 				rightClicked: 0,
 				color: 0x0033cc,
 				alive: true,
-				velocity: 0.4,
+				velocity: 0.3,
 				boxWall: [],
 				walls: [],
-				wallThickness: 1.0
+				wallThickness: 0.3,
+				boxTesta: new  THREE.Box3(),
 			};
 			var fourthPlayerControls = {
 				number: 4,
@@ -72,15 +75,16 @@
 				rightClicked: 0,
 				color: 0xfff316,
 				alive: true,
-				velocity: 0.4,
+				velocity: 0.3,
 				boxWall: [],
 				walls: [],
-				wallThickness: 1.0
+				wallThickness: 0.3,
+				boxTesta: new  THREE.Box3(),
 			};
 			
 			playersControl = [firstPlayerControls, secondPlayerControls, thirdPlayerControls, fourthPlayerControls];
 			players = [];
-			nPlayer = 1;
+			nPlayer = 2;
 			alive = nPlayer;
 
 			var clock = new THREE.Clock();
@@ -105,100 +109,94 @@
 			//KEYBOARD CONTROLS
 				var onKeyDown = function ( event ) {
 					switch ( event.keyCode ) {
-						case 81: // a
+						case 87: // q
 							firstPlayerControls.moveLeft = true;
 							firstPlayerControls.leftClicked++;
 							break;
-						case 87: // d
+						case 81: // w
 							firstPlayerControls.moveRight = true;
 							firstPlayerControls.rightClicked++;
 							break;
 
-						case 104: // a
+						case 105: // a
 							secondPlayerControls.moveLeft = true;
 							secondPlayerControls.leftClicked++;
 							break;
-						case 105: // d
+						case 104: // d
 							secondPlayerControls.moveRight = true;
 							secondPlayerControls.rightClicked++;
 							break;
 						
-						case 67: // a
+						case 86: // a
 							thirdPlayerControls.moveLeft = true;
 							thirdPlayerControls.leftClicked++;
 							break;
-						case 86: // d
+						case 67: // d
 							thirdPlayerControls.moveRight = true;
 							thirdPlayerControls.rightClicked++;
 							break;
 													
-						case 190: // a
+						case 188: // a
 							fourthPlayerControls.moveLeft = true;
 							fourthPlayerControls.leftClicked++;
 							break;
-						case 173: // d
+						case 190: // d
 							fourthPlayerControls.moveRight = true;
 							fourthPlayerControls.rightClicked++;
 							break;
-						case 27:
+						case 27: // ESC
 							pause = !pause;
 							break;
 					}
 				};
 				var onKeyUp = function ( event ) {
 					switch( event.keyCode ) {
-						case 81: // a
+						case 87: // w
 							firstPlayerControls.moveLeft = false;
 							firstPlayerControls.leftClicked = 0;
 							break;
-						case 87: // d
+						case 81: // q
 							firstPlayerControls.moveRight = false;
 							firstPlayerControls.rightClicked = 0;
 							break;
 
-						case 104: // a
+						case 105: // numpad 8
 							secondPlayerControls.moveLeft = false;
 							secondPlayerControls.leftClicked = 0;
 							break;
-						case 105: // d
+						case 104: // numpad 9
 							secondPlayerControls.moveRight = false;
 							secondPlayerControls.rightClicked = 0;
 							break;
 						
-						case 67: // a
+						case 86: // c
 							thirdPlayerControls.moveLeft = false;
 							thirdPlayerControls.leftClicked = 0;
 							break;
-						case 86: // d
+						case 67: // v
 							thirdPlayerControls.moveRight = false;
 							thirdPlayerControls.rightClicked = 0;
 							break;
 													
-						case 190: // a
+						case 188: // period
 							fourthPlayerControls.moveLeft = false;
 							fourthPlayerControls.leftClicked = 0;
 							break;
-						case 173: // d
+						case 190: // comma
 							fourthPlayerControls.moveRight = false;
 							fourthPlayerControls.rightClicked = 0;
 							break;
 					}
 				};
 
-
-
-
 			//CAMERA SETTINGS
 				camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 1000 );
 				
-				camera.position.x = 10;
-				camera.position.y = 50;
-				camera.position.z = 10;
+				camera.position.x = 0;
+				camera.position.y = 85;
+				camera.position.z = 0;
 
-
-
-
-			
+	
 				document.addEventListener( 'keydown', onKeyDown, false );
 				document.addEventListener( 'keyup', onKeyUp, false );
 
@@ -213,8 +211,11 @@
 
 				scene = new THREE.Scene();
 
-
-
+				var skyBoxGeometry = new THREE.CubeGeometry( 10000, 10000, 10000 );
+				var skyBoxMaterial = new THREE.MeshBasicMaterial( { color: 0x9999ff});
+				var skyBox = new THREE.Mesh( skyBoxGeometry, skyBoxMaterial );
+				scene.add(skyBox);
+	
 				groundGeometry = new THREE.PlaneBufferGeometry( planeWidth, planeHeight );
 				groundGeometry.rotateX( - Math.PI / 2 );
 				//geometry.rotateY( - Math.PI / 4 );
@@ -250,8 +251,10 @@
 
 
 				for (var i = 0; i < alive; i++)
+				{
 					players[i] = new THREE.Player( playersControl[i],planeWidth, planeHeight, i);
-						
+					//console.log(playersControl[i].boxTesta)
+				}
 				//******renderer******
 				container.innerHTML = "";
 				container.appendChild( renderer.domElement );
@@ -270,72 +273,86 @@
 			}
 			
 			function animate() {
+				//camera = camera.rotateX(THREE.Math.degToRad( 100 ));
 				requestAnimationFrame( animate );
-
 				if (!pause)
 				{
 					for (var i = 0; i < alive; i++){
-
-						var playerBox = playersControl[i].boxWall[0];
+						
+						var playerBox = playersControl[i].boxTesta;
+						//if(i==0)console.log(i,playerBox);
 						for (var o = 0; o < alive; o++)
-						{
-
+						{	
+							var j = 0;
+							lunghezza = playersControl[o].boxWall.length
 							if (i==o)
 							{
-								var lunghezza = playersControl[o].boxWall.length - 2;
-								var j = 1;
+								lunghezza -= 2;
 							}
 							else
 							{
-								var lunghezza = playersControl[o].boxWall.length;
-								var j = 0;
+								if (playerBox.intersectsBox(playersControl[o].boxTesta)) 
+										{
+											console.log("player "+playersControl[i].number+" collide con player"+playersControl[o].number);
+											playersControl[i].alive = false;
+											playersControl[o].alive= false;
+
+											//playersControl[o].velocity= 0.0;
+											//players[i].stira(playersControl[o]);
+											lunghezza = 0;
+					
+										}
 							}
 
-							for (; j<lunghezza; j++){			
-								
-								console.log(playersControl[o].boxWall);
-
-									if (playersControl[o].boxWall[j].intersectsBox(playerBox)) {
-										console.log("player "+playersControl[i].number+" collide ");
-										playersControl[i].velocity = 0.0;
-										players[i].stira(playersControl[i]);
+							for (; j<lunghezza; j++)
+								{			
+									
+									if (playerBox.intersectsBox(playersControl[o].boxWall[j]))
+									{	
+										console.log('player '+playersControl[i].number+' collide con muro di '+playersControl[o].number)
+										playersControl[i].alive = false;
+										//playersControl[i].velocity= 0.0;
+										//players[i].stira(playersControl[i]);
 									}
+								}
 							}
 						}
-					}
-
-					for (var i = 0; i < alive; i++)
+					
+					var ciclo = alive;
+					for (var i = 0; i < ciclo; i++)
 					{
 						if (playersControl[i].alive)
 							players[i].updatePlayerModel(playersControl[i], scene, planeWidth, planeHeight);
 						else
 						{
-							alive--;
+							ciclo--;
+							playersControl[i].velocity= 0.0;
+							players[i].stira(playersControl[i]);
 							players.splice(i,1);
 							playersControl.splice(i,1);
 						}
 					}
+					alive = ciclo;
 					if(alive == 1 && nPlayer>alive)
 					{
 						console.log("player "+playersControl[0].number+" win ");
 						playersControl[0].velocity = 0.0;
-						alive = -1;
-						//alive--;						
+
+						//alive -= 1;
 					}
 					else if (alive == 0)
 					{
 						if (nPlayer>1)
 						{
 							console.log(" draw ");
-							playersControl[0].velocity = 0.0;
 						}
 						else
 							console.log("GAME OVER!");
 					}
 
+				}
 					render();
 					stats.update();
-				}
 			}
 			function render() {
 
