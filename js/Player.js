@@ -21,11 +21,15 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 	var position = [0,controls.dimension,0];
 	var rotation = [- Math.PI / 2, 0,0];
 
+	var x = getShip();
+
+
 	switch( playerN ) {
 			case 0: // player 1
 				position[0] = planeWidth/3;
 				position[2] = 0;
 				this.orientation = new THREE.Vector3(-1,0,0);
+				x.rotateY(Math.PI);
 				break;
 			
 			case 1: // player 2
@@ -33,6 +37,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 				position[2] = planeWidth/3;
 				this.orientation = new THREE.Vector3(0,0,-1);
 			//	this.cube.rotateY(THREE.Math.degToRad( 90 ));
+				x.rotateY(Math.PI/2);
 
 				break;
 				
@@ -40,18 +45,25 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 				position[0] = -planeWidth/3;
 				position[2] = 0;
 				this.orientation = new THREE.Vector3(1,0,0);
+
 				break;
 			
 			case 3: // player 4
 				position[0] = 0;
 				position[2] = -planeWidth/3;
 				this.orientation = new THREE.Vector3(0,0,1);
+				x.rotateY(-Math.PI/2);
+
 			//	this.cube.rotateY(THREE.Math.degToRad( 90 ));
 
 				break;
 		}
-
-
+		var scale = 0.25;
+	x.position.x = position[0];
+	x.position.y = position[1];
+	x.position.z = position[2];
+	x.scale.set(scale, scale, scale);
+	scene.add(x);
 	this.shipGeometry = new THREE.BufferGeometry();
 	
 	/*var material2 = new THREE.MeshToonMaterial( { 
@@ -87,7 +99,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 
 				var offset = 0.3;
 				var offsetY = 2.8;
-				var offsetDist = 1.7;
+				var offsetDist = 1.3;
 
 				addOBJ('fan.obj',fanL, [position[0]-offsetDist, position[1]+offsetY, position[2]-offset], [0,- Math.PI / 2,- Math.PI / 2], [0.05,0.05,0.05], new THREE.MeshToonMaterial( { 
 					color: controls.fanColor,
@@ -124,6 +136,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 
 
 
+
 	this.ship =new THREE.Mesh(this.shipGeometry, shipMaterial);
 
 	var scale = [0.1,0.1,0.1];
@@ -135,7 +148,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 
 		this.group.add(this.ship);
 
-
+				scene.add( this.group );
 
 
 		this.sfera.computeBoundingBox();
@@ -147,8 +160,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 				specular:0xFFFFFF,
 				reflectivity: 1 } ) ) );
 
-		this.group.add( this.light );
-		scene.add( this.group );
+		scene.add( this.light );
 
 		this.light.position.x = position[0];
 		this.light.position.y = position[1];
@@ -224,7 +236,9 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 	{
 		controls.alive=false;
 		scene.remove(this.light);
-		scene.remove(this.ship);
+		//scene.remove(this.ship);
+				scene.remove(this.group);
+
 		for (var i = 0; i < controls.walls.length; i++) 
 			scene.remove(controls.walls[i]);
 	}
@@ -252,6 +266,8 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 		}
 
 		//AVANZA NELLA DIREZIONE AGGIORNATA
+		this.light.position.x=this.light.position.x+(this.orientation.x*controls.velocity);
+		this.light.position.z=this.light.position.z+(this.orientation.z*controls.velocity);
 
 		this.group.position.x=this.group.position.x+(this.orientation.x*controls.velocity);
 		this.group.position.z=this.group.position.z+(this.orientation.z*controls.velocity);
