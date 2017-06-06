@@ -24,10 +24,12 @@
 			var planeHeight = 100;
 
 			var pause = false;
-			var velocity = 1;
+			var velocity = 0.1;
 			var dimension = 1.0;
 			var startGame = false;
 			var music = false;
+			var nightMode = true;
+			var hemiLight;
 
 			var firstPlayerControls = {
 				number: 1,
@@ -265,9 +267,17 @@
 
 
 
-
+/*
 		   // LIGHTS
-		    scene.add(new THREE.AmbientLight(0xffffff,2));
+		    //scene.add(new THREE.AmbientLight(0xffffff,2));
+
+				hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
+				hemiLight.color.setHSL( 0.6, 1, 0.6 );
+				hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
+				hemiLight.position.set( 0, 500, 0 );
+				scene.add( hemiLight );
+		
+			*/
 
 
 			/*	for (var i = 0; i < alive; i++)
@@ -382,6 +392,7 @@
 				}
 				else
  				{
+ 					//document.body.background = "images/background.jpg";
  					document.getElementById("start").onclick = function(){
 
 						var e = document.getElementById("dropdown");
@@ -392,16 +403,34 @@
 							sound = new Sound();
 							sound.menu_sound.play();
 						}	
+						if (nightMode)
+						{
+																	   // LIGHTS
+					    //scene.add(new THREE.AmbientLight(0xffffff,2));
+
+							hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
+							hemiLight.color.setHSL( 0.6, 1, 0.6 );
+							hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
+							hemiLight.position.set( 0, 500, 0 );
+							scene.add( hemiLight );
+						}
+						else
+						{
+																	   // LIGHTS
+					    //scene.add(new THREE.AmbientLight(0xffffff,2));
+
+							hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 2 );
+							hemiLight.color.setHSL( 2, 1, 2 );
+							hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
+							hemiLight.position.set( 0, 500, 0 );
+							scene.add( hemiLight );
+						}
  						startGame = true; 
  						alive = nPlayer;
  						for (var i = 0; i < alive; i++)
 							players[i] = new THREE.Player( playersControl[i],planeWidth, planeHeight, i);
 
-						document.getElementById("start").style.display="none";
-						document.getElementById("music").style.display="none";
-						document.getElementById("dropdown").style.display="none";
-						document.getElementById("label_player").style.display="none";
-						document.getElementById("label_music").style.display="none";
+						closeMenu();
  					};
  					document.getElementById("music").onclick = function(){
  						if(music)
@@ -416,7 +445,22 @@
  						}
  						music = !music;
 					};
-					
+
+ 					document.getElementById("night").onclick = function(){
+
+						if(nightMode)
+ 						{
+ 							document.getElementById("night").innerHTML = "OFF";
+    					document.getElementById("night").style.color = 'red';
+ 						}
+ 						else
+ 						{
+ 							document.getElementById("night").innerHTML = "ON";
+    					document.getElementById("night").style.color = 'green';
+ 						}
+ 						nightMode = !nightMode;
+					};
+							
  				}
  				if(startGame)
  				{
@@ -443,4 +487,14 @@ function Sound() {
 	this.level_sound = new Audio("audio/powerup.mp3");
 	this.menu_sound = new Audio("audio/menu.mp3");
 
+};
+
+function closeMenu() {
+						document.getElementById("start").style.display="none";
+						document.getElementById("music").style.display="none";
+						document.getElementById("dropdown").style.display="none";
+						document.getElementById("label_player").style.display="none";
+						document.getElementById("label_music").style.display="none";
+						document.getElementById("label_night").style.display="none";
+						document.getElementById("night").style.display="none";
 };

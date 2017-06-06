@@ -16,7 +16,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 
 		//SFERA COLORATA	
 		this.sfera = new THREE.SphereBufferGeometry( controls.dimension, 64, 64 );
-		this.light = new THREE.PointLight( controls.color, 0.2, 5000,2 );
+		this.light = new THREE.PointLight( controls.color, 5, 20,2 );
 
 	var position = [0,controls.dimension,0];
 	var rotation = [- Math.PI / 2,0,0];
@@ -70,7 +70,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 
 				
 				var shipMaterial = new THREE.MeshPhongMaterial( {
-					shininess: 50,
+					shininess: 10,
 					color: 0xffffff,
 					specular: 0x999999,
 					map: shipTexture
