@@ -47,6 +47,12 @@ function addOBJ(file,obj,positions,rotations,scales,mat){
 
       mesh.scale.set(scales[0], scales[1], scales[2]);
       mesh.rotation.set(rotations[0],rotations[1],rotations[2]);
+     /* mesh.rotation.x = rotations[0];
+       mesh.rotation.y = rotations[1];
+        mesh.rotation.z = rotations[2];*/
+      /*  mesh.rotateX(positions[0]);
+       mesh.rotateY(positions[1]);
+        mesh.rotateZ(positions[2]);*/
       mesh.position.set(positions[0],positions[1],positions[2]);
       obj.add(mesh);
     });

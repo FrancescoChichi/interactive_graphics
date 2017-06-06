@@ -19,7 +19,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 		this.light = new THREE.PointLight( controls.color, 5, 20,2 );
 
 	var position = [0,controls.dimension,0];
-	var rotation = [- Math.PI / 2,0,0];
+	var rotation = [- Math.PI / 2, 0,0];
 
 	switch( playerN ) {
 			case 0: // player 1
@@ -77,6 +77,53 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 				} );
 
 
+	this.group = new THREE.Group();
+
+					var fanL = new THREE.Mesh();
+					var fanR = new THREE.Mesh();
+					var fanU = new THREE.Mesh();
+					var fanD = new THREE.Mesh();
+					var body = new THREE.Mesh();
+
+				var offset = 0.3;
+				var offsetY = 2.8;
+				var offsetDist = 1.7;
+
+				addOBJ('fan.obj',fanL, [position[0]-offsetDist, position[1]+offsetY, position[2]-offset], [0,- Math.PI / 2,- Math.PI / 2], [0.05,0.05,0.05], new THREE.MeshToonMaterial( { 
+					color: controls.fanColor,
+					specular:0xFFFFFF,
+					reflectivity: 1 } ));
+
+				addOBJ('fan.obj',fanR, [position[0]+offsetDist, position[1]+offsetY, position[2]+offset], [0, Math.PI / 2,- Math.PI / 2], [0.05,0.05,0.05], new THREE.MeshToonMaterial( { 
+					color: controls.fanColor,
+					specular:0xFFFFFF,
+					reflectivity: 1 } ));
+				 	fanR.geometry.computeBoundingBox();
+
+					console.log(fanR.geometry.boundingBox.getSize());
+				addOBJ('fan.obj',fanU, [position[0]+offset, position[1]+offsetY, position[2]-offsetDist], [0,Math.PI,- Math.PI / 2], [0.05,0.05,0.05], new THREE.MeshToonMaterial( { 
+					color: controls.fanColor,
+					specular:0xFFFFFF,
+					reflectivity: 1 } ));
+
+				addOBJ('fan.obj',fanD, [position[0]-offset, position[1]+offsetY, position[2]+offsetDist], [0,0,- Math.PI / 2], [0.05,0.05,0.05], new THREE.MeshToonMaterial( { 
+					color: controls.fanColor,
+					specular:0xFFFFFF,
+					reflectivity: 1 } ));
+				
+				this.group.add( fanL );
+				this.group.add( fanR );
+				this.group.add( fanU );
+				this.group.add( fanD );
+
+
+
+
+
+
+
+
+
 	this.ship =new THREE.Mesh(this.shipGeometry, shipMaterial);
 
 	var scale = [0.1,0.1,0.1];
@@ -85,7 +132,8 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 				specular:0xFFFFFF,
 				reflectivity: 1 } ));
 
-		scene.add(this.ship);
+
+		this.group.add(this.ship);
 
 
 
@@ -99,7 +147,8 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 				specular:0xFFFFFF,
 				reflectivity: 1 } ) ) );
 
-		scene.add( this.light );
+		this.group.add( this.light );
+		scene.add( this.group );
 
 		this.light.position.x = position[0];
 		this.light.position.y = position[1];
@@ -203,13 +252,9 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 		}
 
 		//AVANZA NELLA DIREZIONE AGGIORNATA
-		this.light.position.x=this.light.position.x+(this.orientation.x*controls.velocity);
-		this.light.position.z=this.light.position.z+(this.orientation.z*controls.velocity);
 
-		this.ship.position.x=this.ship.position.x+(this.orientation.x*controls.velocity);
-		this.ship.position.z=this.ship.position.z+(this.orientation.z*controls.velocity);
-
-
+		this.group.position.x=this.group.position.x+(this.orientation.x*controls.velocity);
+		this.group.position.z=this.group.position.z+(this.orientation.z*controls.velocity);
 
 		//SE IL GIOCATORE È USCITO, MUORE
 		if (Math.abs(this.light.position.x)>planeWidth/2 || Math.abs(this.light.position.z)>planeHeight/2 )

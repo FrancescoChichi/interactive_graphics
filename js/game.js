@@ -26,6 +26,7 @@
 			var pause = false;
 			var velocity = 0.1;
 			var dimension = 1.0;
+			var wallThick = 0.8;
 			var startGame = false;
 			var music = false;
 			var nightMode = true;
@@ -39,11 +40,12 @@
 				leftClicked: 0,
 				rightClicked: 0,
 				color: 0xff3399,
+				fanColor: 0xff80bf,
 				alive: true,
 				velocity: velocity,
 				boxWall: [],
 				walls: [],
-				wallThickness: 0.3,
+				wallThickness: wallThick,
 				boxTesta: 0,
 			};
 			var secondPlayerControls = {
@@ -54,11 +56,12 @@
 				leftClicked: 0,
 				rightClicked: 0,
 				color: 0x0bdd43,
+				fanColor: 0x55f780,
 				alive: true,
 				velocity: velocity,
 				boxWall: [],
 				walls: [],
-				wallThickness: 0.3,
+				wallThickness: wallThick,
 				boxTesta: new  THREE.Box3(),
 			};
 
@@ -69,12 +72,13 @@
 				moveRight: false,
 				leftClicked: 0,
 				rightClicked: 0,
-				color: 0x0033cc,
+				color: 0xff9900,
+				fanColor: 0xffc266,
 				alive: true,
 				velocity: velocity,
 				boxWall: [],
 				walls: [],
-				wallThickness: 0.3,
+				wallThickness: wallThick,
 				boxTesta: new  THREE.Box3(),
 			};
 			var fourthPlayerControls = {
@@ -85,11 +89,12 @@
 				leftClicked: 0,
 				rightClicked: 0,
 				color: 0xfff316,
+				fanColor: 0xfff766,
 				alive: true,
 				velocity: velocity,
 				boxWall: [],
 				walls: [],
-				wallThickness: 0.3,
+				wallThickness: wallThick,
 				boxTesta: new  THREE.Box3(),
 			};
 			
