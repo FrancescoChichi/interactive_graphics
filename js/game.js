@@ -24,9 +24,9 @@
 			var planeHeight = 100;
 
 			var pause = false;
-			var velocity = 0.0;
+			var velocity = 0.1;
 			var dimension = 2.0;
-			var wallThick = 3.8;
+			var wallThick = 1.8;
 			var startGame = false;
 			var music = false;
 			var nightMode = true;
@@ -117,11 +117,7 @@
 			var click=0;
 
 
-    var particleCount;
-    var particles;
-    
-    var texture;
-    var material;
+
 
 			/*===================*\
 			 * END CONFIGURATION *
@@ -279,32 +275,7 @@
 
 
   
-    particleCount = 80;
-    particles = [];
     
-    texture = THREE.ImageUtils.loadTexture("textures/oUBYu.png");
-    material = new THREE.SpriteMaterial({
-        color: 0xff4502,
-        map: texture,
-        transparent: true,
-        opacity: 0.5,
-        blending: THREE.AdditiveBlending
-    });
-    
-    
-    for (var i = 0; i < particleCount; i++) {
-        var particle = new THREE.Sprite(material.clone());
-        particle.scale.multiplyScalar(Math.random() * 4);
-
-        particle.velocity = new THREE.Vector3( Math.random(), 0, 0 );
-	                
-	      particle.position.y = 5;
-
-        particles.push(particle);
-        scene.add(particle);
-        scene.add(particle);
-
-    }
 
 
 
@@ -355,22 +326,9 @@
 				{
 					if (!pause)
 					{
-						for (var i = 0; i < particles.length; i++) {
-	            var particle = particles[i];
-	            if(particle.position.x > 10) {
-	                particle.position.x = 5;
-	                particle.velocity.x = Math.random();
-	                particle.material.opacity = 1;
-	            }
-	           	particle.rotateY(Math.PI)
-
-	            particle.material.opacity -= 0.1;
-	            particle.velocity.x += 0.001;
-	            particle.position.add(particle.velocity);
-	        	}
+						
 
 						for (var i = 0; i < alive; i++){
-							
 							var playerBox = playersControl[i].boxTesta;
 							//if(i==0)console.log(i,playerBox);
 							for (var o = 0; o < alive; o++)
