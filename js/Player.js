@@ -222,6 +222,8 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 
 		this.s.updateParticle();
 
+		this.ship.getObjectByName("torus").rotateZ(-Math.PI/6);
+
 		//SE IL GIOCATORE È USCITO, MUORE
 		if (Math.abs(this.light.position.x)>planeWidth/2 || Math.abs(this.light.position.z)>planeHeight/2 )
 		{

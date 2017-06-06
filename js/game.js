@@ -25,11 +25,11 @@
 
 			var pause = false;
 			var velocity = 0.1;
-			var dimension = 1.0;
+			var dimension = 0.5;
 			var wallThick = 1.8;
 			var startGame = false;
 			var music = false;
-			var nightMode = true;
+			var nightMode = false;
 			var hemiLight;
 
 			var firstPlayerControls = {
@@ -425,7 +425,7 @@
 																	   // LIGHTS
 					    //scene.add(new THREE.AmbientLight(0xffffff,2));
 
-							hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
+							hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.0 );
 							hemiLight.color.setHSL( 0.6, 1, 0.6 );
 							hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
 							hemiLight.position.set( 0, 500, 0 );
@@ -436,7 +436,7 @@
 																	   // LIGHTS
 					    //scene.add(new THREE.AmbientLight(0xffffff,2));
 
-							hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 2 );
+							hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 1.5 );
 							hemiLight.color.setHSL( 2, 1, 2 );
 							hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
 							hemiLight.position.set( 0, 500, 0 );

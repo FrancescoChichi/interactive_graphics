@@ -23,24 +23,44 @@ THREE.Ship = function (controls) {
 				specular:0xFFFFFF,
 				reflectivity: 1 } );
 
-	var groundTexture = new THREE.TextureLoader().load( "textures/metal-texture512.jpg" );
-	groundTexture.repeat.set( 1, 1 );
-	groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
-	groundTexture.magFilter = THREE.NearestFilter;
-	groundTexture.format = THREE.RGBFormat;
+	var metalTexture = new THREE.TextureLoader().load( "textures/metal-texture512.jpg" );
+	metalTexture.repeat.set( 1, 1 );
+	metalTexture.wrapS = metalTexture.wrapT = THREE.RepeatWrapping;
+	metalTexture.magFilter = THREE.NearestFilter;
+	metalTexture.format = THREE.RGBFormat;
 
-	// GROUND
-	var groundMaterial = new THREE.MeshPhongMaterial( {
+
+	var metalMaterial = new THREE.MeshPhongMaterial( {
 		shininess: 80,
 		color: 0xffffff,
 		specular: 0xffffff,
-		map: groundTexture
+		map: metalTexture
 	} );
+
+	var torusTexture = new THREE.TextureLoader().load( "textures/rubber.jpg" );
+	torusTexture.repeat.set( 10, 1 );
+	torusTexture.wrapS = metalTexture.wrapT = THREE.RepeatWrapping;
+	torusTexture.magFilter = THREE.NearestFilter;
+	torusTexture.format = THREE.RGBFormat;
+
+
+	var toruslMaterial = new THREE.MeshPhongMaterial( {
+		shininess: 80,
+		color: 0xffffff,
+		specular: 0xffffff,
+		map: torusTexture
+	} );
+
+	var glassMaterial = new THREE.MeshToonMaterial( {
+		shininess: 10,
+		color: 0x00ffff,
+		specular: 0xffffff
+			} );
 
 	var sphereGeometry = new THREE.SphereBufferGeometry( 4.5, 64, 32 );
 
-	var semiSphereGeometryL = new THREE.SphereBufferGeometry( 4.5, 64, 32 );
-	var semiSphereGeometryR = new THREE.SphereBufferGeometry( 4.5, 64, 32 );
+	var semiSphereGeometryL = new THREE.SphereBufferGeometry( 1, 64, 32 );
+	var semiSphereGeometryR = new THREE.SphereBufferGeometry( 1, 64, 32 );
 
 	var torusGeometry = new THREE.TorusBufferGeometry( 6, 2, 32, 64 );
 	var cubeGeometry = new THREE.BoxBufferGeometry( 2, 2, 4 );
@@ -59,14 +79,19 @@ THREE.Ship = function (controls) {
 
 
 		//scene.add( this.light );
-	this.group.add(addObject( torusGeometry, groundMaterial, 0, 5, 0, Math.PI/2, 0, 0 ));
-	this.group.add(addObject( cubeGeometry, materialPhong, 4, 9, 0, 0, 0, 0 ));
-	//this.group.add(addObject( sphereGeometry, materialPlayer, 0, 7, 0, 0, 0, 0 ));
-	this.group.add(addObject( cilinderGeometry, materialPhong, -2, 8, 5.5, Math.PI/2, 0, Math.PI/2));
-	this.group.add(addObject( cilinderGeometry, materialPhong, -2, 8, -5.5, Math.PI/2, 0,Math.PI/2 ));
-	this.group.add(addObject( geometry, materialPhong, -3.8, 8, 5.5, 0, Math.PI, Math.PI/2 ));
-	this.group.add(addObject( geometry, materialPhong, -3.8, 8, -5.5, 0, Math.PI, Math.PI/2 ));
-this.group.add(this.light);
+	var torus = addObject( torusGeometry, toruslMaterial, 0, 5, 0, Math.PI/2, 0, 0 );
+	torus.name = "torus";
+	this.group.add(torus);
+
+	this.group.add(addObject( cubeGeometry, glassMaterial, 4, 9, 0, 0, 0, 0 ));
+	this.group.add(addObject( cilinderGeometry, metalMaterial, -2, 8, 5.5, Math.PI/2, 0, Math.PI/2));
+	this.group.add(addObject( cilinderGeometry, metalMaterial, -2, 8, -5.5, Math.PI/2, 0,Math.PI/2 ));
+	this.group.add(addObject( geometry, metalMaterial, -3.8, 8, 5.5, 0, Math.PI, Math.PI/2 ));
+	this.group.add(addObject( geometry, metalMaterial, -3.8, 8, -5.5, 0, Math.PI, Math.PI/2 ));
+	this.group.add(addObject( semiSphereGeometryL, metalMaterial, -0.6, 8, -5.5, 0, Math.PI, Math.PI/2 ));
+	this.group.add(addObject( semiSphereGeometryR, metalMaterial, -0.6, 8, 5.5, 0, Math.PI, Math.PI/2 ));
+	//	this.group.add(addObject( sphereGeometry, metalMaterial, 0, 7, 0, 0, 0, 0 ));
+	this.group.add(this.light);
 
 	this.particleCount = 80;
   this.particlesL = [];
