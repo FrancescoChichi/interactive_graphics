@@ -200,6 +200,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 			controls.leftClicked++;
 			this.poseBK = this.light.position.clone();
 			this.turn = true;
+			this.ship.rotateY(-Math.PI/2);
 
 		}
 
@@ -209,6 +210,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 			controls.rightClicked++;
 			this.poseBK = this.light.position.clone();
 			this.turn = true;
+			this.ship.rotateY(+Math.PI/2);
 		}
 
 		//AVANZA NELLA DIREZIONE AGGIORNATA
@@ -338,30 +340,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 	var z = this.light.position.z;//+1*this.orientation.z;
 
 	var centro = bz.getCenter();
-	//this.cube.translate(centro.x,centro.y,centro.z);
 
-	/*/this.cube.position.x = centro.x;//+1*this.orientation.x;
-	this.cube.position.y =0;
-	this.cube.position.z = centro.z;//+1*this.orientation.z;
-*/
-				/*DEBUG
-
-	var material = new THREE.LineBasicMaterial({
-	color: 0x0000ff
-		});
-	var geometry = new THREE.Geometry();
-			geometry.vertices.push(
-	this.sfera.boundingBox.min,this.sfera.boundingBox.max);
-		
-
-	var linea = new THREE.Line(geometry,material);
-	//scene.add(linea);
-
-		//console.log(controls.walls)
-	*/
-
-	//this.ship.position.x = this.light.position.x;
-	//this.ship.position.z = this.light.position.z;
 
 
 	this.boxOgetto = this.boxOgetto.setFromCenterAndSize( new THREE.Vector3(x,y,z), this.boxOgetto.getSize());

@@ -25,7 +25,7 @@
 
 			var pause = false;
 			var velocity = 0.1;
-			var dimension = 2.0;
+			var dimension = 1.0;
 			var wallThick = 1.8;
 			var startGame = false;
 			var music = false;
