@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html lang="en">
 	<head>
 		<title>Interactive Project</title>
 		<meta charset="utf-8">
@@ -13,8 +12,26 @@
 		</style>
 	</head>
 	<body>
+	<p style="position:absolute;
+    top: 50%;
+    left: 30%">
 
-	
+    <label id = "label_player" style = "color:white">Choose the number of player: </label>
+
+		<select id="dropdown" name="cd-dropdown" class="cd-select">
+						<option value="2" >2</option>
+						<option value="3" >3</option>
+						<option value="4" >4</option>
+		</select>
+		<button id = "start" >start</button>
+		<br>
+		<label id = "label_music" style = "color:white">Music: </label>
+		<button id = "music" style = "color:red">OFF</button>
+
+
+	</p>
+		<label id = "winner"  style = "color:white; display:none; font-size: 300px; top: 20%; left: 30%">"></label>
+
 		<div id="container"></div>
 
 		<script src="build/three.js"></script>
@@ -30,6 +47,7 @@
 		<script src="./js/GPUParticleSystem.js"></script>
 		<script src="js/Player.js"></script>
 
+		<script src="js/loaders/MTLLoader.js"></script>
 		<script src="js/loaders/STLLoader.js"></script>
 		<script src="js/loaders/OBJLoader.js"></script>
 		<script src="js/loaders.js"></script>

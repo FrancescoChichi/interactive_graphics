@@ -15,21 +15,30 @@
 			//var loader;
 			//var mesh2= new THREE.Mesh();
 
+			/*=====================*\
+			 * START CONFIGURATION *
+			\*=====================*/
+
+
 			var planeWidth = 100;
 			var planeHeight = 100;
 
 			var pause = false;
+			var velocity = 1;
+			var dimension = 1.0;
+			var startGame = false;
+			var music = false;
 
 			var firstPlayerControls = {
 				number: 1,
-				dimension: 1.0,
+				dimension: dimension,
 				moveLeft: false,
 				moveRight: false,
 				leftClicked: 0,
 				rightClicked: 0,
 				color: 0xff3399,
 				alive: true,
-				velocity: 0.1,
+				velocity: velocity,
 				boxWall: [],
 				walls: [],
 				wallThickness: 0.3,
@@ -37,14 +46,14 @@
 			};
 			var secondPlayerControls = {
 				number: 2,
-				dimension: 1,
+				dimension: dimension,
 				moveLeft: false,
 				moveRight: false,
 				leftClicked: 0,
 				rightClicked: 0,
 				color: 0x0bdd43,
 				alive: true,
-				velocity: 0.1,
+				velocity: velocity,
 				boxWall: [],
 				walls: [],
 				wallThickness: 0.3,
@@ -53,14 +62,14 @@
 
 			var thirdPlayerControls = {
 				number: 3,
-				dimension: 1,
+				dimension: dimension,
 				moveLeft: false,
 				moveRight: false,
 				leftClicked: 0,
 				rightClicked: 0,
 				color: 0x0033cc,
 				alive: true,
-				velocity: 0.3,
+				velocity: velocity,
 				boxWall: [],
 				walls: [],
 				wallThickness: 0.3,
@@ -68,14 +77,14 @@
 			};
 			var fourthPlayerControls = {
 				number: 4,
-				dimension: 1,
+				dimension: dimension,
 				moveLeft: false,
 				moveRight: false,
 				leftClicked: 0,
 				rightClicked: 0,
 				color: 0xfff316,
 				alive: true,
-				velocity: 0.3,
+				velocity: velocity,
 				boxWall: [],
 				walls: [],
 				wallThickness: 0.3,
@@ -84,7 +93,7 @@
 			
 			playersControl = [firstPlayerControls, secondPlayerControls, thirdPlayerControls, fourthPlayerControls];
 			players = [];
-			nPlayer = 2;
+			nPlayer = 4;
 			alive = nPlayer;
 
 			var clock = new THREE.Clock();
@@ -100,11 +109,19 @@
 			var tick=0;
 			var click=0;
 
+			/*===================*\
+			 * END CONFIGURATION *
+			\*===================*/
+
 
 			init();
 			animate();
+
 			function init() {
 				container = document.getElementById( 'container' );
+ 						
+ 			/*sound = new Sound();
+			sound.menu_sound.play();*/
 
 			//KEYBOARD CONTROLS
 				var onKeyDown = function ( event ) {
@@ -189,6 +206,9 @@
 					}
 				};
 
+
+
+
 			//CAMERA SETTINGS
 				camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 1000 );
 				
@@ -250,11 +270,11 @@
 		    scene.add(new THREE.AmbientLight(0xffffff,2));
 
 
-				for (var i = 0; i < alive; i++)
+			/*	for (var i = 0; i < alive; i++)
 				{
 					players[i] = new THREE.Player( playersControl[i],planeWidth, planeHeight, i);
 					//console.log(playersControl[i].boxTesta)
-				}
+				}*/
 				//******renderer******
 				container.innerHTML = "";
 				container.appendChild( renderer.domElement );
@@ -262,7 +282,7 @@
 				container.appendChild( stats.dom );
 				//
 				window.addEventListener( 'resize', onWindowResize, false );
-
+				
 			}
 
 				
@@ -272,87 +292,137 @@
 				renderer.setSize( window.innerWidth, window.innerHeight );
 			}
 			
-			function animate() {
+			function animate() 
+			{
 				//camera = camera.rotateX(THREE.Math.degToRad( 100 ));
 				requestAnimationFrame( animate );
-				if (!pause)
+				if(startGame)	
 				{
-					for (var i = 0; i < alive; i++){
+					if (!pause)
+					{
+						for (var i = 0; i < alive; i++){
+							
+							var playerBox = playersControl[i].boxTesta;
+							//if(i==0)console.log(i,playerBox);
+							for (var o = 0; o < alive; o++)
+							{	
+								var j = 0;
+								lunghezza = playersControl[o].boxWall.length
+								if (i==o)
+								{
+									lunghezza -= 2;
+								}
+								else
+								{
+									if (playerBox.intersectsBox(playersControl[o].boxTesta)) 
+											{
+												console.log("player "+playersControl[i].number+" collide con player"+playersControl[o].number);
+												playersControl[i].alive = false;
+												playersControl[o].alive= false;
+
+												//playersControl[o].velocity= 0.0;
+												//players[i].stira(playersControl[o]);
+												lunghezza = 0;
 						
-						var playerBox = playersControl[i].boxTesta;
-						//if(i==0)console.log(i,playerBox);
-						for (var o = 0; o < alive; o++)
-						{	
-							var j = 0;
-							lunghezza = playersControl[o].boxWall.length
-							if (i==o)
-							{
-								lunghezza -= 2;
-							}
-							else
-							{
-								if (playerBox.intersectsBox(playersControl[o].boxTesta)) 
-										{
-											console.log("player "+playersControl[i].number+" collide con player"+playersControl[o].number);
+											}
+								}
+
+								for (; j<lunghezza; j++)
+									{			
+										
+										if (playerBox.intersectsBox(playersControl[o].boxWall[j]))
+										{	
+											console.log('player '+playersControl[i].number+' collide con muro di '+playersControl[o].number)
 											playersControl[i].alive = false;
-											playersControl[o].alive= false;
-
-											//playersControl[o].velocity= 0.0;
-											//players[i].stira(playersControl[o]);
-											lunghezza = 0;
-					
+											//playersControl[i].velocity= 0.0;
+											//players[i].stira(playersControl[i]);
 										}
-							}
-
-							for (; j<lunghezza; j++)
-								{			
-									
-									if (playerBox.intersectsBox(playersControl[o].boxWall[j]))
-									{	
-										console.log('player '+playersControl[i].number+' collide con muro di '+playersControl[o].number)
-										playersControl[i].alive = false;
-										//playersControl[i].velocity= 0.0;
-										//players[i].stira(playersControl[i]);
 									}
 								}
 							}
-						}
-					
-					var ciclo = alive;
-					for (var i = 0; i < ciclo; i++)
-					{
-						if (playersControl[i].alive)
-							players[i].updatePlayerModel(playersControl[i], scene, planeWidth, planeHeight);
-						else
+						
+						var ciclo = alive;
+						for (var i = 0; i < ciclo; i++)
 						{
-							ciclo--;
-							playersControl[i].velocity= 0.0;
-							players[i].stira(playersControl[i]);
-							players.splice(i,1);
-							playersControl.splice(i,1);
+							if (playersControl[i].alive)
+								players[i].updatePlayerModel(playersControl[i], scene, planeWidth, planeHeight);
+							else
+							{
+								ciclo--;
+								playersControl[i].velocity= 0.0;
+								players[i].stira(playersControl[i]);
+								players.splice(i,1);
+								playersControl.splice(i,1);
+							}
 						}
-					}
-					alive = ciclo;
-					if(alive == 1 && nPlayer>alive)
-					{
-						console.log("player "+playersControl[0].number+" win ");
-						playersControl[0].velocity = 0.0;
-
-						//alive -= 1;
-					}
-					else if (alive == 0)
-					{
-						if (nPlayer>1)
+						alive = ciclo;
+						if(alive == 1 && nPlayer>alive)
 						{
-							console.log(" draw ");
-						}
-						else
-							console.log("GAME OVER!");
-					}
+							console.log("player "+playersControl[0].number+" win ");
+							document.getElementById("winner").innerHTML = "player "+playersControl[0].number+" win ";
+							document.getElementById("winner").style.display="block";
 
+							playersControl[0].velocity = 0.0;
+
+							//alive -= 1;
+						}
+						else if (alive == 0)
+						{
+							if (nPlayer>1)
+							{
+								console.log(" draw ");
+								document.getElementById("winner").innerHTML = "draw";
+							document.getElementById("winner").style.display="block";
+							}
+							else
+								console.log("GAME OVER!");
+						}
+
+					}
 				}
+				else
+ 				{
+ 					document.getElementById("start").onclick = function(){
+
+						var e = document.getElementById("dropdown");
+						nPlayer = e.options[e.selectedIndex].value;
+
+						if(music)
+						{
+							sound = new Sound();
+							sound.menu_sound.play();
+						}	
+ 						startGame = true; 
+ 						alive = nPlayer;
+ 						for (var i = 0; i < alive; i++)
+							players[i] = new THREE.Player( playersControl[i],planeWidth, planeHeight, i);
+
+						document.getElementById("start").style.display="none";
+						document.getElementById("music").style.display="none";
+						document.getElementById("dropdown").style.display="none";
+						document.getElementById("label_player").style.display="none";
+						document.getElementById("label_music").style.display="none";
+ 					};
+ 					document.getElementById("music").onclick = function(){
+ 						if(music)
+ 						{
+ 							document.getElementById("music").innerHTML = "OFF";
+    					document.getElementById("music").style.color = 'red';
+ 						}
+ 						else
+ 						{
+ 							document.getElementById("music").innerHTML = "ON";
+    					document.getElementById("music").style.color = 'green';
+ 						}
+ 						music = !music;
+					};
+					
+ 				}
+ 				if(startGame)
+ 				{
 					render();
 					stats.update();
+				}	
 			}
 			function render() {
 
@@ -362,3 +432,15 @@
 			// render scene
 				renderer.render( scene, camera );
 			}
+
+
+function Sound() {
+
+	this.death_sound  = new Audio("audio/explode.mp3");
+	this.paddle_sound = new Audio("audio/laser.mp3");
+	this.brick_sound  = new Audio("audio/beep.mp3");
+	this.brick_sound2 = new Audio("audio/laser.mp3");
+	this.level_sound = new Audio("audio/powerup.mp3");
+	this.menu_sound = new Audio("audio/menu.mp3");
+
+};

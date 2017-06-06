@@ -9,7 +9,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 
 
 	//SFERA RIFLETTENTE
-		this.cubeCamera = new THREE.CubeCamera( 1, 10000, 128 );
+		//this.cubeCamera = new THREE.CubeCamera( 1, 10000, 128 );
 
 		//this.mirrorMaterial = new THREE.MeshBasicMaterial( { color: controls.color, envMap: this.cubeCamera.renderTarget } );
 		//var mirrorMaterial = new THREE.MeshPhongMaterial( { emissive: 0xffffff, envMap: cubeCamera.renderTarget } );
@@ -18,19 +18,74 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 		this.sfera = new THREE.SphereBufferGeometry( controls.dimension, 64, 64 );
 		this.light = new THREE.PointLight( controls.color, 0.2, 5000,2 );
 
+	var position = [0,controls.dimension,0];
+	var rotation = [- Math.PI / 2,0,0];
+
+	switch( playerN ) {
+			case 0: // player 1
+				position[0] = planeWidth/3;
+				position[2] = 0;
+				this.orientation = new THREE.Vector3(-1,0,0);
+				break;
+			
+			case 1: // player 2
+				position[0] = 0;
+				position[2] = planeWidth/3;
+				this.orientation = new THREE.Vector3(0,0,-1);
+			//	this.cube.rotateY(THREE.Math.degToRad( 90 ));
+
+				break;
+				
+			case 2: // player 3
+				position[0] = -planeWidth/3;
+				position[2] = 0;
+				this.orientation = new THREE.Vector3(1,0,0);
+				break;
+			
+			case 3: // player 4
+				position[0] = 0;
+				position[2] = -planeWidth/3;
+				this.orientation = new THREE.Vector3(0,0,1);
+			//	this.cube.rotateY(THREE.Math.degToRad( 90 ));
+
+				break;
+		}
 
 
-
-	var geometry2 = new THREE.Geometry();
+	this.shipGeometry = new THREE.BufferGeometry();
 	
-	var material2 = new THREE.MeshPhongMaterial({color:controls.color});
-	
-	var mesh2 =new THREE.Mesh(geometry2, material2);
-	var position = [0,1,0];
-	var rotation = [ - Math.PI / 2 ,0,0];
-	var scale = [0.2,0.2,0.20];
-		addOBJ('ship.obj',mesh2, position, rotation, scale);
-		scene.add(mesh2);
+	/*var material2 = new THREE.MeshToonMaterial( { 
+				color: controls.color,
+				specular:0xFFFFFF,
+				reflectivity: 0.0 } );
+	*/
+	var textureLoader = new THREE.TextureLoader();
+
+	var shipTexture = new textureLoader.load( "textures/metal-texture256.jpg" );
+				//var texture = new THREE.TextureLoader().load( "textures/patterns/bright_squares256.png" );
+				shipTexture.repeat.set( 1, 1 );
+				shipTexture.wrapS = shipTexture.wrapT = THREE.RepeatWrapping;
+				//shipTexture.magFilter = THREE.NearestFilter;
+				shipTexture.format = THREE.RGBFormat;
+
+				
+				var shipMaterial = new THREE.MeshPhongMaterial( {
+					shininess: 50,
+					color: 0xffffff,
+					specular: 0x999999,
+					map: shipTexture
+				} );
+
+
+	this.ship =new THREE.Mesh(this.shipGeometry, shipMaterial);
+
+	var scale = [0.1,0.1,0.1];
+		addOBJ('ship.obj',this.ship, position, rotation, scale, new THREE.MeshToonMaterial( { 
+				color: 0x262626,
+				specular:0xFFFFFF,
+				reflectivity: 1 } ));
+
+		scene.add(this.ship);
 
 
 
@@ -46,17 +101,18 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 
 		scene.add( this.light );
 
-		this.light.position.y = 1;
+		this.light.position.x = position[0];
+		this.light.position.y = position[1];
+		this.light.position.z = position[2];
 
 		this.wallMaterial = new THREE.MeshBasicMaterial( {
 							color: controls.color, 
 							opacity: 0.8,
 							transparent: true,
-							specular:0xFFFFFF,
 							reflectivity: 1 } 
 						);
 
-		this.sphere = new THREE.Mesh( new THREE.IcosahedronBufferGeometry( 500, 3 ), this.mirrorMaterial );
+		//this.sphere = new THREE.Mesh( new THREE.IcosahedronBufferGeometry( 500, 3 ), this.mirrorMaterial );
 		this.turn = false;
 
 		//DEBUG
@@ -70,42 +126,14 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 
 		//geometry.translate(this.light.position.x,this.light.position.y,this.light.position.z);
 
-		this.cube = new THREE.Line( geometry, material );
+		//this.cube = new THREE.Line( geometry, material );
 		
 		//FINE DEBUG
 
-		scene.add( this.cubeCamera );
-		scene.add( this.sphere );
+		//scene.add( this.cubeCamera );
+		//scene.add( this.sphere );
 
-		switch( playerN ) {
-			case 0: // player 1
-				this.light.position.x = planeWidth/3;
-				this.light.position.z = 0;
-				this.orientation = new THREE.Vector3(-1,0,0);
-				break;
-			
-			case 1: // player 2
-				this.light.position.x = 0;
-				this.light.position.z = planeWidth/3;
-				this.orientation = new THREE.Vector3(0,0,-1);
-				this.cube.rotateY(THREE.Math.degToRad( 90 ));
-
-				break;
-				
-			case 2: // player 3
-				this.light.position.x = -planeWidth/3;
-				this.light.position.z = 0;
-				this.orientation = new THREE.Vector3(1,0,0);
-				break;
-			
-			case 3: // player 4
-				this.light.position.x = 0;
-				this.light.position.z = -planeWidth/3;
-				this.orientation = new THREE.Vector3(0,0,1);
-				this.cube.rotateY(THREE.Math.degToRad( 90 ));
-
-				break;
-		}
+		
 
 		//this.cube.position.x = this.light.position.x+1*this.orientation.z;
 		//this.cube.position.y =0;
@@ -122,7 +150,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 		var bz = this.sfera.boundingBox;
 		controls.boxTesta = bz;
 		var centro = bz.getCenter();
-		this.cube.translate(centro.x,centro.y,centro.z);
+		//this.cube.translate(centro.x,centro.y,centro.z);
 
 		//scene.add( this.cube );
 
@@ -147,6 +175,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 	{
 		controls.alive=false;
 		scene.remove(this.light);
+		scene.remove(this.ship);
 		for (var i = 0; i < controls.walls.length; i++) 
 			scene.remove(controls.walls[i]);
 	}
@@ -176,6 +205,11 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 		//AVANZA NELLA DIREZIONE AGGIORNATA
 		this.light.position.x=this.light.position.x+(this.orientation.x*controls.velocity);
 		this.light.position.z=this.light.position.z+(this.orientation.z*controls.velocity);
+
+		this.ship.position.x=this.ship.position.x+(this.orientation.x*controls.velocity);
+		this.ship.position.z=this.ship.position.z+(this.orientation.z*controls.velocity);
+
+
 
 		//SE IL GIOCATORE È USCITO, MUORE
 		if (Math.abs(this.light.position.x)>planeWidth/2 || Math.abs(this.light.position.z)>planeHeight/2 )
@@ -297,10 +331,10 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 	var centro = bz.getCenter();
 	//this.cube.translate(centro.x,centro.y,centro.z);
 
-	this.cube.position.x = centro.x;//+1*this.orientation.x;
+	/*/this.cube.position.x = centro.x;//+1*this.orientation.x;
 	this.cube.position.y =0;
 	this.cube.position.z = centro.z;//+1*this.orientation.z;
-
+*/
 				/*DEBUG
 
 	var material = new THREE.LineBasicMaterial({
@@ -316,6 +350,11 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 
 		//console.log(controls.walls)
 	*/
+
+	//this.ship.position.x = this.light.position.x;
+	//this.ship.position.z = this.light.position.z;
+
+
 	this.boxOgetto = this.boxOgetto.setFromCenterAndSize( new THREE.Vector3(x,y,z), this.boxOgetto.getSize());
 	controls.boxTesta = bz;
 		}
