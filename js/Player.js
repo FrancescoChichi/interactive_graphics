@@ -16,9 +16,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 		//var mirrorMaterial = new THREE.MeshPhongMaterial( { emissive: 0xffffff, envMap: cubeCamera.renderTarget } );
 
 		//SFERA COLORATA	
-		this.sfera = new THREE.SphereBufferGeometry( controls.dimension, 64, 64 );
-		this.light = new THREE.PointLight( controls.color, 5, 20,2 );
-
+	this.wallHeight = 3;
 	var position = [0,controls.dimension,0];
 	var rotation = [- Math.PI / 2, 0,0];
 
@@ -26,10 +24,8 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 	var textureLoader = new THREE.TextureLoader();
 
 	var shipTexture = new textureLoader.load( "textures/metal-texture256.jpg" );
-				//var texture = new THREE.TextureLoader().load( "textures/patterns/bright_squares256.png" );
 				shipTexture.repeat.set( 1, 1 );
 				shipTexture.wrapS = shipTexture.wrapT = THREE.RepeatWrapping;
-				//shipTexture.magFilter = THREE.NearestFilter;
 				shipTexture.format = THREE.RGBFormat;
 
 				
@@ -39,8 +35,8 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 					specular: 0x999999,
 					map: shipTexture
 				} );
-	this.s = new THREE.Ship(controls);
-	this.ship = this.s.getShip();
+	this.player = new THREE.Ship(controls);
+	this.ship = this.player.getAll();
 
 
 	switch( playerN ) {
@@ -55,7 +51,6 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 				position[0] = 0;
 				position[2] = planeWidth/3;
 				this.orientation = new THREE.Vector3(0,0,-1);
-			//	this.cube.rotateY(THREE.Math.degToRad( 90 ));
 				this.ship.rotateY(Math.PI/2);
 
 				break;
@@ -73,7 +68,6 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 				this.orientation = new THREE.Vector3(0,0,1);
 				this.ship.rotateY(-Math.PI/2);
 
-			//	this.cube.rotateY(THREE.Math.degToRad( 90 ));
 
 				break;
 		}
@@ -84,33 +78,27 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 		this.ship.position.z = position[2];
 		this.ship.scale.set(scale, scale, scale);
 		scene.add(this.ship);
-	
-	/*var material2 = new THREE.MeshToonMaterial( { 
-				color: controls.color,
-				specular:0xFFFFFF,
-				reflectivity: 0.0 } );
-	*/
+		this.ship.updateMatrixWorld();
 
 
-
-
-
-
-
-		this.sfera.computeBoundingBox();
-
-		this.boxOgetto = this.sfera.boundingBox;
-
-		this.light.add( new THREE.Mesh( this.sfera, new THREE.MeshToonMaterial( { 
+		this.light = new THREE.PointLight( controls.color, 5, 20,2 );
+		this.light.add( new THREE.Mesh( this.torus, new THREE.MeshToonMaterial( { 
 				color: controls.color,
 				specular:0xFFFFFF,
 				reflectivity: 1 } ) ) );
 
-		//scene.add( this.light );
 
 		this.light.position.x = position[0];
 		this.light.position.y = position[1];
 		this.light.position.z = position[2];
+
+
+		this.torus = new THREE.Box3().setFromObject(this.player.getCabin()	);
+
+
+		this.boxOgetto = this.torus.clone();
+
+
 
 		this.wallMaterial = new THREE.MeshBasicMaterial( {
 							color: controls.color, 
@@ -119,33 +107,12 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 							reflectivity: 1 } 
 						);
 
-		//this.sphere = new THREE.Mesh( new THREE.IcosahedronBufferGeometry( 500, 3 ), this.mirrorMaterial );
 		this.turn = false;
 
-		//DEBUG
-		var material = new THREE.LineBasicMaterial({
-			color: 0x0000ff
-		});
 
 		var size = this.boxOgetto.getSize();
 
 		var geometry = new THREE.BoxBufferGeometry( size.x/2, size.y, size.z/2 );
-
-		//geometry.translate(this.light.position.x,this.light.position.y,this.light.position.z);
-
-		//this.cube = new THREE.Line( geometry, material );
-		
-		//FINE DEBUG
-
-		//scene.add( this.cubeCamera );
-		//scene.add( this.sphere );
-
-		
-
-		//this.cube.position.x = this.light.position.x+1*this.orientation.z;
-		//this.cube.position.y =0;
-		//this.cube.position.z = this.light.position.z+1*this.orientation.z;
-
 
 		var x = this.light.position.x;//+1*this.orientation.x;
 		var y =0;
@@ -154,19 +121,12 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 		this.boxOgetto = this.boxOgetto.setFromCenterAndSize( new THREE.Vector3(x,y,z)
 			, new THREE.Vector3(size.x/3,size.y,size.z/1.5));
 
-		var bz = this.sfera.boundingBox;
+		var bz = this.torus.clone();
 		controls.boxTesta = bz;
 		var centro = bz.getCenter();
-		//this.cube.translate(centro.x,centro.y,centro.z);
 
-		//scene.add( this.cube );
-
-		
 		this.poseBK = this.light.position.clone();
 
-		//this.sphere.receiveShadow = true;
-
-		this.theta = new vec3(1,0,0);
 
 		this.ry = new THREE.Matrix3();
 		this.ry.set(0.0, 0.0, -1.0,
@@ -178,30 +138,37 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 					0.0, 1.0, 0.0,
 					-1.0, 0.0,  0.0);
 
-	this.stira = function(controls)
+	this.death = function(controls, sound)
 	{
 		controls.alive=false;
-		scene.remove(this.light);
-		//scene.remove(this.ship);
-				scene.remove(this.ship);
+
+		scene.remove(this.ship);
+
+		sound.death_sound.play();
 
 		for (var i = 0; i < controls.walls.length; i++) 
 			scene.remove(controls.walls[i]);
+	}
+
+	this.render = function(renderer, scene, time){
+		this.ship.position.y = Math.sin( time*5 ) + 1 ;
+		//this.player.render(renderer, scene, time); 
 	}
 
 	this.getPosition = function (){
 		return this.light.position;
 	}
 
-	this.updatePlayerModel = function ( controls, scene, planeWidth, planeHeight ) {
+	this.updatePlayerModel = function ( controls, scene, planeWidth, planeHeight, sound ) {
 		//GIRA A SINISTRA
+		this.torus = new THREE.Box3().setFromObject(this.player.getCabin());
+
 		if ( controls.leftClicked == 1 && controls.moveLeft ) {
 			this.orientation.applyMatrix3(this.ry);
 			controls.leftClicked++;
 			this.poseBK = this.light.position.clone();
 			this.turn = true;
 			this.ship.rotateY(-Math.PI/2);
-
 		}
 
 		//GIRA A DESTRA
@@ -220,14 +187,14 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 		this.ship.position.x=this.ship.position.x+(this.orientation.x*controls.velocity);
 		this.ship.position.z=this.ship.position.z+(this.orientation.z*controls.velocity);
 
-		this.s.updateParticle();
+		this.player.updateParticle();
 
-		this.ship.getObjectByName("torus").rotateZ(-Math.PI/6);
+		this.ship.getObjectByName("torus").rotateZ(THREE.Math.degToRad(-5));
 
 		//SE IL GIOCATORE È USCITO, MUORE
 		if (Math.abs(this.light.position.x)>planeWidth/2 || Math.abs(this.light.position.z)>planeHeight/2 )
 		{
-			this.stira(controls);
+			this.death(controls, sound);
 		}
 		else
 		{
@@ -245,7 +212,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 				{
 					var geometry = new THREE.BoxBufferGeometry(
 							controls.wallThickness,
-							1,
+							this.wallHeight,
 							Math.abs(this.light.position.z - this.poseBK.z)+controls.wallThickness
 						);
 				}
@@ -254,7 +221,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 				{
 					var geometry = new THREE.BoxBufferGeometry(
 							Math.abs(this.light.position.x - this.poseBK.x)+controls.wallThickness,
-							1,
+							this.wallHeight,
 							controls.wallThickness
 						);
 				}	
@@ -263,19 +230,6 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 				var bz = geometry.boundingBox;
 
 				controls.boxWall.push(bz);
-
-				/*DEBUG
-				var material = new THREE.LineBasicMaterial({
-						color: 0x0000ff
-							});
-				var gem = new THREE.Geometry();
-						gem.vertices.push(
-				bz.min,
-				bz.max);
-			
-				var linea = new THREE.Line(gem,material);
-				scene.add(linea);
-				*/
 
 				var cube = new THREE.Mesh( geometry, this.wallMaterial);
 				scene.add(cube);
@@ -295,7 +249,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 				{
 					var geometry = new THREE.BoxBufferGeometry(
 							controls.wallThickness,
-							1,
+							this.wallHeight,
 							Math.abs(this.light.position.z - this.poseBK.z)+controls.wallThickness
 						);
 				}	
@@ -305,7 +259,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 				{
 					var geometry = new THREE.BoxBufferGeometry(
 							Math.abs(this.light.position.x - this.poseBK.x)+controls.wallThickness,
-							1,
+							this.wallHeight,
 							controls.wallThickness
 						);
 				}
@@ -315,20 +269,6 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 				var bz = geometry.boundingBox;
 				controls.boxWall.push(bz);
 
-				/*DEBUG
-
-				var material = new THREE.LineBasicMaterial({
-					color: 0x0000ff
-						});
-				var gem = new THREE.Geometry();
-						gem.vertices.push(
-				bz.min,
-				bz.max);
-					
-				var linea = new THREE.Line(gem,material);
-				scene.add(linea);
-
-				*/
 				var cube = new THREE.Mesh( geometry, this.wallMaterial);
 				scene.add(cube);
 				controls.walls.push(cube);
@@ -336,15 +276,13 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 			}
 		this.turn = false;
 
-	var bz = this.sfera.boundingBox;
+	var bz = this.torus.clone();
 	var x = this.light.position.x;//+1*this.orientation.x;
 	var y =0;
 	var z = this.light.position.z;//+1*this.orientation.z;
 
 	var centro = bz.getCenter();
-
-
-
+				
 	this.boxOgetto = this.boxOgetto.setFromCenterAndSize( new THREE.Vector3(x,y,z), this.boxOgetto.getSize());
 	controls.boxTesta = bz;
 		}
