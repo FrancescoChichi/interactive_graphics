@@ -6,17 +6,12 @@
 THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 	
 	var scope = this;
+	
+	this.deathAnimationFrame = 0;
 
-
-
-	//SFERA RIFLETTENTE
-		//this.cubeCamera = new THREE.CubeCamera( 1, 10000, 128 );
-
-		//this.mirrorMaterial = new THREE.MeshBasicMaterial( { color: controls.color, envMap: this.cubeCamera.renderTarget } );
-		//var mirrorMaterial = new THREE.MeshPhongMaterial( { emissive: 0xffffff, envMap: cubeCamera.renderTarget } );
-
-		//SFERA COLORATA	
 	this.wallHeight = 3;
+	this.wallY = 1.5;
+
 	var position = [0,controls.dimension,0];
 	var rotation = [- Math.PI / 2, 0,0];
 
@@ -81,16 +76,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 		this.ship.updateMatrixWorld();
 
 
-		this.light = new THREE.PointLight( controls.color, 5, 20,2 );
-		this.light.add( new THREE.Mesh( this.torus, new THREE.MeshToonMaterial( { 
-				color: controls.color,
-				specular:0xFFFFFF,
-				reflectivity: 1 } ) ) );
 
-
-		this.light.position.x = position[0];
-		this.light.position.y = position[1];
-		this.light.position.z = position[2];
 
 
 		this.torus = new THREE.Box3().setFromObject(this.player.getCabin()	);
@@ -114,9 +100,9 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 
 		var geometry = new THREE.BoxBufferGeometry( size.x/2, size.y, size.z/2 );
 
-		var x = this.light.position.x;//+1*this.orientation.x;
+		var x = this.ship.position.x;//+1*this.orientation.x;
 		var y =0;
-		var z = this.light.position.z;//+1*this.orientation.z;
+		var z = this.ship.position.z;//+1*this.orientation.z;
 		
 		this.boxOgetto = this.boxOgetto.setFromCenterAndSize( new THREE.Vector3(x,y,z)
 			, new THREE.Vector3(size.x/3,size.y,size.z/1.5));
@@ -125,7 +111,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 		controls.boxTesta = bz;
 		var centro = bz.getCenter();
 
-		this.poseBK = this.light.position.clone();
+		this.poseBK = this.ship.position.clone();
 
 
 		this.ry = new THREE.Matrix3();
@@ -142,21 +128,54 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 	{
 		controls.alive=false;
 
-		scene.remove(this.ship);
 
 		sound.death_sound.play();
+
+
+		scene.remove(this.ship);
 
 		for (var i = 0; i < controls.walls.length; i++) 
 			scene.remove(controls.walls[i]);
 	}
 
-	this.render = function(renderer, scene, time){
-		this.ship.position.y = Math.sin( time*5 ) + 1 ;
-		//this.player.render(renderer, scene, time); 
+	this.render = function(time, controls, sound){
+		if (controls.alive){
+			this.ship.position.y = Math.sin( time*5 ) + 1 ;
+		}
+		else{
+			this.deathAnimationFrame++;
+			this.player.getCabin().position.y++;
+			this.player.getCabin().position.x++;
+			this.player.getCabin().rotateZ(THREE.Math.degToRad(-5));
+
+			this.player.getMotorL().position.x++;
+			this.player.getMotorR().position.x++;
+
+			for (var i = 0; i<controls.walls.length; i++)
+				if (controls.walls[i].scale.y >= 0 )
+					controls.walls[i].scale.y -= 0.1;
+
+			if (this.ship.scale.x>=0)
+				this.ship.scale.x -= 0.001;
+			if (this.ship.scale.y>=0)
+				this.ship.scale.y -= 0.001;
+			if (this.ship.scale.z>=0)
+				this.ship.scale.z -= 0.001;
+
+			if (this.ship.getObjectByName("torus").position.y>=-this.ship.position.y*1.5)
+				this.ship.getObjectByName("torus").position.y--;
+
+			if(this.deathAnimationFrame>100){
+				this.death(controls, sound);
+				return true;
+			}
+
+		}
+		return false;
 	}
 
 	this.getPosition = function (){
-		return this.light.position;
+		return this.ship.position;
 	}
 
 	this.updatePlayerModel = function ( controls, scene, planeWidth, planeHeight, sound ) {
@@ -166,7 +185,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 		if ( controls.leftClicked == 1 && controls.moveLeft ) {
 			this.orientation.applyMatrix3(this.ry);
 			controls.leftClicked++;
-			this.poseBK = this.light.position.clone();
+			this.poseBK = this.ship.position.clone();
 			this.turn = true;
 			this.ship.rotateY(-Math.PI/2);
 		}
@@ -175,14 +194,12 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 		else if ( controls.rightClicked == 1 && controls.moveRight ) {
 			this.orientation.applyMatrix3(this.ryt);
 			controls.rightClicked++;
-			this.poseBK = this.light.position.clone();
+			this.poseBK = this.ship.position.clone();
 			this.turn = true;
 			this.ship.rotateY(+Math.PI/2);
 		}
 
 		//AVANZA NELLA DIREZIONE AGGIORNATA
-		this.light.position.x=this.light.position.x+(this.orientation.x*controls.velocity);
-		this.light.position.z=this.light.position.z+(this.orientation.z*controls.velocity);
 
 		this.ship.position.x=this.ship.position.x+(this.orientation.x*controls.velocity);
 		this.ship.position.z=this.ship.position.z+(this.orientation.z*controls.velocity);
@@ -192,7 +209,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 		this.ship.getObjectByName("torus").rotateZ(THREE.Math.degToRad(-5));
 
 		//SE IL GIOCATORE È USCITO, MUORE
-		if (Math.abs(this.light.position.x)>planeWidth/2 || Math.abs(this.light.position.z)>planeHeight/2 )
+		if (Math.abs(this.ship.position.x)>planeWidth/2 || Math.abs(this.ship.position.z)>planeHeight/2 )
 		{
 			this.death(controls, sound);
 		}
@@ -205,7 +222,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 
 				//MI STO MUOVENDO LUNGO L'ASSE Z
 				var  com = new THREE.Vector3() ;
-				com.addVectors (this.light.position,this.poseBK);
+				com.addVectors (this.ship.position,this.poseBK);
 				com.divideScalar(2); 
 
 				if(this.orientation.z!=0)
@@ -213,19 +230,19 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 					var geometry = new THREE.BoxBufferGeometry(
 							controls.wallThickness,
 							this.wallHeight,
-							Math.abs(this.light.position.z - this.poseBK.z)+controls.wallThickness
+							Math.abs(this.ship.position.z - this.poseBK.z)+controls.wallThickness
 						);
 				}
 				//MI STO MUOVENDO LUNGO L'ASSE X
 				else
 				{
 					var geometry = new THREE.BoxBufferGeometry(
-							Math.abs(this.light.position.x - this.poseBK.x)+controls.wallThickness,
+							Math.abs(this.ship.position.x - this.poseBK.x)+controls.wallThickness,
 							this.wallHeight,
 							controls.wallThickness
 						);
 				}	
-				geometry.translate(com.x,1,com.z);
+				geometry.translate(com.x,this.wallY,com.z);
 				geometry.computeBoundingBox();
 				var bz = geometry.boundingBox;
 
@@ -243,14 +260,14 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 				controls.boxWall.pop();
 
 				var  com = new THREE.Vector3() ;
-				com.addVectors (this.light.position,this.poseBK);
+				com.addVectors (this.ship.position,this.poseBK);
 				com.divideScalar(2); 
 				if(this.orientation.z!=0)
 				{
 					var geometry = new THREE.BoxBufferGeometry(
 							controls.wallThickness,
 							this.wallHeight,
-							Math.abs(this.light.position.z - this.poseBK.z)+controls.wallThickness
+							Math.abs(this.ship.position.z - this.poseBK.z)+controls.wallThickness
 						);
 				}	
 
@@ -258,13 +275,13 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 				else
 				{
 					var geometry = new THREE.BoxBufferGeometry(
-							Math.abs(this.light.position.x - this.poseBK.x)+controls.wallThickness,
+							Math.abs(this.ship.position.x - this.poseBK.x)+controls.wallThickness,
 							this.wallHeight,
 							controls.wallThickness
 						);
 				}
 
-				geometry.translate(com.x,1,com.z);
+				geometry.translate(com.x,this.wallY,com.z);
 				geometry.computeBoundingBox();
 				var bz = geometry.boundingBox;
 				controls.boxWall.push(bz);
@@ -277,9 +294,9 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 		this.turn = false;
 
 	var bz = this.torus.clone();
-	var x = this.light.position.x;//+1*this.orientation.x;
+	var x = this.ship.position.x;//+1*this.orientation.x;
 	var y =0;
-	var z = this.light.position.z;//+1*this.orientation.z;
+	var z = this.ship.position.z;//+1*this.orientation.z;
 
 	var centro = bz.getCenter();
 				

@@ -237,7 +237,9 @@
 
 				//controls = new THREE.FirstPersonControls( camera );
 				controls = new THREE.OrbitControls( camera, renderer.domElement );
-
+				controls.maxPolarAngle = 1.5;
+				controls.minDistance= 0;
+				controls.maxDistance= worldWidth *1.5;
 				scene = new THREE.Scene();
 
 				var skyBoxGeometry = new THREE.CubeGeometry( 10000, 10000, 10000 );
@@ -251,7 +253,7 @@
 
 				var groundTexture = new THREE.TextureLoader().load( "textures/Tron_Background256.jpg" );
 				//var texture = new THREE.TextureLoader().load( "textures/patterns/bright_squares256.png" );
-				groundTexture.repeat.set( 5, 5 );
+				groundTexture.repeat.set( 10, 10 );
 				groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
 				groundTexture.magFilter = THREE.NearestFilter;
 				groundTexture.format = THREE.RGBFormat;
@@ -277,7 +279,7 @@
 				scene.add(new THREE.Mesh(
 					new THREE.BoxBufferGeometry(
 							-worldWidth*4/5,
-							1,
+							0.01,
 							worldWidth*4/5), 
 					new THREE.MeshBasicMaterial( {
 							color: 0xff3300, 
@@ -364,6 +366,10 @@
 							for (var o = 0; o < alive; o++)
 							{	
 								var j = 0;
+
+								if(playersControl[i].alive == false || playersControl[o].alive == false)
+									continue;
+
 								lunghezza = playersControl[o].boxWall.length
 								if (i==o)
 								{
@@ -376,9 +382,6 @@
 												console.log("player "+playersControl[i].number+" collide con player"+playersControl[o].number);
 												playersControl[i].alive = false;
 												playersControl[o].alive= false;
-
-												//playersControl[o].velocity= 0.0;
-												//players[i].stira(playersControl[o]);
 												lunghezza = 0;
 						
 											}
@@ -391,28 +394,26 @@
 										{	
 											console.log('player '+playersControl[i].number+' collide con muro di '+playersControl[o].number)
 											playersControl[i].alive = false;
-											//playersControl[i].velocity= 0.0;
-											//players[i].stira(playersControl[i]);
 										}
 									}
 								}
 							}
 						
-						var ciclo = alive;
-						for (var i = 0; i < ciclo; i++)
+						//var ciclo = alive;
+						for (var i = 0; i < alive; i++)
 						{
 							if (playersControl[i].alive)
 								players[i].updatePlayerModel(playersControl[i], scene, planeWidth, planeHeight);
 							else
 							{
-								ciclo--;
+								//ciclo--;
 								playersControl[i].velocity= 0.0;
-								players[i].death(playersControl[i],sound);
+								/*players[i].death(playersControl[i],sound);
 								players.splice(i,1);
-								playersControl.splice(i,1);
+								playersControl.splice(i,1);*/
 							}
 						}
-						alive = ciclo;
+						//alive = ciclo;
 						if(alive == 1 && nPlayer>alive)
 						{
 							console.log("player "+playersControl[0].number+" win ");
@@ -433,8 +434,8 @@
 							}
 							else{
 								console.log("GAME OVER!");
-								document.getElementById("winner").innerHTML = "GAME OVER!";
-								document.getElementById("winner").style.display="block";
+								//document.getElementById("winner").innerHTML = "GAME OVER!";
+								//document.getElementById("winner").style.display="block";
 							}
 						}
 
@@ -552,7 +553,11 @@
 				}
 
 				for (var i = 0; i < alive; i++)
-					players[i].render( renderer, scene, time );
+					if(players[i].render( time, playersControl[i], sound )){
+						players.splice(i,1);
+						playersControl.splice(i,1);
+						alive--;
+					}
 
 			// render scene
 				renderer.render( scene, camera );
