@@ -8,9 +8,8 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 	var scope = this;
 	
 	this.deathAnimationFrame = 0;
-
-	this.wallHeight = 3;
-	this.wallY = 1.5;
+	this.wallHeight = 2;
+	this.wallY = 2;
 
 	var position = [0,controls.dimension,0];
 	var rotation = [- Math.PI / 2, 0,0];
@@ -139,8 +138,8 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 	}
 
 	this.render = function(time, controls, sound){
-		if (controls.alive){
-			this.ship.position.y = Math.sin( time*5 ) + 1 ;
+		if (controls.alive){ //ANIMAZIONE MOVIMENTO UFO
+			this.ship.position.y = Math.sin( time*5 ) + 1.3 ;
 		}
 		else{
 			this.deathAnimationFrame++;
@@ -177,7 +176,9 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 	this.getPosition = function (){
 		return this.ship.position;
 	}
-
+	this.getOrientation = function(){
+		return this.orientation;
+	}
 	this.updatePlayerModel = function ( controls, scene, planeWidth, planeHeight, sound ) {
 		//GIRA A SINISTRA
 		this.torus = new THREE.Box3().setFromObject(this.player.getCabin());

@@ -19,17 +19,16 @@
 			 * START CONFIGURATION *
 			\*=====================*/
 
-
+			var lightModality = "";
 			var planeWidth = 100;
 			var planeHeight = 100;
 			var time = Math.random();
 			var pause = false;
-			var velocity = 0.2;
+			var velocity = 0.0;
 			var dimension = 0.5;
 			var wallThick = 0.8;
 			var startGame = false;
 			var music = false;
-			var nightMode = false;
 			var hemiLight;
 			var halo;
 
@@ -115,9 +114,10 @@
 			var tick=0;
 			var click=0;
 
-
-
-
+			var cameraPose = new THREE.Vector3(0.0,90.0,0.0);
+			var cameraPoseBK = new THREE.Vector3(0.0,90.0,0.0);
+			var follow = false;
+			var playerToFollow = -1;
 			/*===================*\
 			 * END CONFIGURATION *
 			\*===================*/
@@ -173,6 +173,33 @@
 						case 27: // ESC
 							pause = !pause;
 							break;
+						case 49:
+							follow = false;
+							cameraPose.set(0.0,90.0,0.0);
+							break;
+						case 50:
+							follow = false;
+							cameraPose.set(-61.5,16.0,-63.7);
+							break;
+						case 51:
+							follow = false;
+							cameraPose.set(-61.5,16.0,63.7);
+							break;
+						case 52:
+							follow = false;
+							cameraPose.set(61.5,16.0,63.7);
+							break;
+						case 53:
+							follow = false;
+							cameraPose.set(61.5,16.0,-63.7);
+							break;
+						case 54:
+						if(nPlayer == 1){
+							follow = true;
+							cameraPose.set(players[0].getPosition().x,players[0].getPosition().y,players[0].getPosition().z);
+							playerToFollow = 0;
+						}
+							break;
 					}
 				};
 				var onKeyUp = function ( event ) {
@@ -221,9 +248,7 @@
 			//CAMERA SETTINGS
 				camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 1000 );
 				
-				camera.position.x = 0;
-				camera.position.y = 85;
-				camera.position.z = 0;
+				camera.position.set(0.0,90.0,0.0);
 
 	
 				document.addEventListener( 'keydown', onKeyDown, false );
@@ -260,9 +285,8 @@
 
 				// GROUND
 				var groundMaterial = new THREE.MeshPhongMaterial( {
-					shininess: 80,
+					shininess: 0,
 					color: 0xffffff,
-					specular: 0xffffff,
 					side: THREE.DoubleSide,
 					map: groundTexture
 				} );
@@ -274,6 +298,26 @@
 				ground.receiveShadow = true;
 
 				scene.add( ground );
+
+
+
+			//SKYBOX
+	
+			var prefix = "textures/SkyboxSet1/DarkStormy/";
+			var suffix = ".png";
+			var urls  = [prefix+"DarkStormyFront2048"+suffix, 
+									 prefix+"DarkStormyBack2048"+suffix, 
+									 prefix+"DarkStormyUp2048"+suffix, 
+									 prefix+"DarkStormyDown2048"+suffix, 
+									 prefix+"DarkStormyLeft2048"+suffix, 
+									 prefix+"DarkStormyRight2048"+suffix];
+			
+			var reflectionCube = new THREE.CubeTextureLoader().load( urls );
+			reflectionCube.format = THREE.RGBFormat;
+
+			scene.background = reflectionCube;
+
+
 
 				//MAP WALLS
 				scene.add(new THREE.Mesh(
@@ -287,7 +331,9 @@
 							transparent: true })
 					));
 
+
 				halo = new THREE.Halo(worldWidth/2);
+
 				scene.add(halo.getTorus());
 
 
@@ -400,12 +446,18 @@
 							}
 						
 						//var ciclo = alive;
+						var c = 0;
+						var indexPlayer = 0;
 						for (var i = 0; i < alive; i++)
 						{
-							if (playersControl[i].alive)
+							if (playersControl[i].alive){
 								players[i].updatePlayerModel(playersControl[i], scene, planeWidth, planeHeight);
+								indexPlayer = i;
+								c++;
+							}
 							else
 							{
+
 								//ciclo--;
 								playersControl[i].velocity= 0.0;
 								/*players[i].death(playersControl[i],sound);
@@ -413,15 +465,22 @@
 								playersControl.splice(i,1);*/
 							}
 						}
+						if (c == 1 && nPlayer>1)
+							playersControl[indexPlayer].velocity=0.0;
 						//alive = ciclo;
 						if(alive == 1 && nPlayer>alive)
 						{
 							console.log("player "+playersControl[0].number+" win ");
-							document.getElementById("winner").innerHTML = "player "+playersControl[0].number+" win ";
-							document.getElementById("winner").style.display="block";
+							//document.getElementById("winner").innerHTML = "player "+playersControl[0].number+" win ";
+							//document.getElementById("winner").style.display="block";
 
-							playersControl[0].velocity = 0.0;
+							controls.autoRotate = true;
+							camera.position.x = players[0].getPosition().x + 10;
+							camera.position.y = 10;
+							camera.position.z = players[0].getPosition().z + 10;
 
+							controls.target = players[0].getPosition();
+							pause = true;
 							//alive -= 1;
 						}
 						else if (alive == 0)
@@ -446,36 +505,20 @@
  					//document.body.background = "images/background.jpg";
  					document.getElementById("start").onclick = function(){
 
-						var e = document.getElementById("dropdown");
-						nPlayer = e.options[e.selectedIndex].value;
+						nPlayer = document.getElementById("dropdown").options[document.getElementById("dropdown").selectedIndex].value;
+						lightModality = document.getElementById("dayMode").options[document.getElementById("dayMode").selectedIndex].value;
+
+						if(lightModality ==  "night")
+							halo.rotateHalo(Math.PI);
+
 						sound = new Sound();
 
 						if(music)
 						{
 							sound.menu_sound.play();
 						}	
-						if (nightMode)
-						{
-																	   // LIGHTS
-					    //scene.add(new THREE.AmbientLight(0xffffff,2));
 
-							hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.0 );
-							hemiLight.color.setHSL( 0.6, 1, 0.6 );
-							hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
-							hemiLight.position.set( 0, 500, 0 );
-							scene.add( hemiLight );
-						}
-						else
-						{
-																	   // LIGHTS
-					    //scene.add(new THREE.AmbientLight(0xffffff,2));
 
-							hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 1.5 );
-							hemiLight.color.setHSL( 2, 1, 2 );
-							hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
-							hemiLight.position.set( 0, 500, 0 );
-							scene.add( hemiLight );
-						}
  						startGame = true; 
  						alive = nPlayer;
  						for (var i = 0; i < alive; i++)
@@ -497,20 +540,7 @@
  						music = !music;
 					};
 
- 					document.getElementById("night").onclick = function(){
 
-						if(nightMode)
- 						{
- 							document.getElementById("night").innerHTML = "OFF";
-    					document.getElementById("night").style.color = 'red';
- 						}
- 						else
- 						{
- 							document.getElementById("night").innerHTML = "ON";
-    					document.getElementById("night").style.color = 'green';
- 						}
- 						nightMode = !nightMode;
-					};
 							
  				}
  				if(startGame)
@@ -547,8 +577,9 @@
 					light4.position.x = Math.sin( time * vel * 0.3 ) * boh;
 					light4.position.y = 1;
 					light4.position.z = Math.sin( time * vel * 0.5 ) * boh;
-
-					halo.animate();
+						
+					if(lightModality == "cycle")
+						halo.animate();
 
 				}
 
@@ -558,6 +589,19 @@
 						playersControl.splice(i,1);
 						alive--;
 					}
+				if(cameraPose.x!=cameraPoseBK.x||cameraPose.y!=cameraPoseBK.y||cameraPose.z!=cameraPoseBK.z){
+					camera.position.set(cameraPose.x,cameraPose.y,cameraPose.z);
+					cameraPoseBK.set(cameraPose.x,cameraPose.y,cameraPose.z);
+				}
+				if (follow && nPlayer == 1){
+					var x = new THREE.Vector3(players[playerToFollow].getOrientation().x * 10,players[playerToFollow].getOrientation().y * 10,players[playerToFollow].getOrientation().z * 10);
+					var y = new THREE.Vector3(players[playerToFollow].getOrientation().x * 5,
+						players[playerToFollow].getOrientation().y * 5,
+						players[playerToFollow].getOrientation().z * 5);
+
+					camera.position.set(players[playerToFollow].getPosition().x-y.x,players[playerToFollow].getPosition().y+5,players[playerToFollow].getPosition().z-y.z);
+					controls.target.set(players[playerToFollow].getPosition().x+x.x,players[playerToFollow].getPosition().y,players[playerToFollow].getPosition().z+x.z);
+				}
 
 			// render scene
 				renderer.render( scene, camera );
@@ -578,8 +622,8 @@ function closeMenu() {
 	document.getElementById("start").style.display="none";
 	document.getElementById("music").style.display="none";
 	document.getElementById("dropdown").style.display="none";
+	document.getElementById("dayMode").style.display="none";
 	document.getElementById("label_player").style.display="none";
 	document.getElementById("label_music").style.display="none";
 	document.getElementById("label_night").style.display="none";
-	document.getElementById("night").style.display="none";
 };
