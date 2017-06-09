@@ -26,12 +26,13 @@ THREE.explosionParticle = function (particlesNumber,position, color,wordRotation
 		  particle.position.y =  position.y;
 		  particle.position.z =  position.z;
 		  
-		 
-		  var vec =new THREE.Vector3(
-	 	    (Math.random() * (maxEx-minEx+1))+minEx,
-			(Math.abs(Math.random() * (maxEx-minEx+1))+minEx),
-			(Math.random() * (maxEx-minEx+1))+minEx);
+		 var x = Math.random() * raggio;
+		 x *= Math.floor(Math.random()*2) == 1 ? 1 : -1; 
+		 var z = Math.random() * raggio;
+		 z *= Math.floor(Math.random()*2) == 1 ? 1 : -1; 
+		 var y = Math.random() * raggio;
 
+		  var vec =new THREE.Vector3(x,y,z);
 	      this.particlesDirection.push(vec);
 	      this.particles.add(particle);
 	      
@@ -46,10 +47,7 @@ THREE.explosionParticle = function (particlesNumber,position, color,wordRotation
 				(this.particlesDirection[i].x)/animationStep,
 				(this.particlesDirection[i].y)/animationStep,
 				(this.particlesDirection[i].z)/animationStep);
-			//console.log(wordRotation);
-			//matrice.multiply(wordRotation);
-			//console.log(matrice);
-			//this.particles.children[i].applyMatrix(matrice);
+			matrice.scale(new THREE.Vector3(1.005,1.005,1.005));
 			this.particles.children[i].applyMatrix(matrice);
 			};
 		};

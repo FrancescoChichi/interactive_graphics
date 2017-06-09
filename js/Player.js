@@ -187,18 +187,18 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 		//GIRA A SINISTRA
 		this.torus = new THREE.Box3().setFromObject(this.player.getCabin());
 
-		if ( controls.leftClicked == 1 && controls.moveLeft ) {
+		if ( !controls.pushed && controls.moveLeft ) {
+			controls.pushed = true;
 			this.orientation.applyMatrix3(this.ry);
-			controls.leftClicked++;
 			this.poseBK = this.ship.position.clone();
 			this.turn = true;
 			this.ship.rotateY(-Math.PI/2);
 		}
 
 		//GIRA A DESTRA
-		else if ( controls.rightClicked == 1 && controls.moveRight ) {
+		else if ( !controls.pushed && controls.moveRight ) {
+			controls.pushed = true;
 			this.orientation.applyMatrix3(this.ryt);
-			controls.rightClicked++;
 			this.poseBK = this.ship.position.clone();
 			this.turn = true;
 			this.ship.rotateY(+Math.PI/2);

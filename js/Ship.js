@@ -178,7 +178,6 @@ THREE.Ship = function (controls) {
 	}
 
 	this.render = function(render, scene){
-		
 		/*this.glass.visible = false;
 		//this.cubeCamera.position.copy( this.glass.position );
 		this.cubeCamera.updateCubeMap( renderer, scene );

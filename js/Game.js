@@ -37,8 +37,7 @@
 				dimension: dimension,
 				moveLeft: false,
 				moveRight: false,
-				leftClicked: 0,
-				rightClicked: 0,
+				pushed: false,
 				color: 0xff3399,
 				alive: true,
 				velocity: velocity,
@@ -52,8 +51,7 @@
 				dimension: dimension,
 				moveLeft: false,
 				moveRight: false,
-				leftClicked: 0,
-				rightClicked: 0,
+				pushed: false,
 				color: 0x0bdd43,
 				alive: true,
 				velocity: velocity,
@@ -68,8 +66,7 @@
 				dimension: dimension,
 				moveLeft: false,
 				moveRight: false,
-				leftClicked: 0,
-				rightClicked: 0,
+				pushed: false,
 				color: 0xff9900,
 				alive: true,
 				velocity: velocity,
@@ -83,8 +80,7 @@
 				dimension: dimension,
 				moveLeft: false,
 				moveRight: false,
-				leftClicked: 0,
-				rightClicked: 0,
+				pushed: false,
 				color: 0xff0000,
 				alive: true,
 				velocity: velocity,
@@ -137,38 +133,30 @@
 					switch ( event.keyCode ) {
 						case 87: // q
 							firstPlayerControls.moveLeft = true;
-							firstPlayerControls.leftClicked++;
 							break;
 						case 81: // w
 							firstPlayerControls.moveRight = true;
-							firstPlayerControls.rightClicked++;
 							break;
 
 						case 105: // a
 							secondPlayerControls.moveLeft = true;
-							secondPlayerControls.leftClicked++;
 							break;
 						case 104: // d
 							secondPlayerControls.moveRight = true;
-							secondPlayerControls.rightClicked++;
 							break;
 						
 						case 86: // a
 							thirdPlayerControls.moveLeft = true;
-							thirdPlayerControls.leftClicked++;
 							break;
 						case 67: // d
 							thirdPlayerControls.moveRight = true;
-							thirdPlayerControls.rightClicked++;
 							break;
 													
 						case 188: // a
 							fourthPlayerControls.moveLeft = true;
-							fourthPlayerControls.leftClicked++;
 							break;
 						case 190: // d
 							fourthPlayerControls.moveRight = true;
-							fourthPlayerControls.rightClicked++;
 							break;
 						case 27: // ESC
 							pause = !pause;
@@ -206,38 +194,38 @@
 					switch( event.keyCode ) {
 						case 87: // w
 							firstPlayerControls.moveLeft = false;
-							firstPlayerControls.leftClicked = 0;
+							firstPlayerControls.pushed = false;
 							break;
 						case 81: // q
 							firstPlayerControls.moveRight = false;
-							firstPlayerControls.rightClicked = 0;
+							firstPlayerControls.pushed = false;
 							break;
 
 						case 105: // numpad 8
 							secondPlayerControls.moveLeft = false;
-							secondPlayerControls.leftClicked = 0;
+							secondPlayerControls.pushed = false;
 							break;
 						case 104: // numpad 9
 							secondPlayerControls.moveRight = false;
-							secondPlayerControls.rightClicked = 0;
+							secondPlayerControls.pushed = false;
 							break;
 						
 						case 86: // c
 							thirdPlayerControls.moveLeft = false;
-							thirdPlayerControls.leftClicked = 0;
+							thirdPlayerControls.pushed = false;
 							break;
 						case 67: // v
 							thirdPlayerControls.moveRight = false;
-							thirdPlayerControls.rightClicked = 0;
+							thirdPlayerControls.pushed = false;
 							break;
 													
 						case 188: // period
 							fourthPlayerControls.moveLeft = false;
-							fourthPlayerControls.leftClicked = 0;
+							fourthPlayerControls.pushed = false;
 							break;
 						case 190: // comma
 							fourthPlayerControls.moveRight = false;
-							fourthPlayerControls.rightClicked = 0;
+							fourthPlayerControls.pushed = false;
 							break;
 					}
 				};
@@ -301,7 +289,7 @@
 
 
 				/*
-				
+
 			//SKYBOX
 	
 			var prefix = "textures/skybox/";
