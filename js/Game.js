@@ -22,7 +22,7 @@
 			var lightModality = "";
 			var planeWidth = 100;
 			var planeHeight = 100;
-			var time = Math.PI;
+			var time = Math.random();
 			var pause = false;
 			var velocity = 0.2;
 			var dimension = 0.5;

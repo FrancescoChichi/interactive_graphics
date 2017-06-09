@@ -17,7 +17,8 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 
 
 	var textureLoader = new THREE.TextureLoader();
-	
+	//scene.add(this.explosionParticle);
+
 	var shipTexture = new textureLoader.load( "textures/metal-texture256.jpg" );
 				shipTexture.repeat.set( 1, 1 );
 				shipTexture.wrapS = shipTexture.wrapT = THREE.RepeatWrapping;
