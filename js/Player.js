@@ -7,30 +7,30 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 	
 	var scope = this;
 	
-	this.deathAnimationFrame = 0;
+	this.deathAnimationFrameCounter = 0;
+	this.deathAnimationFrame = 100;
 	this.wallHeight = 2;
 	this.wallY = 2;
 	this.explosionParticle = null;
-
 	var position = [0,controls.dimension,0];
 	var rotation = [- Math.PI / 2, 0,0];
 
 
 	var textureLoader = new THREE.TextureLoader();
-	//scene.add(this.explosionParticle);
-
+	
 	var shipTexture = new textureLoader.load( "textures/metal-texture256.jpg" );
 				shipTexture.repeat.set( 1, 1 );
 				shipTexture.wrapS = shipTexture.wrapT = THREE.RepeatWrapping;
 				shipTexture.format = THREE.RGBFormat;
 
 				
-				var shipMaterial = new THREE.MeshPhongMaterial( {
-					shininess: 10,
-					color: 0xffffff,
-					specular: 0x999999,
-					map: shipTexture
-				} );
+	var shipMaterial = new THREE.MeshPhongMaterial( {
+		shininess: 10,
+		color: 0xffffff,
+		specular: 0x999999,
+		map: shipTexture
+	} );
+
 	this.player = new THREE.Ship(controls);
 	this.ship = this.player.getAll();
 
@@ -43,7 +43,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 				this.ship.rotateY(Math.PI);
 				break;
 			
-			case 1: // player 2
+			case 2: // player 2
 				position[0] = 0;
 				position[2] = planeWidth/3;
 				this.orientation = new THREE.Vector3(0,0,-1);
@@ -51,7 +51,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 
 				break;
 				
-			case 2: // player 3
+			case 1: // player 3
 				position[0] = -planeWidth/3;
 				position[2] = 0;
 				this.orientation = new THREE.Vector3(1,0,0);
@@ -119,32 +119,27 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 
 	this.death = function(controls, sound)
 	{
-		controls.alive=false;
-
-		//sound.death_sound.play();
-
 		scene.remove(this.ship);
-
+		controls.alive=false;
 		for (var i = 0; i < controls.walls.length; i++) 
 			scene.remove(controls.walls[i]);
 	}
 
 	this.render = function(time, controls, sound){
+		this.player.updateParticle();
 		if (controls.alive){ //ANIMAZIONE MOVIMENTO UFO
 			this.ship.position.y = Math.sin( time*5 ) + 1.3 ;
 		}
 		else{
-
-			if (this.deathAnimationFrame == 0)
+			if (this.deathAnimationFrameCounter == 0)
 			{
-				this.explosionParticle = new THREE.explosionParticle(300,this.ship.getWorldPosition(),controls.color,this.ship.matrixWorld);
+				this.explosionParticle = new THREE.explosionParticle(100,this.ship.getWorldPosition(),controls.color,this.ship.matrixWorld);
 			}
+			this.deathAnimationFrameCounter++;
 
-			this.explosionParticle.render(50);
-
+			this.explosionParticle.render(this.deathAnimationFrame);
 
 			var cabin = this.player.getCabin()
-			this.deathAnimationFrame++;
 			cabin.position.y++;
 			cabin.position.x++;
 			cabin.rotateZ(THREE.Math.degToRad(-5));
@@ -152,24 +147,39 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 			this.player.getMotorL().position.x++;
 			this.player.getMotorR().position.x++;
 
+			var scale =1/this.deathAnimationFrame;
+
+			var matrice = new THREE.Matrix4().scale(new THREE.Vector3(scale,scale,scale))
+
+			this.player.getMotorL().scale.x-=scale;
+			this.player.getMotorL().scale.y-=scale;
+			this.player.getMotorL().scale.z-=scale;
+
+			this.player.getMotorR().scale.x-=scale;
+			this.player.getMotorR().scale.y-=scale;
+			this.player.getMotorR().scale.z-=scale;
+
+			if (cabin.scale.x>=0)
+				cabin.scale.x -= scale;
+			if (cabin.scale.y>=0)
+				cabin.scale.y -= scale;
+			if (cabin.scale.z>=0)
+				cabin.scale.z -= scale;
+
+						
+			//this.ship.applyMatrix(matrice);
 			for (var i = 0; i<controls.walls.length; i++)
 				if (controls.walls[i].scale.y >= 0 )
-					controls.walls[i].scale.y -= 0.1;
+					controls.walls[i].scale.y -= scale;
 
-			if (this.ship.scale.x>=0)
-				this.ship.scale.x -= 0.001;
-			if (this.ship.scale.y>=0)
-				this.ship.scale.y -= 0.001;
-			if (this.ship.scale.z>=0)
-				this.ship.scale.z -= 0.001;
 
 			if (this.ship.getObjectByName("torus").position.y>=-this.ship.position.y*1.5)
 				this.ship.getObjectByName("torus").position.y--;
 
-			if(this.deathAnimationFrame>100){
-				scene.remove(this.explosionParticle);
-				this.explosionParticle.remove();
+			if(this.deathAnimationFrameCounter>this.deathAnimationFrame){
 				this.death(controls, sound);
+				scene.remove(this.explosionParticle);
+				//this.explosionParticle.remove();
 				return true;
 			}
 
@@ -183,7 +193,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 	this.getOrientation = function(){
 		return this.orientation;
 	}
-	this.updatePlayerModel = function ( controls, scene, planeWidth, planeHeight, sound ) {
+	this.updatePlayerModel = function ( controls, scene,sound ) {
 		//GIRA A SINISTRA
 		this.torus = new THREE.Box3().setFromObject(this.player.getCabin());
 
@@ -209,16 +219,11 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 		this.ship.position.x=this.ship.position.x+(this.orientation.x*controls.velocity);
 		this.ship.position.z=this.ship.position.z+(this.orientation.z*controls.velocity);
 
-		this.player.updateParticle();
-
 		this.ship.getObjectByName("torus").rotateZ(THREE.Math.degToRad(-5));
 
 		//SE IL GIOCATORE È USCITO, MUORE
-		if (Math.abs(this.ship.position.x)>planeWidth/2 || Math.abs(this.ship.position.z)>planeHeight/2 )
-		{
-			this.death(controls, sound);
-		}
-		else
+
+		if(controls.alive)
 		{
 			var geometry = 0;
 
@@ -275,7 +280,6 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 							Math.abs(this.ship.position.z - this.poseBK.z)+controls.wallThickness
 						);
 				}	
-
 				//MI STO MUOVENDO LUNGO L'ASSE X
 				else
 				{

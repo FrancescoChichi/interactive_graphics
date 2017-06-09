@@ -4,7 +4,10 @@ THREE.Ship = function (controls) {
 	this.particleCount;
 	this.particlesL;
 	this.particlesR;
-	    
+	this.animationFrames = 100;
+	this.currentFram = 0;	
+
+
 	this.texture;
 	this.material;
 		
@@ -60,14 +63,6 @@ THREE.Ship = function (controls) {
 		reflectivity: 1
 			} );
 
-	/*this.cubeCamera = new THREE.CubeCamera( 1, 10000, 128 );
-	this.cubeCamera.position.x = 4;
-	this.cubeCamera.position.y = 9;
-	this.cubeCamera.position.z = 0;
-	this.cubeCamera.rotateY(Math.PI);
-
-	var mirrorMaterial = new THREE.MeshBasicMaterial( { color: 0xffffff, envMap: this.cubeCamera.renderTarget } );
-*/
 //GEOMETRY
 	var points = [];
 	for ( var i = 0; i < 10; i ++ ) {
@@ -119,11 +114,11 @@ THREE.Ship = function (controls) {
 	this.cabin.add(this.light); //palla di luce
 	this.ship.add(this.cabin);
 
-	this.particleCount = 120;
+	this.particleCount = 60;
   this.particlesL = [];
   this.particlesR = [];
 
-  this.texture = THREE.ImageUtils.loadTexture("textures/oUBYu.png");
+  this.texture = new THREE.TextureLoader().load("textures/oUBYu.png");
   this.material = new THREE.SpriteMaterial({
       color: controls.color, //0xff4502
       map: this.texture,
@@ -177,12 +172,6 @@ THREE.Ship = function (controls) {
 		return this.group;
 	}
 
-	this.render = function(render, scene){
-		/*this.glass.visible = false;
-		//this.cubeCamera.position.copy( this.glass.position );
-		this.cubeCamera.updateCubeMap( renderer, scene );
-		this.glass.visible = true;*/
-	}
 	
 
 	function addObject( geometry, material, x, y, z, rx, ry, rz ) {

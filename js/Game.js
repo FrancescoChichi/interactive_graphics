@@ -22,7 +22,7 @@
 			var lightModality = "";
 			var planeWidth = 100;
 			var planeHeight = 100;
-			var time = Math.random();
+			var time = Math.PI;
 			var pause = false;
 			var velocity = 0.2;
 			var dimension = 0.5;
@@ -331,7 +331,7 @@
 				var sphere = new THREE.SphereGeometry( 0.5, 16, 8 );
 
 
-				light1 = new THREE.PointLight( 0xff0040, 2, lightPower );
+				light1 = new THREE.PointLight( 0xff0000, 2, lightPower );
 				light1.add( new THREE.Mesh( sphere, new THREE.MeshBasicMaterial( { color: 0xff0040 } ) ) );
 				scene.add( light1 );
 				
@@ -348,27 +348,6 @@
 				light4.add( new THREE.Mesh( sphere, new THREE.MeshBasicMaterial( { color: 0xffaa00 } ) ) );
 				scene.add( light4 );
 
-/*
-		   // LIGHTS
-		    //scene.add(new THREE.AmbientLight(0xffffff,2));
-
-				hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
-				hemiLight.color.setHSL( 0.6, 1, 0.6 );
-				hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
-				hemiLight.position.set( 0, 500, 0 );
-				scene.add( hemiLight );
-		
-			*/
-
-			/*var anello = new THREE.RingBufferGeometry(10,100,320);
-			var m = new THREE.Mesh(anello,new THREE.MeshPhongMaterial( { shininess: 50, color: 0xffffff, specular: 0x999999 } ));
-			scene.add(m);*/
-
-			/*	for (var i = 0; i < alive; i++)
-				{
-					players[i] = new THREE.Player( playersControl[i],planeWidth, planeHeight, i);
-					//console.log(playersControl[i].boxTesta)
-				}*/
 				//******renderer******
 				container.innerHTML = "";
 				container.appendChild( renderer.domElement );
@@ -397,35 +376,41 @@
 					if (!pause)
 					{
 						for (var i = 0; i < alive; i++){
+							if (Math.abs(this.players[i].getPosition().x)>planeWidth/2 || 
+								Math.abs(this.players[i].getPosition().z)>planeHeight/2 )
+							{
+									playersControl[i].alive = false;
+							}
+
 							var playerBox = playersControl[i].boxTesta;
-							//if(i==0)console.log(i,playerBox);
+
 							for (var o = 0; o < alive; o++)
 							{	
 								var j = 0;
 
-								if(playersControl[i].alive == false || playersControl[o].alive == false)
-									continue;
-
 								lunghezza = playersControl[o].boxWall.length
+
 								if (i==o)
 								{
 									lunghezza -= 2;
 								}
 								else
 								{
+									if (!playersControl[i].alive)
+										continue;
+
 									if (playerBox.intersectsBox(playersControl[o].boxTesta)) 
 											{
 												console.log("player "+playersControl[i].number+" collide con player"+playersControl[o].number);
 												playersControl[i].alive = false;
 												playersControl[o].alive= false;
 												lunghezza = 0;
-						
 											}
 								}
-
+							
 								for (; j<lunghezza; j++)
-									{			
-										
+									{		
+								
 										if (playerBox.intersectsBox(playersControl[o].boxWall[j]))
 										{	
 											console.log('player '+playersControl[i].number+' collide con muro di '+playersControl[o].number)
@@ -441,26 +426,20 @@
 						for (var i = 0; i < alive; i++)
 						{
 							if (playersControl[i].alive){
-								players[i].updatePlayerModel(playersControl[i], scene, planeWidth, planeHeight);
+								players[i].updatePlayerModel(playersControl[i], scene);
 								indexPlayer = i;
 								c++;
 							}
 							else
 							{
-
-								//ciclo--;
 								playersControl[i].velocity= 0.0;
-								/*players[i].death(playersControl[i],sound);
-								players.splice(i,1);
-								playersControl.splice(i,1);*/
 							}
 						}
-						if (c == 1 && nPlayer>1)
-							playersControl[indexPlayer].velocity=0.0;
-						//alive = ciclo;
-						if(alive == 1 && nPlayer>alive)
+
+						if (c == 1 && nPlayer>1 && alive ==1 )
 						{
-							console.log("player "+playersControl[0].number+" win ");
+							playersControl[indexPlayer].velocity=0.0;
+								console.log("player "+playersControl[0].number+" win ");
 							//document.getElementById("winner").innerHTML = "player "+playersControl[0].number+" win ";
 							//document.getElementById("winner").style.display="block";
 
@@ -471,9 +450,9 @@
 
 							controls.target = players[0].getPosition();
 							pause = true;
-							//alive -= 1;
+						
 						}
-						else if (alive == 0)
+						if (alive == 0)
 						{
 							if (nPlayer>1)
 							{
@@ -529,8 +508,6 @@
  						}
  						music = !music;
 					};
-
-
 							
  				}
  				if(startGame)
@@ -544,18 +521,14 @@
 				var delta = clock.getDelta();
 				controls.update( delta );
 
-
-
-
 				var dist = 30;
 				var scale = 0.9;
-				var vel = 3;
+				var vel = 25;
 				var boh = 100;
 				if(!pause)
-				{				
-					time += 0.005;				
-
-					light1.position.x = Math.sin( time * vel * 0.7 ) * boh;
+				{		
+					time += 0.001;				
+light1.position.x = Math.sin( time * vel * 0.7 ) * boh;
 					light1.position.y = 1;
 					light1.position.z = Math.cos( time * vel * 0.3 ) * boh;
 					light2.position.x = Math.cos( time * vel * 0.3 ) * boh;
@@ -567,18 +540,19 @@
 					light4.position.x = Math.sin( time * vel * 0.3 ) * boh;
 					light4.position.y = 1;
 					light4.position.z = Math.sin( time * vel * 0.5 ) * boh;
-						
+
 					if(lightModality == "cycle")
 						halo.animate();
 
+					for (var i = 0; i < alive; i++)
+						if(players[i].render( time, playersControl[i], sound )){
+							console.log('MORTO');
+							players.splice(i,1);
+							playersControl.splice(i,1);
+							alive--;
+					}
 				}
 
-				for (var i = 0; i < alive; i++)
-					if(players[i].render( time, playersControl[i], sound )){
-						players.splice(i,1);
-						playersControl.splice(i,1);
-						alive--;
-					}
 				if(cameraPose.x!=cameraPoseBK.x||cameraPose.y!=cameraPoseBK.y||cameraPose.z!=cameraPoseBK.z){
 					camera.position.set(cameraPose.x,cameraPose.y,cameraPose.z);
 					cameraPoseBK.set(cameraPose.x,cameraPose.y,cameraPose.z);
