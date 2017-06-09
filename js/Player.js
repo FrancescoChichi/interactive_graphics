@@ -10,12 +10,14 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 	this.deathAnimationFrame = 0;
 	this.wallHeight = 2;
 	this.wallY = 2;
+	this.explosionParticle = null;
 
 	var position = [0,controls.dimension,0];
 	var rotation = [- Math.PI / 2, 0,0];
 
 
 	var textureLoader = new THREE.TextureLoader();
+	//scene.add(this.explosionParticle);
 
 	var shipTexture = new textureLoader.load( "textures/metal-texture256.jpg" );
 				shipTexture.repeat.set( 1, 1 );
@@ -74,16 +76,9 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 		scene.add(this.ship);
 		this.ship.updateMatrixWorld();
 
-
-
-
-
 		this.torus = new THREE.Box3().setFromObject(this.player.getCabin()	);
 
-
 		this.boxOgetto = this.torus.clone();
-
-
 
 		this.wallMaterial = new THREE.MeshBasicMaterial( {
 							color: controls.color, 
@@ -93,7 +88,6 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 						);
 
 		this.turn = false;
-
 
 		var size = this.boxOgetto.getSize();
 
@@ -127,9 +121,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 	{
 		controls.alive=false;
 
-
-		sound.death_sound.play();
-
+		//sound.death_sound.play();
 
 		scene.remove(this.ship);
 
@@ -142,10 +134,20 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 			this.ship.position.y = Math.sin( time*5 ) + 1.3 ;
 		}
 		else{
+
+			if (this.deathAnimationFrame == 0)
+			{
+				this.explosionParticle = new THREE.explosionParticle(300,this.ship.getWorldPosition(),controls.color,this.ship.matrixWorld);
+			}
+
+			this.explosionParticle.render(50);
+
+
+			var cabin = this.player.getCabin()
 			this.deathAnimationFrame++;
-			this.player.getCabin().position.y++;
-			this.player.getCabin().position.x++;
-			this.player.getCabin().rotateZ(THREE.Math.degToRad(-5));
+			cabin.position.y++;
+			cabin.position.x++;
+			cabin.rotateZ(THREE.Math.degToRad(-5));
 
 			this.player.getMotorL().position.x++;
 			this.player.getMotorR().position.x++;
@@ -165,6 +167,8 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 				this.ship.getObjectByName("torus").position.y--;
 
 			if(this.deathAnimationFrame>100){
+				scene.remove(this.explosionParticle);
+				this.explosionParticle.remove();
 				this.death(controls, sound);
 				return true;
 			}

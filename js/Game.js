@@ -24,7 +24,7 @@
 			var planeHeight = 100;
 			var time = Math.random();
 			var pause = false;
-			var velocity = 0.0;
+			var velocity = 0.2;
 			var dimension = 0.5;
 			var wallThick = 0.8;
 			var startGame = false;
@@ -300,23 +300,25 @@
 				scene.add( ground );
 
 
-
+				/*
+				
 			//SKYBOX
 	
-			var prefix = "textures/SkyboxSet1/DarkStormy/";
-			var suffix = ".png";
-			var urls  = [prefix+"DarkStormyFront2048"+suffix, 
-									 prefix+"DarkStormyBack2048"+suffix, 
-									 prefix+"DarkStormyUp2048"+suffix, 
-									 prefix+"DarkStormyDown2048"+suffix, 
-									 prefix+"DarkStormyLeft2048"+suffix, 
-									 prefix+"DarkStormyRight2048"+suffix];
+			var prefix = "textures/skybox/";
+			var suffix = ".PNG";
+			var urls  = [prefix+"nz"+'.JPG', 
+						 prefix+"ny"+suffix, 
+						 prefix+"nz"+'.JPG', 
+						 prefix+"py"+'.JPG', 
+						 prefix+"px"+'.JPG', 
+						 prefix+"prova"+'.JPG'];
 			
 			var reflectionCube = new THREE.CubeTextureLoader().load( urls );
 			reflectionCube.format = THREE.RGBFormat;
 
 			scene.background = reflectionCube;
 
+				*/
 
 
 				//MAP WALLS

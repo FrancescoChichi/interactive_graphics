@@ -17,8 +17,8 @@ THREE.Ship = function (controls) {
 
 
 //MATERIALI
-	var materialPhong = new THREE.MeshPhongMaterial( { shininess: 5, color: 0xffffff, specular: 0x999999 } );
-	var materialPlayer = new THREE.MeshToonMaterial( { shininess: 5, 
+	var materialPhong = new THREE.MeshPhongMaterial( { shininess: 50, color: 0xffffff, specular: 0x999999 } );
+	var materialPlayer = new THREE.MeshToonMaterial( { shininess: 50, 
 				color: controls.color,
 				specular:0xFFFFFF,
 				reflectivity: 1 } );
@@ -31,17 +31,9 @@ THREE.Ship = function (controls) {
 
 
 	var metalMaterial = new THREE.MeshPhongMaterial( {
-		shininess: 50,
+		shininess: 80,
 		color: 0xffffff,
 		specular: 0xffffff,
-		side: THREE.DoubleSide,
-		map: metalTexture
-	} );
-
-	var metalBallMaterial = new THREE.MeshPhongMaterial( {
-		shininess: 50,
-		color: controls.color,
-		specular: controls.color,
 		side: THREE.DoubleSide,
 		map: metalTexture
 	} );
@@ -54,7 +46,7 @@ THREE.Ship = function (controls) {
 
 
 	var toruslMaterial = new THREE.MeshPhongMaterial( {
-		shininess: 5,
+		shininess: 80,
 		//color: 0x0000ff,
 		reflectivity: 1,
 		specular: 0xffffff,
@@ -62,8 +54,10 @@ THREE.Ship = function (controls) {
 	} );
 
 	var glassMaterial = new THREE.MeshToonMaterial( {
-		color: controls.color,
-		specular: controls.color
+		shininess: 10,
+		color: 0x0000ff,
+		specular: 0xffffff,
+		reflectivity: 1
 			} );
 
 	/*this.cubeCamera = new THREE.CubeCamera( 1, 10000, 128 );
@@ -92,11 +86,10 @@ THREE.Ship = function (controls) {
 
 	this.light = new THREE.PointLight( controls.color, 5, 5, 2 );
 
-	this.light.add( new THREE.Mesh( sphereGeometry, metalBallMaterial));
-		/*new THREE.MeshToonMaterial( { 
+	this.light.add( new THREE.Mesh( sphereGeometry, new THREE.MeshToonMaterial( { 
 			color: controls.color,
 			specular:0xFFFFFF,
-			reflectivity: 1 } ) ) );*/
+			reflectivity: 1 } ) ) );
 
 	this.light.position.x = 0;
 	this.light.position.y = 7;
@@ -104,7 +97,7 @@ THREE.Ship = function (controls) {
 
 
 	//CREAZIONE GRUPPI
-		scene.add( this.light );
+		//scene.add( this.light );
 	var torus = addObject( torusGeometry, toruslMaterial, 0, 5, 0, Math.PI/2, 0, 0 );
 	torus.name = "torus";
 
@@ -121,16 +114,12 @@ THREE.Ship = function (controls) {
 	this.motors.add(this.motorL);
 	this.ship.add(this.motors);
 	this.group.add(this.ship);
-	//	this.group.add(addObject( sphereGeometry, metalMaterial, 0, 7, 0, 0, 0, 0 ));
-
 	this.glass = addObject( cubeGeometry, glassMaterial, 4, 9, 0, 0, 0, 0 );
-	//this.cabin.add(this.cubeCamera);
-
 	this.cabin.add(this.glass); //vetro
 	this.cabin.add(this.light); //palla di luce
 	this.ship.add(this.cabin);
 
-	this.particleCount = 200;
+	this.particleCount = 120;
   this.particlesL = [];
   this.particlesR = [];
 
@@ -210,15 +199,11 @@ THREE.Ship = function (controls) {
 
 		return tmpMesh;
 	};
-var caso = 10;
+
 	this.updateParticle = function(){
 		for (var i = 0; i < this.particlesL.length; i++) {
 	    var particle = this.particlesL[i];
-	    if (Math.random() > 0.8)
-	    	caso = 40;
-	    else 
-	    	caso = 10;
-	    if(particle.position.x < -caso) {
+	    if(particle.position.x < -10) {
 	      particle.position.x = -4;
 	      particle.velocity.x = -Math.random()-1;
 	      particle.material.opacity = 1;
@@ -231,11 +216,7 @@ var caso = 10;
 
 		for (var i = 0; i < this.particlesR.length; i++) {
 	    var particle = this.particlesR[i];
-	    if (Math.random() > 0.8)
-	    	caso = 40;
-	    else 
-	    	caso = 10;
-	    if(particle.position.x < -caso) {
+	    if(particle.position.x < -10) {
 	      particle.position.x = -4;
 	      particle.velocity.x = -Math.random()-1;
 	      particle.material.opacity = 1;
