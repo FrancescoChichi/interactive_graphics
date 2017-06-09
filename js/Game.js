@@ -44,7 +44,7 @@
 				boxWall: [],
 				walls: [],
 				wallThickness: wallThick,
-				boxTesta: 0,
+				boxTesta: new  THREE.Box3(),
 			};
 			var secondPlayerControls = {
 				number: 2,
@@ -398,19 +398,24 @@
 								{
 									if (!playersControl[i].alive)
 										continue;
-
-									if (playerBox.intersectsBox(playersControl[o].boxTesta)) 
-											{
-												console.log("player "+playersControl[i].number+" collide con player"+playersControl[o].number);
-												playersControl[i].alive = false;
-												playersControl[o].alive= false;
-												lunghezza = 0;
-											}
+									if (playersControl[o].alive)
+									{
+										if (playerBox.intersectsBox(playersControl[o].boxTesta)) 
+												{
+													console.log("player "+playersControl[i].number+" collide con player"+playersControl[o].number);
+													playersControl[i].alive = false;
+													playersControl[o].alive= false;
+													lunghezza = 0;
+												}
+									}
+									else
+										continue;
 								}
 							
 								for (; j<lunghezza; j++)
 									{		
-								
+										if (!playersControl[o].alive)
+											continue;
 										if (playerBox.intersectsBox(playersControl[o].boxWall[j]))
 										{	
 											console.log('player '+playersControl[i].number+' collide con muro di '+playersControl[o].number)
@@ -434,24 +439,27 @@
 							{
 								playersControl[i].velocity= 0.0;
 							}
+							console.log(c,indexPlayer);
 						}
-
-						if (c == 1 && nPlayer>1 && alive ==1 )
+						if (c== 1 && nPlayer>1)
 						{
-							playersControl[indexPlayer].velocity=0.0;
+							playersControl[indexPlayer].velocity= 0.0;
+							playersControl[indexPlayer].boxTesta= new  THREE.Box3();
+							if (alive == 1)
+							{
+								controls.autoRotate = true;
+								camera.position.x = players[0].getPosition().x + 10;
+								camera.position.y = 10;
+								camera.position.z = players[0].getPosition().z + 10;
+
+								controls.target = players[0].getPosition();
+								//pause = true;
 								console.log("player "+playersControl[0].number+" win ");
-							//document.getElementById("winner").innerHTML = "player "+playersControl[0].number+" win ";
-							//document.getElementById("winner").style.display="block";
+								
+							}
 
-							controls.autoRotate = true;
-							camera.position.x = players[0].getPosition().x + 10;
-							camera.position.y = 10;
-							camera.position.z = players[0].getPosition().z + 10;
-
-							controls.target = players[0].getPosition();
-							pause = true;
-						
 						}
+
 						if (alive == 0)
 						{
 							if (nPlayer>1)
@@ -527,8 +535,9 @@
 				var boh = 100;
 				if(!pause)
 				{		
-					time += 0.001;				
-light1.position.x = Math.sin( time * vel * 0.7 ) * boh;
+					time += 0.001;			
+
+					light1.position.x = Math.sin( time * vel * 0.7 ) * boh;
 					light1.position.y = 1;
 					light1.position.z = Math.cos( time * vel * 0.3 ) * boh;
 					light2.position.x = Math.cos( time * vel * 0.3 ) * boh;

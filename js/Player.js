@@ -180,7 +180,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 			if(this.deathAnimationFrameCounter>this.deathAnimationFrame){
 				this.death(controls, sound);
 				scene.remove(this.explosionParticle);
-				//this.explosionParticle.remove();
+				this.explosionParticle.remove();
 				return true;
 			}
 
