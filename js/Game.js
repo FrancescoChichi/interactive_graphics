@@ -9,6 +9,7 @@
 			var worldWidth = 128, worldDepth = 128;
 			var ship, shipControl;
 
+			var piedistallo;
 			/*=====================*\
 			 * START CONFIGURATION *
 			\*=====================*/
@@ -261,7 +262,7 @@
 				menuCamera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 1000 );
 
 				camera.position.set(0.0,90.0,0.0);
-				menuCamera.position.set(10.0,8.0,20.0);
+				menuCamera.position.set(10.0,4.0,20.0);
 
 	
 				document.addEventListener( 'keydown', onKeyDown, false );
@@ -323,8 +324,12 @@
 
 				shipControl = new THREE.Ship(firstPlayerControls);
 				ship = shipControl.getAll();
-
+				ship.scale.set(.5,.5,.5);
 				menuScene.add(ship);
+
+				piedistallo = new Geometry([1, 1, 3, 64]).cylinder;
+				//menuScene.add(piedistallo);
+
 
 			//SKYBOX
 	

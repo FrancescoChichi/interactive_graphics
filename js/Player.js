@@ -13,17 +13,17 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 	var textureLoader = new THREE.TextureLoader();
 
 	var shipTexture = new textureLoader.load( "textures/metal-texture256.jpg" );
-				shipTexture.repeat.set( 1, 1 );
-				shipTexture.wrapS = shipTexture.wrapT = THREE.RepeatWrapping;
-				shipTexture.format = THREE.RGBFormat;
+		shipTexture.repeat.set( 1, 1 );
+		shipTexture.wrapS = shipTexture.wrapT = THREE.RepeatWrapping;
+		shipTexture.format = THREE.RGBFormat;
 
 				
-				var shipMaterial = new THREE.MeshPhongMaterial( {
-					shininess: 10,
-					color: 0xffffff,
-					specular: 0x999999,
-					map: shipTexture
-				} );
+	var shipMaterial = new THREE.MeshPhongMaterial( {
+		shininess: 10,
+		color: 0xffffff,
+		specular: 0x999999,
+		map: shipTexture
+	} );
 
 	this.player = new THREE.Ship(controls);
 	this.ship = this.player.getAll();

@@ -23,57 +23,12 @@ THREE.Ship = function (controls) {
 				specular:0xFFFFFF,
 				reflectivity: 1 } );
 
-	var metalTexture = new THREE.TextureLoader().load( "textures/metal-texture512.jpg" );
-	metalTexture.repeat.set( 1, 1 );
-	metalTexture.wrapS = metalTexture.wrapT = THREE.RepeatWrapping;
-	metalTexture.magFilter = THREE.NearestFilter;
-	metalTexture.format = THREE.RGBFormat;
 
+	var metalMaterial = new Material(50,0xffffff,0xffffff).metalDoubleSide;
+	var metalBallMaterial = new Material(50,controls.color,controls.color).metalDoubleSide;
+	var toruslMaterial = new Material(5,0xffffff,0xffffff,1).halo;
+	var glassMaterial =new Material(0,controls.color,controls.color).glass;
 
-	var metalMaterial = new THREE.MeshPhongMaterial( {
-		shininess: 50,
-		color: 0xffffff,
-		specular: 0xffffff,
-		side: THREE.DoubleSide,
-		map: metalTexture
-	} );
-
-	var metalBallMaterial = new THREE.MeshPhongMaterial( {
-		shininess: 50,
-		color: controls.color,
-		specular: controls.color,
-		side: THREE.DoubleSide,
-		map: metalTexture
-	} );
-
-	var torusTexture = new THREE.TextureLoader().load( "textures/halo/halo.jpg" );
-	torusTexture.repeat.set( 4, 1 );
-	torusTexture.wrapS = torusTexture.wrapT = THREE.RepeatWrapping;
-	torusTexture.magFilter = THREE.NearestFilter;
-	torusTexture.format = THREE.RGBFormat;
-
-
-	var toruslMaterial = new THREE.MeshPhongMaterial( {
-		shininess: 5,
-		//color: 0x0000ff,
-		reflectivity: 1,
-		specular: 0xffffff,
-		map: torusTexture
-	} );
-
-	var glassMaterial = new THREE.MeshToonMaterial( {
-		color: controls.color,
-		specular: controls.color
-			} );
-
-	/*this.cubeCamera = new THREE.CubeCamera( 1, 10000, 128 );
-	this.cubeCamera.position.x = 4;
-	this.cubeCamera.position.y = 9;
-	this.cubeCamera.position.z = 0;
-	this.cubeCamera.rotateY(Math.PI);
-
-	var mirrorMaterial = new THREE.MeshBasicMaterial( { color: 0xffffff, envMap: this.cubeCamera.renderTarget } );
-*/
 //GEOMETRY
 	var points = [];
 	for ( var i = 0; i < 10; i ++ ) {
@@ -88,7 +43,8 @@ THREE.Ship = function (controls) {
 
 	var torusGeometry = new THREE.TorusBufferGeometry( 6, 2, 32, 64 );
 	var cubeGeometry = new THREE.BoxBufferGeometry( 2, 2, 4 );
-	var cilinderGeometry = new THREE.CylinderBufferGeometry( 1, 1, 3, 64);
+	//var cilinderGeometry = new THREE.CylinderBufferGeometry( 1, 1, 3, 64);
+	var cilinderGeometry = new Geometry([1, 1, 3, 64]).cylinder;
 
 	this.light = new THREE.PointLight( controls.color, 5, 5, 2 );
 
