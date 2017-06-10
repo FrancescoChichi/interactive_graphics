@@ -10,7 +10,7 @@ function Geometry(params){
 
 function Material(shininess,color,specular, reflectivity){
 	this.metalTexture = new THREE.TextureLoader().load( "textures/metal-texture512.jpg" );
-		this.metalTexture.repeat.set( 1, 1 );
+		this.metalTexture.repeat.set( 5, 1 );
 		this.metalTexture.wrapS = this.metalTexture.wrapT = THREE.RepeatWrapping;
 		this.metalTexture.magFilter = THREE.NearestFilter;
 		this.metalTexture.format = THREE.RGBFormat;
@@ -42,7 +42,6 @@ function Material(shininess,color,specular, reflectivity){
 		side: THREE.DoubleSide,
 		map: this.metalTexture
 	} );
-
 
 	this.glass = new THREE.MeshToonMaterial( {
 		color: color,

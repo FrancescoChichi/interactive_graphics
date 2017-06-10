@@ -25,9 +25,9 @@
 		<script src="./js/GPUParticleSystem.js"></script>
 		
 		<script src="js/Graphics.js"></script>
+		<script src="js/KeyboardControls.js"></script>
 
 
-	
 		<div class="container" id="mainPage">
 			<ul style="left:-10%">
 				<li>
@@ -107,19 +107,36 @@
 			</ul>
 		</div>
 		<div id="keyMenu" class="menu" style="display:none">
-		  <table >
-		    <tr>
-		      <td>Player</td>
-		      <td>Move Left</td>
-		      <td>Move Right</td>
-		    </tr>
-		    <tr>
-			    <td>1</td>
-			    <td>Q</td>
-			    <td>W</td>
-		  	</tr>
-		  </table>
-  		<ul><li>	<button id = "back" style="position:relative; bottom:10%;">Back</button> </li></ul>
+			<ul style="left:10%">
+			  <table >
+			    <tr>
+			      <td>Player</td>
+			      <td>Move Left</td>
+			      <td>Move Right</td>
+			    </tr>
+			    <tr>
+				    <td>1</td>
+				    <td><button id = "FirstL" style = "font-size: 20px">Q</button></td>
+				    <td><button id = "FirstR" style = "font-size: 20px">W</button></td>
+			  	</tr>
+			  	<tr>
+				    <td>2</td>
+				    <td><button id = "SecondL" style = "font-size: 20px">8</button></td>
+				    <td><button id = "SecondR" style = "font-size: 20px">9</button></td>
+			  	</tr>
+			  	<tr>
+				    <td>3</td>
+				    <td><button id = "ThirdL" style = "font-size: 20px">x</button></td>
+				    <td><button id = "ThirdR" style = "font-size: 20px">c</button></td>
+			  	</tr>
+			  	<tr>
+				    <td>4</td>
+				    <td><button id = "FourthL" style = "font-size: 20px">,</button></td>
+				    <td><button id = "FourthR" style = "font-size: 20px">.</button></td>
+			  	</tr>
+			  </table>
+  			<li>	<button id = "back" style="position:relative; bottom:10%;">Back</button> </li>
+  		</ul>
 		</div>
 		<label id = "winner"  style = "color:white; display:none; font-size: 300px; top: 20%; left: 30%">"></label>
 		<div id="container"></div>
