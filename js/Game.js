@@ -9,11 +9,7 @@
 			var worldWidth = 128, worldDepth = 128;
 			var cubeCamera;
 			var walls = [];
-			//var cubeMesh;
-			//var sphereControls;
-			//var sphere;
-			//var loader;
-			//var mesh2= new THREE.Mesh();
+
 
 			/*=====================*\
 			 * START CONFIGURATION *
