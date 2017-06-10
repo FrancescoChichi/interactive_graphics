@@ -7,28 +7,23 @@
 			var camera, controls, scene, renderer;
 			var mesh, texture, geometry, material;
 			var worldWidth = 128, worldDepth = 128;
-			var cubeCamera;
-			var walls = [];
-			//var cubeMesh;
-			//var sphereControls;
-			//var sphere;
-			//var loader;
-			//var mesh2= new THREE.Mesh();
+
 
 			/*=====================*\
 			 * START CONFIGURATION *
 			\*=====================*/
 
-			var lightModality = "";
 			var planeWidth = 100;
 			var planeHeight = 100;
+			var lightModality = "";
+
 			var time = Math.random();
 			var pause = false;
-			var velocity = 0.2;
+			var velocity = 0.0;
 			var dimension = 0.5;
 			var wallThick = 0.8;
 			var startGame = false;
-			var music = false;
+			var music = 0;
 			var hemiLight;
 			var halo;
 
@@ -37,21 +32,23 @@
 				dimension: dimension,
 				moveLeft: false,
 				moveRight: false,
-				pushed: false,
+				leftClicked: 0,
+				rightClicked: 0,
 				color: 0xff3399,
 				alive: true,
 				velocity: velocity,
 				boxWall: [],
 				walls: [],
 				wallThickness: wallThick,
-				boxTesta: new  THREE.Box3(),
+				boxTesta: 0,
 			};
 			var secondPlayerControls = {
 				number: 2,
 				dimension: dimension,
 				moveLeft: false,
 				moveRight: false,
-				pushed: false,
+				leftClicked: 0,
+				rightClicked: 0,
 				color: 0x0bdd43,
 				alive: true,
 				velocity: velocity,
@@ -66,7 +63,8 @@
 				dimension: dimension,
 				moveLeft: false,
 				moveRight: false,
-				pushed: false,
+				leftClicked: 0,
+				rightClicked: 0,
 				color: 0xff9900,
 				alive: true,
 				velocity: velocity,
@@ -80,7 +78,8 @@
 				dimension: dimension,
 				moveLeft: false,
 				moveRight: false,
-				pushed: false,
+				leftClicked: 0,
+				rightClicked: 0,
 				color: 0xff0000,
 				alive: true,
 				velocity: velocity,
@@ -117,10 +116,16 @@
 			/*===================*\
 			 * END CONFIGURATION *
 			\*===================*/
+			
+//function renderGame() {
 
+	init();
+	animate();
+//}
 
-			init();
-			animate();
+//function renderMenu(){
+//	var menu = new THREE.Menu(firstPlayerControls);
+//}	
 
 			function init() {
 				container = document.getElementById( 'container' );
@@ -133,33 +138,58 @@
 					switch ( event.keyCode ) {
 						case 87: // q
 							firstPlayerControls.moveLeft = true;
+							firstPlayerControls.leftClicked++;
 							break;
 						case 81: // w
 							firstPlayerControls.moveRight = true;
+							firstPlayerControls.rightClicked++;
 							break;
 
 						case 105: // a
 							secondPlayerControls.moveLeft = true;
+							secondPlayerControls.leftClicked++;
 							break;
 						case 104: // d
 							secondPlayerControls.moveRight = true;
+							secondPlayerControls.rightClicked++;
 							break;
 						
 						case 86: // a
 							thirdPlayerControls.moveLeft = true;
+							thirdPlayerControls.leftClicked++;
 							break;
 						case 67: // d
 							thirdPlayerControls.moveRight = true;
+							thirdPlayerControls.rightClicked++;
 							break;
 													
 						case 188: // a
 							fourthPlayerControls.moveLeft = true;
+							fourthPlayerControls.leftClicked++;
 							break;
 						case 190: // d
 							fourthPlayerControls.moveRight = true;
+							fourthPlayerControls.rightClicked++;
 							break;
 						case 27: // ESC
-							pause = !pause;
+							if(startGame)
+							{
+								pause = !pause;
+
+								if (pause){
+									sound.menu_sound.pause();
+									if(music > 0)
+										sound.brick_sound.play();
+								}
+								else if(music == 2)
+									sound.menu_sound.play();
+
+								if(pause)
+									document.getElementById("pause").setAttribute("style","display:inline");
+								else
+									document.getElementById("pause").setAttribute("style","display:none");
+							}
+
 							break;
 						case 49:
 							follow = false;
@@ -181,7 +211,7 @@
 							follow = false;
 							cameraPose.set(61.5,16.0,-63.7);
 							break;
-						case 54:
+						case 54: //FIST PERSON CAMERA
 						if(nPlayer == 1){
 							follow = true;
 							cameraPose.set(players[0].getPosition().x,players[0].getPosition().y,players[0].getPosition().z);
@@ -194,44 +224,44 @@
 					switch( event.keyCode ) {
 						case 87: // w
 							firstPlayerControls.moveLeft = false;
-							firstPlayerControls.pushed = false;
+							firstPlayerControls.leftClicked = 0;
 							break;
 						case 81: // q
 							firstPlayerControls.moveRight = false;
-							firstPlayerControls.pushed = false;
+							firstPlayerControls.rightClicked = 0;
 							break;
 
 						case 105: // numpad 8
 							secondPlayerControls.moveLeft = false;
-							secondPlayerControls.pushed = false;
+							secondPlayerControls.leftClicked = 0;
 							break;
 						case 104: // numpad 9
 							secondPlayerControls.moveRight = false;
-							secondPlayerControls.pushed = false;
+							secondPlayerControls.rightClicked = 0;
 							break;
 						
 						case 86: // c
 							thirdPlayerControls.moveLeft = false;
-							thirdPlayerControls.pushed = false;
+							thirdPlayerControls.leftClicked = 0;
 							break;
 						case 67: // v
 							thirdPlayerControls.moveRight = false;
-							thirdPlayerControls.pushed = false;
+							thirdPlayerControls.rightClicked = 0;
 							break;
 													
 						case 188: // period
 							fourthPlayerControls.moveLeft = false;
-							fourthPlayerControls.pushed = false;
+							fourthPlayerControls.leftClicked = 0;
 							break;
 						case 190: // comma
 							fourthPlayerControls.moveRight = false;
-							fourthPlayerControls.pushed = false;
+							fourthPlayerControls.rightClicked = 0;
 							break;
 					}
 				};
 
 
-
+			sound = new Sound();
 
 			//CAMERA SETTINGS
 				camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 1000 );
@@ -288,25 +318,24 @@
 				scene.add( ground );
 
 
-				/*
 
 			//SKYBOX
 	
-			var prefix = "textures/skybox/";
-			var suffix = ".PNG";
-			var urls  = [prefix+"nz"+'.JPG', 
-						 prefix+"ny"+suffix, 
-						 prefix+"nz"+'.JPG', 
-						 prefix+"py"+'.JPG', 
-						 prefix+"px"+'.JPG', 
-						 prefix+"prova"+'.JPG'];
+
+			var prefix = "textures/halo/";
+			var suffix = ".jpg";
+			var urls  = [prefix+"haloBELLO"+suffix,  //back
+									 prefix+"haloBELLO"+suffix, 	//front
+									 prefix+"haloBELLO"+suffix,  //up
+									 prefix+"halo"+suffix,  //down
+									 prefix+"haloBELLO90"+suffix,  //left
+									 prefix+"haloBELLO90"+suffix]; //right
 			
 			var reflectionCube = new THREE.CubeTextureLoader().load( urls );
 			reflectionCube.format = THREE.RGBFormat;
 
 			scene.background = reflectionCube;
 
-				*/
 
 
 				//MAP WALLS
@@ -331,7 +360,7 @@
 				var sphere = new THREE.SphereGeometry( 0.5, 16, 8 );
 
 
-				light1 = new THREE.PointLight( 0xff0000, 2, lightPower );
+				light1 = new THREE.PointLight( 0xff0040, 2, lightPower );
 				light1.add( new THREE.Mesh( sphere, new THREE.MeshBasicMaterial( { color: 0xff0040 } ) ) );
 				scene.add( light1 );
 				
@@ -376,46 +405,35 @@
 					if (!pause)
 					{
 						for (var i = 0; i < alive; i++){
-							if (Math.abs(this.players[i].getPosition().x)>planeWidth/2 || 
-								Math.abs(this.players[i].getPosition().z)>planeHeight/2 )
-							{
-									playersControl[i].alive = false;
-							}
-
 							var playerBox = playersControl[i].boxTesta;
-
+							//if(i==0)console.log(i,playerBox);
 							for (var o = 0; o < alive; o++)
 							{	
 								var j = 0;
 
-								lunghezza = playersControl[o].boxWall.length
+								if(playersControl[i].alive == false || playersControl[o].alive == false)
+									continue;
 
+								lunghezza = playersControl[o].boxWall.length
 								if (i==o)
 								{
 									lunghezza -= 2;
 								}
 								else
 								{
-									if (!playersControl[i].alive)
-										continue;
-									if (playersControl[o].alive)
-									{
-										if (playerBox.intersectsBox(playersControl[o].boxTesta)) 
-												{
-													console.log("player "+playersControl[i].number+" collide con player"+playersControl[o].number);
-													playersControl[i].alive = false;
-													playersControl[o].alive= false;
-													lunghezza = 0;
-												}
-									}
-									else
-										continue;
+									if (playerBox.intersectsBox(playersControl[o].boxTesta)) 
+											{
+												console.log("player "+playersControl[i].number+" collide con player"+playersControl[o].number);
+												playersControl[i].alive = false;
+												playersControl[o].alive= false;
+												lunghezza = 0;
+						
+											}
 								}
-							
+
 								for (; j<lunghezza; j++)
-									{		
-										if (!playersControl[o].alive)
-											continue;
+									{			
+										
 										if (playerBox.intersectsBox(playersControl[o].boxWall[j]))
 										{	
 											console.log('player '+playersControl[i].number+' collide con muro di '+playersControl[o].number)
@@ -431,7 +449,7 @@
 						for (var i = 0; i < alive; i++)
 						{
 							if (playersControl[i].alive){
-								players[i].updatePlayerModel(playersControl[i], scene);
+								players[i].updatePlayerModel(playersControl[i], scene, planeWidth, planeHeight);
 								indexPlayer = i;
 								c++;
 							}
@@ -439,28 +457,26 @@
 							{
 								playersControl[i].velocity= 0.0;
 							}
-							console.log(c,indexPlayer);
 						}
-						if (c== 1 && nPlayer>1)
+						if (c == 1 && nPlayer>1)
+							playersControl[indexPlayer].velocity=0.0;
+						//alive = ciclo;
+						if(alive == 1 && nPlayer>alive)
 						{
-							playersControl[indexPlayer].velocity= 0.0;
-							playersControl[indexPlayer].boxTesta= new  THREE.Box3();
-							if (alive == 1)
-							{
-								controls.autoRotate = true;
-								camera.position.x = players[0].getPosition().x + 10;
-								camera.position.y = 10;
-								camera.position.z = players[0].getPosition().z + 10;
+							console.log("player "+playersControl[0].number+" win ");
+							//document.getElementById("winner").innerHTML = "player "+playersControl[0].number+" win ";
+							//document.getElementById("winner").style.display="block";
 
-								controls.target = players[0].getPosition();
-								//pause = true;
-								console.log("player "+playersControl[0].number+" win ");
-								
-							}
+							controls.autoRotate = true;
+							camera.position.x = players[0].getPosition().x + 10;
+							camera.position.y = 10;
+							camera.position.z = players[0].getPosition().z + 10;
 
+							controls.target = players[0].getPosition();
+							pause = true;
+							//alive -= 1;
 						}
-
-						if (alive == 0)
+						else if (alive == 0)
 						{
 							if (nPlayer>1)
 							{
@@ -474,23 +490,88 @@
 								//document.getElementById("winner").style.display="block";
 							}
 						}
-
 					}
+
+					else
+						{
+							//gioco in pausa;
+								document.getElementById("resume").onclick = function()
+								{
+									if(music>1)
+									{
+										sound.menu_sound.play();
+									}	
+									pause = false;
+									//document.getElementById("container").setAttribute("style","display:inline");
+									document.getElementById("pause").setAttribute("style","display:none");
+								}
+								document.getElementById("menu").onclick = function()
+								{
+									window.location.reload(true);
+									//document.getElementById("container").setAttribute("style","display:inline");
+									document.getElementById("pause").setAttribute("style","display:none");
+								}
+								document.getElementById("keyPause").onclick = function()
+								{
+									document.getElementById("pause").setAttribute("style","display:none");
+									document.getElementById("keyMenu").setAttribute("style","display:inline");
+								}
+								document.getElementById("back").onclick = function()
+								{
+									document.getElementById("pause").setAttribute("style","display:inline");
+									document.getElementById("keyMenu").setAttribute("style","display:none");
+								}
+
+						}
 				}
-				else
+				else //GIOCO IN PAUSA
  				{
- 					//document.body.background = "images/background.jpg";
- 					document.getElementById("start").onclick = function(){
 
-						nPlayer = document.getElementById("dropdown").options[document.getElementById("dropdown").selectedIndex].value;
-						lightModality = document.getElementById("dayMode").options[document.getElementById("dayMode").selectedIndex].value;
 
-						if(lightModality ==  "night")
+					document.getElementById("key").onclick = function()
+					{
+						document.getElementById("mainPage").setAttribute("style","display:none");
+						document.getElementById("keyMenu").setAttribute("style","display:inline");
+					}
+					document.getElementById("back").onclick = function()
+					{
+						document.getElementById("mainPage").setAttribute("style","display:inline");
+						document.getElementById("keyMenu").setAttribute("style","display:none");
+					}
+
+ 					document.getElementById("start").onclick = function()
+					{
+
+						if(  document.getElementById("1").checked)
+						nPlayer = 1;
+						else if(document.getElementById("2").checked)
+						nPlayer = 2;
+						else if(document.getElementById("3").checked)
+						nPlayer = 3;
+						else nPlayer = 4;
+
+
+						//MUSIC SELECTION
+						if(document.getElementById("all").checked)
+							music = 2; //MUSIC + EVENT
+						else if(document.getElementById("events").checked)
+							music = 1;
+
+
+						//LIGHT MODE
+						if (document.getElementById("night").checked){
+							lightModality = "night";
 							halo.rotateHalo(Math.PI);
+						}
+						else if (document.getElementById("day").checked)
+							lightModality = "day";
+						else
+							lightModality = "cycle";
 
-						sound = new Sound();
 
-						if(music)
+						
+
+						if(music>1)
 						{
 							sound.menu_sound.play();
 						}	
@@ -500,22 +581,19 @@
  						alive = nPlayer;
  						for (var i = 0; i < alive; i++)
 							players[i] = new THREE.Player( playersControl[i],planeWidth, planeHeight, i);
+						
+						document.getElementById("mainPage").setAttribute("style","display:none");
 
-						closeMenu();
+
+						if(nPlayer == 1){
+							follow = true;
+							camera.position.set(players[0].getPosition().x,players[0].getPosition().y,players[0].getPosition().z);
+
+							playerToFollow = 0;
+						}
+
  					};
- 					document.getElementById("music").onclick = function(){
- 						if(music)
- 						{
- 							document.getElementById("music").innerHTML = "OFF";
-    					document.getElementById("music").style.color = 'red';
- 						}
- 						else
- 						{
- 							document.getElementById("music").innerHTML = "ON";
-    					document.getElementById("music").style.color = 'green';
- 						}
- 						music = !music;
-					};
+ 					
 							
  				}
  				if(startGame)
@@ -529,13 +607,16 @@
 				var delta = clock.getDelta();
 				controls.update( delta );
 
+
+
+
 				var dist = 30;
 				var scale = 0.9;
-				var vel = 25;
+				var vel = 3;
 				var boh = 100;
 				if(!pause)
-				{		
-					time += 0.001;			
+				{				
+					time += 0.005;				
 
 					light1.position.x = Math.sin( time * vel * 0.7 ) * boh;
 					light1.position.y = 1;
@@ -549,19 +630,18 @@
 					light4.position.x = Math.sin( time * vel * 0.3 ) * boh;
 					light4.position.y = 1;
 					light4.position.z = Math.sin( time * vel * 0.5 ) * boh;
-
+						
 					if(lightModality == "cycle")
 						halo.animate();
 
-					for (var i = 0; i < alive; i++)
-						if(players[i].render( time, playersControl[i], sound )){
-							console.log('MORTO');
-							players.splice(i,1);
-							playersControl.splice(i,1);
-							alive--;
-					}
 				}
 
+				for (var i = 0; i < alive; i++)
+					if(players[i].render( time, playersControl[i], sound, music )){
+						players.splice(i,1);
+						playersControl.splice(i,1);
+						alive--;
+					}
 				if(cameraPose.x!=cameraPoseBK.x||cameraPose.y!=cameraPoseBK.y||cameraPose.z!=cameraPoseBK.z){
 					camera.position.set(cameraPose.x,cameraPose.y,cameraPose.z);
 					cameraPoseBK.set(cameraPose.x,cameraPose.y,cameraPose.z);
@@ -588,15 +668,6 @@ function Sound() {
 	this.brick_sound2 = new Audio("audio/laser.mp3");
 	this.level_sound = new Audio("audio/powerup.mp3");
 	this.menu_sound = new Audio("audio/menu.mp3");
+	this.menu_sound.loop=true;
 
-};
-
-function closeMenu() {
-	document.getElementById("start").style.display="none";
-	document.getElementById("music").style.display="none";
-	document.getElementById("dropdown").style.display="none";
-	document.getElementById("dayMode").style.display="none";
-	document.getElementById("label_player").style.display="none";
-	document.getElementById("label_music").style.display="none";
-	document.getElementById("label_night").style.display="none";
 };

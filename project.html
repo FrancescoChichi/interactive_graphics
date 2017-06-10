@@ -3,45 +3,18 @@
 		<title>Interactive Project</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link rel="stylesheet"
+      href="css/bootstrap.min.css">
+
 		<style>
 			body {
 				margin: 0px;
 				background-color: #000000;
 				overflow: hidden;
-
+			}
 		</style>
 	</head>
-	<bodys>
-
-	<p style="position:absolute;
-    top: 50%;
-    left: 30%">
-
-    <label id = "label_player" style = "color:white">Choose the number of player: </label>
-
-		<select id="dropdown" name="cd-dropdown" class="cd-select">
-						<option value="1" >1</option>
-						<option value="2" >2</option>
-						<option value="3" >3</option>
-						<option value="4" >4</option>
-		</select>
-		<button id = "start">start</button>
-		<br>
-		<label id = "label_music" style = "color:white">Music: </label>
-		<button id = "music" style = "color:red">OFF</button>
-		<br>
-		<label id = "label_night" style = "color:white">Night mode: </label>
-		<select id="dayMode" name="cd-dayMode" class="cd-select">
-						<option value="day" >day</option>
-						<option value="night" >night</option>
-						<option value="cycle" >cycle</option>
-		</select>
-
-	</p>
-		<label id = "winner"  style = "color:white; display:none; font-size: 300px; top: 20%; left: 30%">"></label>
-
-		<div id="container"></div>
-
+	<body>
 		<script src="build/three.js"></script>
 		<script src="build/three.min.js"></script>
 
@@ -55,8 +28,105 @@
 
 		<script src="js/Halo.js"></script>
 		<script src="js/Ship.js"></script>
+
+	
+		<div class="container" id="mainPage">
+			<ul style="left:-10%">
+				<li>
+					<button id = "start" >Start The Game!</button>
+				</li>
+			</ul>
+  		<ul style="left:-5%">
+				<h2>Player:</h2>
+  			<li>
+    			<input type="radio" id="1" name="player" checked>
+    			<label for="1">1</label>
+    			<div class="check"></div>
+  			</li>
+  			<li>
+    			<input type="radio" id="2" name="player">
+					<label for="2">2</label>
+    			<div class="check"></div>
+  			</li>
+  			<li>
+    			<input type="radio" id="3" name="player">
+					<label for="3">3</label>
+    			<div class="check"></div>
+  			</li>
+				<li>
+					<input type="radio" id="4" name="player">
+					<label for="4">4</label>
+					<div class="check"></div>
+				</li>
+			</ul>
+			<ul >
+				<h2>Music:</h2>
+					<li>
+						<input type="radio" id="all" name="music" checked>
+						<label for="all">All</label>
+						<div class="check"></div>
+					</li>
+					<li>
+						<input type="radio" id="events" name="music">
+						<label for="events">Only Events</label>
+						<div class="check"></div>
+					</li>
+					<li>
+						<input type="radio" id="none" name="music">
+						<label for="none">None</label>
+						<div class="check"></div>
+					</li>
+			</ul>
+			<ul style="left:-5%">
+				<h2>Mode:</h2>
+					<li>
+						<input type="radio" id="day" name="mode" checked>
+						<label for="day">Day</label>
+						<div class="check"></div>
+					</li>
+					<li>
+						<input type="radio" id="night" name="mode">
+						<label for="night">Night</label>
+						<div class="check"></div>
+					</li>
+					<li>
+						<input type="radio" id="cycle" name="mode">
+						<label for="cycle">Cycle</label>
+						<div class="check"></div>
+					</li>
+			</ul>
+			<ul style="left:-10%">
+				<li>
+				<button id = "key" >Key Settings</button>
+				</li>
+			</ul>
+		</div>
+		<div class="menu" id="pause" style="display:none">
+			<ul >
+				<li>	<button id = "resume">Resume</button> </li>
+				<li> <button id="keyPause">Key Settings</button> </li>
+				<li> <button id = "menu">Main Menu</button> </li>
+			</ul>
+		</div>
+		<div id="keyMenu" class="menu" style="display:none">
+		  <table >
+		    <tr>
+		      <td>Player</td>
+		      <td>Move Left</td>
+		      <td>Move Right</td>
+		    </tr>
+		    <tr>
+			    <td>1</td>
+			    <td>Q</td>
+			    <td>W</td>
+		  	</tr>
+		  </table>
+  		<ul><li>	<button id = "back" style="position:relative; bottom:10%;">Back</button> </li></ul>
+		</div>
+		<label id = "winner"  style = "color:white; display:none; font-size: 300px; top: 20%; left: 30%">"></label>
+		<div id="container"></div>
+
 		<script src="js/Game.js"></script>
-		<script src="js/explosionParticle.js"></script>
 
 
 	</body>

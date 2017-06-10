@@ -4,10 +4,7 @@ THREE.Ship = function (controls) {
 	this.particleCount;
 	this.particlesL;
 	this.particlesR;
-	this.animationFrames = 100;
-	this.currentFram = 0;	
-
-
+	    
 	this.texture;
 	this.material;
 		
@@ -20,8 +17,8 @@ THREE.Ship = function (controls) {
 
 
 //MATERIALI
-	var materialPhong = new THREE.MeshPhongMaterial( { shininess: 50, color: 0xffffff, specular: 0x999999 } );
-	var materialPlayer = new THREE.MeshToonMaterial( { shininess: 50, 
+	var materialPhong = new THREE.MeshPhongMaterial( { shininess: 5, color: 0xffffff, specular: 0x999999 } );
+	var materialPlayer = new THREE.MeshToonMaterial( { shininess: 5, 
 				color: controls.color,
 				specular:0xFFFFFF,
 				reflectivity: 1 } );
@@ -34,14 +31,22 @@ THREE.Ship = function (controls) {
 
 
 	var metalMaterial = new THREE.MeshPhongMaterial( {
-		shininess: 80,
+		shininess: 50,
 		color: 0xffffff,
 		specular: 0xffffff,
 		side: THREE.DoubleSide,
 		map: metalTexture
 	} );
 
-	var torusTexture = new THREE.TextureLoader().load( "textures/halo.jpg" );
+	var metalBallMaterial = new THREE.MeshPhongMaterial( {
+		shininess: 50,
+		color: controls.color,
+		specular: controls.color,
+		side: THREE.DoubleSide,
+		map: metalTexture
+	} );
+
+	var torusTexture = new THREE.TextureLoader().load( "textures/halo/halo.jpg" );
 	torusTexture.repeat.set( 4, 1 );
 	torusTexture.wrapS = torusTexture.wrapT = THREE.RepeatWrapping;
 	torusTexture.magFilter = THREE.NearestFilter;
@@ -49,7 +54,7 @@ THREE.Ship = function (controls) {
 
 
 	var toruslMaterial = new THREE.MeshPhongMaterial( {
-		shininess: 80,
+		shininess: 5,
 		//color: 0x0000ff,
 		reflectivity: 1,
 		specular: 0xffffff,
@@ -57,12 +62,18 @@ THREE.Ship = function (controls) {
 	} );
 
 	var glassMaterial = new THREE.MeshToonMaterial( {
-		shininess: 10,
-		color: 0x0000ff,
-		specular: 0xffffff,
-		reflectivity: 1
+		color: controls.color,
+		specular: controls.color
 			} );
 
+	/*this.cubeCamera = new THREE.CubeCamera( 1, 10000, 128 );
+	this.cubeCamera.position.x = 4;
+	this.cubeCamera.position.y = 9;
+	this.cubeCamera.position.z = 0;
+	this.cubeCamera.rotateY(Math.PI);
+
+	var mirrorMaterial = new THREE.MeshBasicMaterial( { color: 0xffffff, envMap: this.cubeCamera.renderTarget } );
+*/
 //GEOMETRY
 	var points = [];
 	for ( var i = 0; i < 10; i ++ ) {
@@ -81,10 +92,11 @@ THREE.Ship = function (controls) {
 
 	this.light = new THREE.PointLight( controls.color, 5, 5, 2 );
 
-	this.light.add( new THREE.Mesh( sphereGeometry, new THREE.MeshToonMaterial( { 
+	this.light.add( new THREE.Mesh( sphereGeometry, metalBallMaterial));
+		/*new THREE.MeshToonMaterial( { 
 			color: controls.color,
 			specular:0xFFFFFF,
-			reflectivity: 1 } ) ) );
+			reflectivity: 1 } ) ) );*/
 
 	this.light.position.x = 0;
 	this.light.position.y = 7;
@@ -92,7 +104,7 @@ THREE.Ship = function (controls) {
 
 
 	//CREAZIONE GRUPPI
-		//scene.add( this.light );
+		scene.add( this.light );
 	var torus = addObject( torusGeometry, toruslMaterial, 0, 5, 0, Math.PI/2, 0, 0 );
 	torus.name = "torus";
 
@@ -109,16 +121,20 @@ THREE.Ship = function (controls) {
 	this.motors.add(this.motorL);
 	this.ship.add(this.motors);
 	this.group.add(this.ship);
+	//	this.group.add(addObject( sphereGeometry, metalMaterial, 0, 7, 0, 0, 0, 0 ));
+
 	this.glass = addObject( cubeGeometry, glassMaterial, 4, 9, 0, 0, 0, 0 );
+	//this.cabin.add(this.cubeCamera);
+
 	this.cabin.add(this.glass); //vetro
 	this.cabin.add(this.light); //palla di luce
 	this.ship.add(this.cabin);
 
-	this.particleCount = 60;
+	this.particleCount = 200;
   this.particlesL = [];
   this.particlesR = [];
 
-  this.texture = new THREE.TextureLoader().load("textures/oUBYu.png");
+  this.texture = THREE.ImageUtils.loadTexture("textures/oUBYu.png");
   this.material = new THREE.SpriteMaterial({
       color: controls.color, //0xff4502
       map: this.texture,
@@ -172,6 +188,13 @@ THREE.Ship = function (controls) {
 		return this.group;
 	}
 
+	this.render = function(render, scene){
+		
+		/*this.glass.visible = false;
+		//this.cubeCamera.position.copy( this.glass.position );
+		this.cubeCamera.updateCubeMap( renderer, scene );
+		this.glass.visible = true;*/
+	}
 	
 
 	function addObject( geometry, material, x, y, z, rx, ry, rz ) {
@@ -187,11 +210,17 @@ THREE.Ship = function (controls) {
 
 		return tmpMesh;
 	};
-
+var caso = 10;
 	this.updateParticle = function(){
 		for (var i = 0; i < this.particlesL.length; i++) {
 	    var particle = this.particlesL[i];
-	    if(particle.position.x < -10) {
+	    if (Math.random() > 0.8)
+	    	caso = 40;
+	    else if (Math.random() < 0.1)
+	    	caso = 0;
+	    else 
+	    	caso = 10;
+	    if(particle.position.x < -caso) {
 	      particle.position.x = -4;
 	      particle.velocity.x = -Math.random()-1;
 	      particle.material.opacity = 1;
@@ -204,7 +233,13 @@ THREE.Ship = function (controls) {
 
 		for (var i = 0; i < this.particlesR.length; i++) {
 	    var particle = this.particlesR[i];
-	    if(particle.position.x < -10) {
+	    if (Math.random() > 0.8)
+	    	caso = 40;
+	    else if (Math.random() < 0.1)
+	    	caso = 0;
+	    else 
+	    	caso = 10;
+	    if(particle.position.x < -caso) {
 	      particle.position.x = -4;
 	      particle.velocity.x = -Math.random()-1;
 	      particle.material.opacity = 1;
