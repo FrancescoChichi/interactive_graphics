@@ -24,6 +24,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 					specular: 0x999999,
 					map: shipTexture
 				} );
+
 	this.player = new THREE.Ship(controls);
 	this.ship = this.player.getAll();
 
@@ -66,7 +67,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 		this.ship.position.y = position[1];
 		this.ship.position.z = position[2];
 		this.ship.scale.set(scale, scale, scale);
-		scene.add(this.ship);
+		gameScene.add(this.ship);
 		this.ship.updateMatrixWorld();
 
 
@@ -123,15 +124,15 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 		controls.alive=false;
 
 
-		scene.remove(this.ship);
+		gameScene.remove(this.ship);
 
 		for (var i = 0; i < controls.walls.length; i++) 
-			scene.remove(controls.walls[i]);
+			gameScene.remove(controls.walls[i]);
 	}
 
 	this.render = function(time, controls, sound, music){
 		if (controls.alive){ //ANIMAZIONE MOVIMENTO UFO
-			this.ship.position.y = Math.sin( time*5 ) + 1.3 ;
+			this.player.render(-1.5);
 		}
 		else{
 			this.deathAnimationFrame++;
@@ -173,7 +174,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 	this.getOrientation = function(){
 		return this.orientation;
 	}
-	this.updatePlayerModel = function ( controls, scene, planeWidth, planeHeight, sound ) {
+	this.updatePlayerModel = function ( controls, gameScene, planeWidth, planeHeight, sound ) {
 		//GIRA A SINISTRA
 		this.torus = new THREE.Box3().setFromObject(this.player.getCabin());
 
@@ -244,14 +245,14 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 				controls.boxWall.push(bz);
 
 				var cube = new THREE.Mesh( geometry, this.wallMaterial);
-				scene.add(cube);
+				gameScene.add(cube);
 				controls.walls.push(cube);
 
 			}
 
 			else
 			{
-				scene.remove(controls.walls.pop());
+				gameScene.remove(controls.walls.pop());
 				controls.boxWall.pop();
 
 				var  com = new THREE.Vector3() ;
@@ -282,7 +283,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 				controls.boxWall.push(bz);
 
 				var cube = new THREE.Mesh( geometry, this.wallMaterial);
-				scene.add(cube);
+				gameScene.add(cube);
 				controls.walls.push(cube);
 
 			}

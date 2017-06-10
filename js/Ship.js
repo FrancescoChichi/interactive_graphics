@@ -104,7 +104,7 @@ THREE.Ship = function (controls) {
 
 
 	//CREAZIONE GRUPPI
-		scene.add( this.light );
+	//	scene.add( this.light );
 	var torus = addObject( torusGeometry, toruslMaterial, 0, 5, 0, Math.PI/2, 0, 0 );
 	torus.name = "torus";
 
@@ -188,12 +188,11 @@ THREE.Ship = function (controls) {
 		return this.group;
 	}
 
-	this.render = function(render, scene){
-		
-		/*this.glass.visible = false;
-		//this.cubeCamera.position.copy( this.glass.position );
-		this.cubeCamera.updateCubeMap( renderer, scene );
-		this.glass.visible = true;*/
+	this.render = function(angle){
+		this.group.position.y = Math.sin( time*5 ) + 1.3 ;
+
+		ship.getObjectByName("torus").rotateZ(THREE.Math.degToRad(angle));
+
 	}
 	
 

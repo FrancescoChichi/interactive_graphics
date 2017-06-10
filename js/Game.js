@@ -4,10 +4,10 @@
 				document.getElementById( 'container' ).innerHTML = "";
 			}
 			var container, stats;
-			var camera, controls, scene, renderer;
+			var camera, menuCamera, controls,controlsMenu, gameScene, menuScene, renderer;
 			var mesh, texture, geometry, material;
 			var worldWidth = 128, worldDepth = 128;
-
+			var ship, shipControl;
 
 			/*=====================*\
 			 * START CONFIGURATION *
@@ -34,7 +34,7 @@
 				moveRight: false,
 				leftClicked: 0,
 				rightClicked: 0,
-				color: 0xff3399,
+				color: 0xff0000,
 				alive: true,
 				velocity: velocity,
 				boxWall: [],
@@ -80,7 +80,7 @@
 				moveRight: false,
 				leftClicked: 0,
 				rightClicked: 0,
-				color: 0xff0000,
+				color: 0xff3399,
 				alive: true,
 				velocity: velocity,
 				boxWall: [],
@@ -117,16 +117,9 @@
 			 * END CONFIGURATION *
 			\*===================*/
 			
-//function renderGame() {
 
 	init();
 	animate();
-//}
-
-//function renderMenu(){
-//	var menu = new THREE.Menu(firstPlayerControls);
-//}	
-
 			function init() {
 				container = document.getElementById( 'container' );
  						
@@ -265,8 +258,10 @@
 
 			//CAMERA SETTINGS
 				camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 1000 );
-				
+				menuCamera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 1000 );
+
 				camera.position.set(0.0,90.0,0.0);
+				menuCamera.position.set(10.0,8.0,20.0);
 
 	
 				document.addEventListener( 'keydown', onKeyDown, false );
@@ -279,16 +274,25 @@
 				renderer.setSize( window.innerWidth, window.innerHeight );
 
 				//controls = new THREE.FirstPersonControls( camera );
+				controlsMenu = new THREE.OrbitControls( camera, renderer.domElement );
+				controlsMenu.maxPolarAngle = 1.5;
+				controlsMenu.minDistance= 0;
+				controlsMenu.maxDistance= worldWidth *1.5;
+
+
 				controls = new THREE.OrbitControls( camera, renderer.domElement );
 				controls.maxPolarAngle = 1.5;
 				controls.minDistance= 0;
 				controls.maxDistance= worldWidth *1.5;
-				scene = new THREE.Scene();
+
+
+				gameScene = new THREE.Scene();
+				menuScene = new THREE.Scene();
 
 				var skyBoxGeometry = new THREE.CubeGeometry( 10000, 10000, 10000 );
 				var skyBoxMaterial = new THREE.MeshBasicMaterial( { color: 0x9999ff});
 				var skyBox = new THREE.Mesh( skyBoxGeometry, skyBoxMaterial );
-				scene.add(skyBox);
+				gameScene.add(skyBox);
 	
 				groundGeometry = new THREE.PlaneBufferGeometry( planeWidth, planeHeight );
 				groundGeometry.rotateX( - Math.PI / 2 );
@@ -315,9 +319,12 @@
 
 				ground.receiveShadow = true;
 
-				scene.add( ground );
+				gameScene.add( ground );
 
+				shipControl = new THREE.Ship(firstPlayerControls);
+				ship = shipControl.getAll();
 
+				menuScene.add(ship);
 
 			//SKYBOX
 	
@@ -334,12 +341,12 @@
 			var reflectionCube = new THREE.CubeTextureLoader().load( urls );
 			reflectionCube.format = THREE.RGBFormat;
 
-			scene.background = reflectionCube;
+			gameScene.background = reflectionCube;
 
 
 
 				//MAP WALLS
-				scene.add(new THREE.Mesh(
+				gameScene.add(new THREE.Mesh(
 					new THREE.BoxBufferGeometry(
 							-worldWidth*4/5,
 							0.01,
@@ -353,7 +360,7 @@
 
 				halo = new THREE.Halo(worldWidth/2);
 
-				scene.add(halo.getTorus());
+				gameScene.add(halo.getTorus());
 
 
 				//POWER UP
@@ -362,20 +369,25 @@
 
 				light1 = new THREE.PointLight( 0xff0040, 2, lightPower );
 				light1.add( new THREE.Mesh( sphere, new THREE.MeshBasicMaterial( { color: 0xff0040 } ) ) );
-				scene.add( light1 );
+				gameScene.add( light1 );
 				
 				light2 = new THREE.PointLight( 0x0040ff, 2, lightPower );
 				light2.add( new THREE.Mesh( sphere, new THREE.MeshBasicMaterial( { color: 0x0040ff } ) ) );
-				scene.add( light2 );
+				gameScene.add( light2 );
 
 
 				light3 = new THREE.PointLight( 0x80ff80, 2, lightPower );
 				light3.add( new THREE.Mesh( sphere, new THREE.MeshBasicMaterial( { color: 0x80ff80 } ) ) );
-				scene.add( light3 );
+				gameScene.add( light3 );
 
 				light4 = new THREE.PointLight( 0xffaa00, 2, lightPower );
 				light4.add( new THREE.Mesh( sphere, new THREE.MeshBasicMaterial( { color: 0xffaa00 } ) ) );
-				scene.add( light4 );
+				gameScene.add( light4 );
+
+
+				var light = new THREE.AmbientLight( 0x404040, 5 ); // soft white light
+				menuScene.add(light);
+
 
 				//******renderer******
 				container.innerHTML = "";
@@ -449,7 +461,7 @@
 						for (var i = 0; i < alive; i++)
 						{
 							if (playersControl[i].alive){
-								players[i].updatePlayerModel(playersControl[i], scene, planeWidth, planeHeight);
+								players[i].updatePlayerModel(playersControl[i], gameScene, planeWidth, planeHeight);
 								indexPlayer = i;
 								c++;
 							}
@@ -598,10 +610,32 @@
  				}
  				if(startGame)
  				{
+
 					render();
 					stats.update();
 				}	
+				else
+				{
+					renderMenu();
+					stats.update();
+				}
+
 			}
+
+			function renderMenu() {
+				var delta = clock.getDelta();
+				controlsMenu.update(delta);
+ 										
+ 				time += 0.005;				
+ 				shipControl.render(0.0);
+ 				ship.rotateY(THREE.Math.degToRad(+0.2));
+ 				shipControl.updateParticle();
+				renderer.render( menuScene, menuCamera );
+			}
+
+
+
+
 			function render() {
 
 				var delta = clock.getDelta();
@@ -656,8 +690,8 @@
 					controls.target.set(players[playerToFollow].getPosition().x+x.x,players[playerToFollow].getPosition().y,players[playerToFollow].getPosition().z+x.z);
 				}
 
-			// render scene
-				renderer.render( scene, camera );
+
+				renderer.render( gameScene, camera );
 			}
 
 function Sound() {
