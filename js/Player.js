@@ -15,23 +15,6 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 	var position = [0,controls.dimension,0];
 	var rotation = [- Math.PI / 2, 0,0];
 
-
-	var textureLoader = new THREE.TextureLoader();
-	//scene.add(this.explosionParticle);
-
-	var shipTexture = new textureLoader.load( "textures/metal-texture256.jpg" );
-				shipTexture.repeat.set( 1, 1 );
-				shipTexture.wrapS = shipTexture.wrapT = THREE.RepeatWrapping;
-				shipTexture.format = THREE.RGBFormat;
-
-				
-	var shipMaterial = new THREE.MeshPhongMaterial( {
-		shininess: 10,
-		color: 0xffffff,
-		specular: 0x999999,
-		map: shipTexture
-	} );
-
 	this.player = new THREE.Ship(controls);
 	this.ship = this.player.getAll();
 
@@ -94,16 +77,8 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 
 		var geometry = new THREE.BoxBufferGeometry( size.x/2, size.y, size.z/2 );
 
-		var x = this.ship.position.x;//+1*this.orientation.x;
-		var y =0;
-		var z = this.ship.position.z;//+1*this.orientation.z;
-		
-		this.boxOgetto = this.boxOgetto.setFromCenterAndSize( new THREE.Vector3(x,y,z)
-			, new THREE.Vector3(size.x/3,size.y,size.z/1.5));
-
 		var bz = this.torus.clone();
 		controls.boxTesta = bz;
-		var centro = bz.getCenter();
 
 		this.poseBK = this.ship.position.clone();
 
@@ -230,14 +205,18 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 		{
 			var geometry = 0;
 
-			if ( this.turn ) 
+			if (! this.turn ) 
 			{
+				scene.remove(controls.walls.pop());
+				controls.boxWall.pop();
 
+			}
 				//MI STO MUOVENDO LUNGO L'ASSE Z
 				var  com = new THREE.Vector3() ;
 				com.addVectors (this.ship.position,this.poseBK);
 				com.divideScalar(2); 
 
+
 				if(this.orientation.z!=0)
 				{
 					var geometry = new THREE.BoxBufferGeometry(
@@ -255,6 +234,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 							controls.wallThickness
 						);
 				}	
+
 				geometry.translate(com.x,this.wallY,com.z);
 				geometry.computeBoundingBox();
 				var bz = geometry.boundingBox;
@@ -265,48 +245,9 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 				controls.walls.push(cube);
 				scene.add(cube);
 
-			}
+				this.turn = false;
 
-			else
-			{
-				scene.remove(controls.walls.pop());
-				controls.boxWall.pop();
-
-				var  com = new THREE.Vector3() ;
-				com.addVectors (this.ship.position,this.poseBK);
-				com.divideScalar(2); 
-				if(this.orientation.z!=0)
-				{
-					var geometry = new THREE.BoxBufferGeometry(
-							controls.wallThickness,
-							this.wallHeight,
-							Math.abs(this.ship.position.z - this.poseBK.z)+controls.wallThickness
-						);
-				}	
-				//MI STO MUOVENDO LUNGO L'ASSE X
-				else
-				{
-					var geometry = new THREE.BoxBufferGeometry(
-							Math.abs(this.ship.position.x - this.poseBK.x)+controls.wallThickness,
-							this.wallHeight,
-							controls.wallThickness
-						);
-				}
-
-				geometry.translate(com.x,this.wallY,com.z);
-				geometry.computeBoundingBox();
-				var bz = geometry.boundingBox;
-				controls.boxWall.push(bz);
-
-				var cube = new THREE.Mesh( geometry, this.wallMaterial);
-				controls.walls.push(cube);
-				scene.add(cube);
-
-			}
-		this.turn = false;
-
-	var bz = this.torus.clone();
-	controls.boxTesta = bz;
+				controls.boxTesta = this.torus.clone();
 		}
 	};
 
