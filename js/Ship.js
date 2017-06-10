@@ -118,7 +118,7 @@ THREE.Ship = function (controls) {
   this.particlesL = [];
   this.particlesR = [];
 
-  this.texture = new THREE.TextureLoader().load("textures/oUBYu.png");
+  this.texture = new THREE.TextureLoader().load("textures/fuoco.png");
   this.material = new THREE.SpriteMaterial({
       color: controls.color, //0xff4502
       map: this.texture,

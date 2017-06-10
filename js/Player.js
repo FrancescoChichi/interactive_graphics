@@ -107,7 +107,6 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 
 		this.poseBK = this.ship.position.clone();
 
-
 		this.ry = new THREE.Matrix3();
 		this.ry.set(0.0, 0.0, -1.0,
 					0.0, 1.0, 0.0,
@@ -118,7 +117,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 					0.0, 1.0, 0.0,
 					-1.0, 0.0,  0.0);
 
-	this.death = function(controls, sound)
+	this.remove = function(controls)
 	{
 		scene.remove(this.ship);
 		controls.alive=false;
@@ -134,6 +133,8 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 		else{
 			if (this.deathAnimationFrameCounter == 0)
 			{
+				//sound.muted = true;
+				sound.play();
 				this.explosionParticle = new THREE.explosionParticle(100,this.ship.getWorldPosition(),controls.color,this.ship.matrixWorld);
 			}
 			this.deathAnimationFrameCounter++;
@@ -171,14 +172,15 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 			//this.ship.applyMatrix(matrice);
 			for (var i = 0; i<controls.walls.length; i++)
 				if (controls.walls[i].scale.y >= 0 )
+				{
 					controls.walls[i].scale.y -= scale;
-
+				}
 
 			if (this.ship.getObjectByName("torus").position.y>=-this.ship.position.y*1.5)
 				this.ship.getObjectByName("torus").position.y--;
 
 			if(this.deathAnimationFrameCounter>this.deathAnimationFrame){
-				this.death(controls, sound);
+				this.remove(controls);
 				scene.remove(this.explosionParticle);
 				this.explosionParticle.remove();
 				return true;
@@ -260,8 +262,8 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 				controls.boxWall.push(bz);
 
 				var cube = new THREE.Mesh( geometry, this.wallMaterial);
-				scene.add(cube);
 				controls.walls.push(cube);
+				scene.add(cube);
 
 			}
 
@@ -297,20 +299,13 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 				controls.boxWall.push(bz);
 
 				var cube = new THREE.Mesh( geometry, this.wallMaterial);
-				scene.add(cube);
 				controls.walls.push(cube);
+				scene.add(cube);
 
 			}
 		this.turn = false;
 
 	var bz = this.torus.clone();
-	var x = this.ship.position.x;//+1*this.orientation.x;
-	var y =0;
-	var z = this.ship.position.z;//+1*this.orientation.z;
-
-	var centro = bz.getCenter();
-				
-	this.boxOgetto = this.boxOgetto.setFromCenterAndSize( new THREE.Vector3(x,y,z), this.boxOgetto.getSize());
 	controls.boxTesta = bz;
 		}
 	};

@@ -9,7 +9,8 @@ THREE.explosionParticle = function (particlesNumber,position, color,wordRotation
  	var material = new THREE.SpriteMaterial({
 				      color: color,
 				      map: new THREE.TextureLoader().load("textures/esplosione.png"),
-				     transparent: true,
+				     transparent: false,
+				     opacity:0.5
 				      });
 
 	  for (var i = 0; i < particlesNumber; i++) {
@@ -25,6 +26,7 @@ THREE.explosionParticle = function (particlesNumber,position, color,wordRotation
 	      particle.position.x =  position.x;
 		  particle.position.y =  position.y;
 		  particle.position.z =  position.z;
+
 		  particle.rotation.set(Math.random() * Math.PI,Math.random() * Math.PI,Math.random() * Math.PI);
 		  
 		  var x = Math.random() * raggio;
@@ -42,6 +44,10 @@ THREE.explosionParticle = function (particlesNumber,position, color,wordRotation
 	    this.particles.applyMatrix(wordRotation);
 		scene.add(this.particles);
 
+		this.particles.scale.x +=  1;
+		this.particles.scale.y +=  1;  
+		this.particles.scale.z +=  1;
+
 		this.render = function(animationStep){
 		for (var i = this.particles.children.length - 1; i >= 0; i--) {
 
@@ -49,10 +55,14 @@ THREE.explosionParticle = function (particlesNumber,position, color,wordRotation
 				(this.particlesDirection[i].x)/animationStep,
 				(this.particlesDirection[i].y)/animationStep,
 				(this.particlesDirection[i].z)/animationStep);
-
-			//matrice.scale(new THREE.Vector3(1.005,1.005,1.005));
+			var scale = 1/animationStep;
+			//matrice.scale(new THREE.Vector3(scale,scale,scale));
 
 			this.particles.children[i].applyMatrix(matrice);
+
+			this.particles.children[i].scale.x -= scale;
+			this.particles.children[i].scale.y -= scale;
+			this.particles.children[i].scale.z -= scale;
 
 			};
 		};

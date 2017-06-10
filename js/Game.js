@@ -251,11 +251,6 @@
 				controls.maxDistance= worldWidth *1.5;
 				scene = new THREE.Scene();
 
-				var skyBoxGeometry = new THREE.CubeGeometry( 10000, 10000, 10000 );
-				var skyBoxMaterial = new THREE.MeshBasicMaterial( { color: 0x9999ff});
-				var skyBox = new THREE.Mesh( skyBoxGeometry, skyBoxMaterial );
-				scene.add(skyBox);
-	
 				groundGeometry = new THREE.PlaneBufferGeometry( planeWidth, planeHeight );
 				groundGeometry.rotateX( - Math.PI / 2 );
 				//geometry.rotateY( - Math.PI / 4 );
@@ -371,106 +366,8 @@
 				{
 					if (!pause)
 					{
-						for (var i = 0; i < alive; i++){
-							if (Math.abs(this.players[i].getPosition().x)>planeWidth/2 || 
-								Math.abs(this.players[i].getPosition().z)>planeHeight/2 )
-							{
-									playersControl[i].alive = false;
-							}
-
-							var playerBox = playersControl[i].boxTesta;
-
-							for (var o = 0; o < alive; o++)
-							{	
-								var j = 0;
-
-								lunghezza = playersControl[o].boxWall.length
-
-								if (i==o)
-								{
-									lunghezza -= 2;
-								}
-								else
-								{
-									if (!playersControl[i].alive)
-										continue;
-									if (playersControl[o].alive)
-									{
-										if (playerBox.intersectsBox(playersControl[o].boxTesta)) 
-												{
-													console.log("player "+playersControl[i].number+" collide con player"+playersControl[o].number);
-													playersControl[i].alive = false;
-													playersControl[o].alive= false;
-													lunghezza = 0;
-												}
-									}
-									else
-										continue;
-								}
-							
-								for (; j<lunghezza; j++)
-									{		
-										if (!playersControl[o].alive)
-											continue;
-										if (playerBox.intersectsBox(playersControl[o].boxWall[j]))
-										{	
-											console.log('player '+playersControl[i].number+' collide con muro di '+playersControl[o].number)
-											playersControl[i].alive = false;
-										}
-									}
-								}
-							}
-						
-						//var ciclo = alive;
-						var c = 0;
-						var indexPlayer = 0;
-						for (var i = 0; i < alive; i++)
-						{
-							if (playersControl[i].alive){
-								players[i].updatePlayerModel(playersControl[i], scene);
-								indexPlayer = i;
-								c++;
-							}
-							else
-							{
-								playersControl[i].velocity= 0.0;
-							}
-							console.log(c,indexPlayer);
-						}
-						if (c== 1 && nPlayer>1)
-						{
-							playersControl[indexPlayer].velocity= 0.0;
-							playersControl[indexPlayer].boxTesta= new  THREE.Box3();
-							if (alive == 1)
-							{
-								controls.autoRotate = true;
-								camera.position.x = players[0].getPosition().x + 10;
-								camera.position.y = 10;
-								camera.position.z = players[0].getPosition().z + 10;
-
-								controls.target = players[0].getPosition();
-								//pause = true;
-								console.log("player "+playersControl[0].number+" win ");
-								
-							}
-
-						}
-
-						if (alive == 0)
-						{
-							if (nPlayer>1)
-							{
-								console.log(" draw ");
-								document.getElementById("winner").innerHTML = "draw";
-								document.getElementById("winner").style.display="block";
-							}
-							else{
-								console.log("GAME OVER!");
-								//document.getElementById("winner").innerHTML = "GAME OVER!";
-								//document.getElementById("winner").style.display="block";
-							}
-						}
-
+						collision();
+						checkEnd();
 					}
 				}
 				else
@@ -489,7 +386,7 @@
 						if(music)
 						{
 							sound.menu_sound.play();
-						}	
+						}
 
 
  						startGame = true; 
@@ -548,13 +445,15 @@
 
 					if(lightModality == "cycle")
 						halo.animate();
-
 					for (var i = 0; i < alive; i++)
-						if(players[i].render( time, playersControl[i], sound )){
-							console.log('MORTO');
+					{
+
+						if(players[i].render( time, playersControl[i], sound.death_sound ))
+						{
 							players.splice(i,1);
 							playersControl.splice(i,1);
 							alive--;
+						}
 					}
 				}
 
@@ -575,6 +474,114 @@
 			// render scene
 				renderer.render( scene, camera );
 			}
+
+			function collision()
+			{
+				for (var i = 0; i < alive; i++){
+										if (Math.abs(this.players[i].getPosition().x)>planeWidth/2 || 
+											Math.abs(this.players[i].getPosition().z)>planeHeight/2 )
+										{
+												playersControl[i].alive = false;
+										}
+
+										var playerBox = playersControl[i].boxTesta;
+
+										for (var o = 0; o < alive; o++)
+										{	
+											var j = 0;
+
+											lunghezza = playersControl[o].boxWall.length
+
+											if (i==o)
+											{
+												lunghezza -= 2;
+											}
+											else
+											{
+												if (!playersControl[i].alive)
+													continue;
+												if (playersControl[o].alive)
+												{
+													if (playerBox.intersectsBox(playersControl[o].boxTesta)) 
+															{
+																console.log("player "+playersControl[i].number+" collide con player"+playersControl[o].number);
+																playersControl[i].alive = false;
+																playersControl[o].alive= false;
+																lunghezza = 0;
+															}
+												}
+												else
+													continue;
+											}
+										
+											for (; j<lunghezza; j++)
+												{		
+													if (!playersControl[o].alive)
+														continue;
+													if (playerBox.intersectsBox(playersControl[o].boxWall[j]))
+													{	
+														console.log('player '+playersControl[i].number+' collide con muro di '+playersControl[o].number)
+														playersControl[i].alive = false;
+													}
+												}
+											}
+										}
+									
+			}
+
+			function checkEnd()
+			{
+				var c = 0;
+				var indexPlayer = 0;
+				for (var i = 0; i < alive; i++)
+				{
+					if (playersControl[i].alive){
+						players[i].updatePlayerModel(playersControl[i], scene);
+						indexPlayer = i;
+						c++;
+					}
+					else
+					{
+						playersControl[i].velocity= 0.0;
+					}
+				}
+				if (c== 1 && nPlayer>1)
+				{
+					playersControl[indexPlayer].velocity= 0.0;
+					playersControl[indexPlayer].boxTesta= new  THREE.Box3();
+
+					if (alive == 1)
+					{
+						controls.autoRotate = true;
+						camera.position.x = players[0].getPosition().x + 10;
+						camera.position.y = 10;
+						camera.position.z = players[0].getPosition().z + 10;
+
+						controls.target = players[0].getPosition();
+						//pause = true;
+						console.log("player "+playersControl[0].number+" win ");
+						
+					}
+
+				}
+
+				if (alive == 0)
+				{
+					if (nPlayer>1)
+					{
+						console.log(" draw ");
+						document.getElementById("winner").innerHTML = "draw";
+						document.getElementById("winner").style.display="block";
+					}
+					else{
+						console.log("GAME OVER!");
+						//document.getElementById("winner").innerHTML = "GAME OVER!";
+						//document.getElementById("winner").style.display="block";
+					}
+				}
+
+			}
+			
 
 function Sound() {
 
