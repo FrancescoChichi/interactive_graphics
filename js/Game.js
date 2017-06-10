@@ -279,25 +279,19 @@
 				scene.add( ground );
 
 
-				/*
+				var prefix = "textures/skybox/";
+				var suffix = ".jpg";
+				var urls  = [prefix+"halo"+suffix,  //back
+										 prefix+"haloBELLO"+suffix, 	//front
+										 prefix+"haloBELLO"+suffix,  //up
+										 prefix+"halo"+suffix,  //down
+										 prefix+"haloBELLO90"+suffix,  //left
+										 prefix+"haloBELLO90"+suffix]; //right
+				
+				var reflectionCube = new THREE.CubeTextureLoader().load( urls );
+				reflectionCube.format = THREE.RGBFormat;
 
-			//SKYBOX
-	
-			var prefix = "textures/skybox/";
-			var suffix = ".PNG";
-			var urls  = [prefix+"nz"+'.JPG', 
-						 prefix+"ny"+suffix, 
-						 prefix+"nz"+'.JPG', 
-						 prefix+"py"+'.JPG', 
-						 prefix+"px"+'.JPG', 
-						 prefix+"prova"+'.JPG'];
-			
-			var reflectionCube = new THREE.CubeTextureLoader().load( urls );
-			reflectionCube.format = THREE.RGBFormat;
-
-			scene.background = reflectionCube;
-
-				*/
+				scene.background = reflectionCube;
 
 
 				//MAP WALLS
