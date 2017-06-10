@@ -42,7 +42,7 @@ THREE.explosionParticle = function (particlesNumber,position, color,wordRotation
 	    }
 
 	    this.particles.applyMatrix(wordRotation);
-		scene.add(this.particles);
+		gameScene.add(this.particles);
 
 		this.particles.scale.x +=  1;
 		this.particles.scale.y +=  1;  
@@ -69,7 +69,7 @@ THREE.explosionParticle = function (particlesNumber,position, color,wordRotation
 
 		this.remove = function()
 		{
-			scene.remove(this.particles);
+			gameScene.remove(this.particles);
 		};
 
 };

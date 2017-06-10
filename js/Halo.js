@@ -8,7 +8,7 @@ THREE.Halo = function (size) {
 	var geom = new THREE.TorusBufferGeometry( dimension, 1, 32, 64 );
 	//var material = new THREE.MeshBasicMaterial( {
 			//	color: 0xff3300 });
-	var torusTexture = new THREE.TextureLoader().load( "textures/halo.jpg" );
+	var torusTexture = new THREE.TextureLoader().load( "textures/halo/halo.jpg" );
 	torusTexture.repeat.set( 100, 1 );
 	torusTexture.wrapS = torusTexture.wrapT = THREE.RepeatWrapping;
 	torusTexture.magFilter = THREE.NearestFilter;
