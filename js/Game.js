@@ -19,7 +19,7 @@ var lightModality = "";
 
 var time = Math.random();
 var pause = false;
-var velocity = 0.0;
+var velocity = 0.1;
 var dimension = 0.5;
 var wallThick = 0.8;
 var startGame = false;
@@ -41,8 +41,8 @@ var firstPlayerControls = {
 	walls: [],
 	wallThickness: wallThick,
 	boxTesta: 0,
-	keyL: 81,
-	keyR: 87
+	keyL: 87,
+	keyR: 81
 };
 var secondPlayerControls = {
 	number: 2,
@@ -120,7 +120,6 @@ var click=0;
 var cameraPose = new THREE.Vector3(0.0,90.0,0.0);
 var cameraPoseBK = new THREE.Vector3(0.0,90.0,0.0);
 var follow = false;
-var playerToFollow = -1;
 /*===================*\
  * END CONFIGURATION *
 \*===================*/
@@ -510,8 +509,6 @@ function animate()
 			if(nPlayer == 1){
 				follow = true;
 				camera.position.set(players[0].getPosition().x,players[0].getPosition().y,players[0].getPosition().z);
-
-				playerToFollow = 0;
 			}
 
 			};
@@ -580,20 +577,22 @@ function render() {
 			playersControl.splice(i,1);
 			alive--;
 		}
-	if(cameraPose.x!=cameraPoseBK.x||cameraPose.y!=cameraPoseBK.y||cameraPose.z!=cameraPoseBK.z){
+
+	if (follow && nPlayer == 1){
+		var x = new THREE.Vector3(players[0].getOrientation().x * 10,players[0].getOrientation().y * 10,players[0].getOrientation().z * 10);
+		var y = new THREE.Vector3(players[0].getOrientation().x * 5,
+			players[0].getOrientation().y * 5,
+			players[0].getOrientation().z * 5);
+
+		camera.position.set(players[0].getPosition().x-y.x,players[0].getPosition().y+5,players[0].getPosition().z-y.z);
+		controls.target.set(players[0].getPosition().x+x.x,players[0].getPosition().y,players[0].getPosition().z+x.z);
+	}
+	else if(cameraPose.x!=cameraPoseBK.x||cameraPose.y!=cameraPoseBK.y||cameraPose.z!=cameraPoseBK.z){
 		camera.position.set(cameraPose.x,cameraPose.y,cameraPose.z);
 		cameraPoseBK.set(cameraPose.x,cameraPose.y,cameraPose.z);
+		controls.target.set(0,0,0);
+		follow = false;
 	}
-	if (follow && nPlayer == 1){
-		var x = new THREE.Vector3(players[playerToFollow].getOrientation().x * 10,players[playerToFollow].getOrientation().y * 10,players[playerToFollow].getOrientation().z * 10);
-		var y = new THREE.Vector3(players[playerToFollow].getOrientation().x * 5,
-			players[playerToFollow].getOrientation().y * 5,
-			players[playerToFollow].getOrientation().z * 5);
-
-		camera.position.set(players[playerToFollow].getPosition().x-y.x,players[playerToFollow].getPosition().y+5,players[playerToFollow].getPosition().z-y.z);
-		controls.target.set(players[playerToFollow].getPosition().x+x.x,players[playerToFollow].getPosition().y,players[playerToFollow].getPosition().z+x.z);
-	}
-
 
 	renderer.render( gameScene, camera );
 }
