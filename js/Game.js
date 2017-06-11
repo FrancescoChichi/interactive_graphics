@@ -3,6 +3,7 @@ if ( ! Detector.webgl ) {
 	Detector.addGetWebGLMessage();
 	document.getElementById( 'container' ).innerHTML = "";
 }
+
 var container, stats;
 var camera, menuCamera, controls,controlsMenu, gameScene, menuScene, renderer;
 var mesh, texture, geometry, material;
@@ -58,8 +59,8 @@ var secondPlayerControls = {
 	walls: [],
 	wallThickness: wallThick,
 	boxTesta: new  THREE.Box3(),
-	keyL: 104,
-	keyR: 105
+	keyL: 105,
+	keyR: 104
 };
 
 var thirdPlayerControls = {
@@ -76,8 +77,8 @@ var thirdPlayerControls = {
 	walls: [],
 	wallThickness: wallThick,
 	boxTesta: new  THREE.Box3(),
-	keyL: 88,
-	keyR: 67
+	keyL: 67,
+	keyR: 88
 };
 var fourthPlayerControls = {
 	number: 4,
@@ -93,8 +94,8 @@ var fourthPlayerControls = {
 	walls: [],
 	wallThickness: wallThick,
 	boxTesta: new  THREE.Box3(),
-	keyL: 188,
-	keyR: 190
+	keyL: 190,
+	keyR: 188
 };
 
 var lightPower = 10; //power up intensity 
@@ -170,28 +171,11 @@ function init() {
 	var skyBox = new THREE.Mesh( skyBoxGeometry, skyBoxMaterial );
 	gameScene.add(skyBox);
 
+//GROUND
 	groundGeometry = new THREE.PlaneBufferGeometry( planeWidth, planeHeight );
 	groundGeometry.rotateX( - Math.PI / 2 );
-	//geometry.rotateY( - Math.PI / 4 );
 
-	var groundTexture = new THREE.TextureLoader().load( "textures/Tron_Background256.jpg" );
-	//var texture = new THREE.TextureLoader().load( "textures/patterns/bright_squares256.png" );
-	groundTexture.repeat.set( 10, 10 );
-	groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
-	groundTexture.magFilter = THREE.NearestFilter;
-	groundTexture.format = THREE.RGBFormat;
-
-	// GROUND
-	var groundMaterial = new THREE.MeshPhongMaterial( {
-		shininess: 0,
-		color: 0xffffff,
-		side: THREE.DoubleSide,
-		map: groundTexture
-	} );
-
-	material = new THREE.MeshBasicMaterial( { color: 0xffffff, map: groundTexture } ); 
-	ground = new THREE.Mesh( groundGeometry, groundMaterial );
-	//ground.scale.set( 1000, 1000, 1000 );
+	ground = new THREE.Mesh( groundGeometry, new Material(0,0xffffff,0,10,10).ground);
 
 	ground.receiveShadow = true;
 
@@ -203,7 +187,7 @@ function init() {
 	menuScene.add(ship);
 
 
-	menuScene.add(new THREE.Mesh(new Geometry([5, 5, 3, 64]).cylinder, new Material(50,0xffffff,0xffffff).metalDoubleSide));
+	menuScene.add(new THREE.Mesh(new Geometry([5, 5, 3, 64]).cylinder, new Material(50,0xffffff,0xffffff,5,1).metalDoubleSide));
 
 
 	//SKYBOX

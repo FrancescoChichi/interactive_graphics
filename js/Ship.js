@@ -6,7 +6,6 @@ THREE.Ship = function (controls) {
 	this.particlesR;
 	    
 	this.texture;
-	this.material;
 		
 	this.group = new THREE.Group();
   this.ship = new THREE.Group();
@@ -24,9 +23,9 @@ THREE.Ship = function (controls) {
 				reflectivity: 1 } );
 
 
-	var metalMaterial = new Material(50,0xffffff,0xffffff).metalDoubleSide;
-	var metalBallMaterial = new Material(50,controls.color,controls.color).metalDoubleSide;
-	var toruslMaterial = new Material(5,0xffffff,0xffffff,1).halo;
+	var motorMaterial = new Material(50,0xffffff,0xffffff,1,1).metalDoubleSide;
+	var metalBallMaterial = new Material(50,controls.color,controls.color,5,1).metalDoubleSide;
+	var toruslMaterial = new Material(5,0xffffff,0xffffff,4,1).halo;
 	var glassMaterial =new Material(0,controls.color,controls.color).glass;
 
 //GEOMETRY
@@ -66,18 +65,18 @@ THREE.Ship = function (controls) {
 
 	this.group.add(torus); //torus
 
-	this.motorR.add(addObject( cilinderGeometry, metalMaterial, -2, 8, 5.5, Math.PI/2, 0, Math.PI/2)); //razzo DX
-	this.motorL.add(addObject( cilinderGeometry, metalMaterial, -2, 8, -5.5, Math.PI/2, 0,Math.PI/2 )); //razzo SX
-	this.motorR.add(addObject( geometry, metalMaterial, -3.8, 8, 5.5, 0, Math.PI, Math.PI/2 )); //cono fondo razzo DX
-	this.motorL.add(addObject( geometry, metalMaterial, -3.8, 8, -5.5, 0, Math.PI, Math.PI/2 )); //cono fondo razzo SX
-	this.motorR.add(addObject( semiSphereGeometryR, metalMaterial, -0.6, 8, 5.5, 0, Math.PI, Math.PI/2 )); //punta razzo DX
-	this.motorL.add(addObject( semiSphereGeometryL, metalMaterial, -0.6, 8, -5.5, 0, Math.PI, Math.PI/2 )); //punta razzo SX
+	this.motorR.add(addObject( cilinderGeometry, motorMaterial, -2, 8, 5.5, Math.PI/2, 0, Math.PI/2)); //razzo DX
+	this.motorL.add(addObject( cilinderGeometry, motorMaterial, -2, 8, -5.5, Math.PI/2, 0,Math.PI/2 )); //razzo SX
+	this.motorR.add(addObject( geometry, motorMaterial, -3.8, 8, 5.5, 0, Math.PI, Math.PI/2 )); //cono fondo razzo DX
+	this.motorL.add(addObject( geometry, motorMaterial, -3.8, 8, -5.5, 0, Math.PI, Math.PI/2 )); //cono fondo razzo SX
+	this.motorR.add(addObject( semiSphereGeometryR, motorMaterial, -0.6, 8, 5.5, 0, Math.PI, Math.PI/2 )); //punta razzo DX
+	this.motorL.add(addObject( semiSphereGeometryL, motorMaterial, -0.6, 8, -5.5, 0, Math.PI, Math.PI/2 )); //punta razzo SX
 
 	this.motors.add(this.motorR);
 	this.motors.add(this.motorL);
 	this.ship.add(this.motors);
 	this.group.add(this.ship);
-	//	this.group.add(addObject( sphereGeometry, metalMaterial, 0, 7, 0, 0, 0, 0 ));
+
 
 	this.glass = addObject( cubeGeometry, glassMaterial, 4, 9, 0, 0, 0, 0 );
 	//this.cabin.add(this.cubeCamera);
@@ -90,18 +89,13 @@ THREE.Ship = function (controls) {
   this.particlesL = [];
   this.particlesR = [];
 
-  this.texture = THREE.ImageUtils.loadTexture("textures/oUBYu.png");
-  this.material = new THREE.SpriteMaterial({
-      color: controls.color, //0xff4502
-      map: this.texture,
-      transparent: true,
-      opacity: 0.5,
-      blending: THREE.AdditiveBlending
-  });
+
+  var particleMaterial = new Material(0,controls.color,0,0,0).particle;
+
   
   
   for (var i = 0; i < this.particleCount; i++) {
-      var particle = new THREE.Sprite(this.material.clone());
+      var particle = new THREE.Sprite(particleMaterial);
       particle.scale.multiplyScalar(Math.random() * 4);
 
       particle.velocity = new THREE.Vector3( -Math.random(), 0, 0 );

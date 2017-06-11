@@ -10,21 +10,6 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 	var rotation = [- Math.PI / 2, 0,0];
 
 
-	var textureLoader = new THREE.TextureLoader();
-
-	var shipTexture = new textureLoader.load( "textures/metal-texture256.jpg" );
-		shipTexture.repeat.set( 1, 1 );
-		shipTexture.wrapS = shipTexture.wrapT = THREE.RepeatWrapping;
-		shipTexture.format = THREE.RGBFormat;
-
-				
-	var shipMaterial = new THREE.MeshPhongMaterial( {
-		shininess: 10,
-		color: 0xffffff,
-		specular: 0x999999,
-		map: shipTexture
-	} );
-
 	this.player = new THREE.Ship(controls);
 	this.ship = this.player.getAll();
 
@@ -79,14 +64,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 
 		this.boxOgetto = this.torus.clone();
 
-
-
-		this.wallMaterial = new THREE.MeshBasicMaterial( {
-							color: controls.color, 
-							opacity: 0.8,
-							transparent: true,
-							reflectivity: 1 } 
-						);
+		this.wallMaterial = new Material(0,controls.color,0,0.8).basicTransparent;
 
 		this.turn = false;
 

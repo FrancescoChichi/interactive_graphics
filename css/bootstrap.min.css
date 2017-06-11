@@ -1,18 +1,22 @@
- body, html{
+body, html{
    height: 100%;
    background: #ffffff;
- 	font-family: sans-serif;
+  font-family: sans-serif;
  }
 
  .container{
    display: block;
    position: absolute;
-   top:20%;
-   left: 60%;
+   top:25%;
+   left: 65%;
    height: auto;
    width: 100%;
  }
-
+ .option{
+   position: relative;
+   height: auto;
+   width: auto ;
+ }
  .menu{
    display: block;
    position: absolute;
@@ -27,8 +31,9 @@ ul{
   position: relative;
 }
  h2 {
- 	color: #AAAAAA;
-  	font-family: sans-serif;
+  color: #AAAAAA;
+  margin: 2%;
+  font-family: sans-serif;
  }
 
 
@@ -36,7 +41,7 @@ ul{
    list-style: none;
    margin: 0;
    padding: 0;
- 	overflow: auto;
+  overflow: auto;
  }
 
  ul li{
@@ -44,7 +49,7 @@ ul{
    display: block;
    position: relative;
    float: left;
- 	border-bottom: 1px solid #333;
+  border-bottom: 1px solid #333;
  }
 
  ul li input[type=radio]{
@@ -76,10 +81,20 @@ ul{
    cursor: pointer;
    -webkit-transition: all 0.25s linear;
  }
- ul li:hover label{
- 	color: #FFFFFF;
+ ul li:hover label, div label{
+  color: #0046FF;
+ }
+ input[type=radio]:checked ~ .check {
+   border: 5px solid #0046FF;
  }
 
+ input[type=radio]:checked ~ .check::before{
+   background: #0046FF;
+ }
+
+ input[type=radio]:checked + label{
+   color: #FFFFFF;
+ }
  ul li .check{
    display: block;
    position: absolute;
@@ -89,9 +104,9 @@ ul{
    width: 25px;
    top: 30px;
    left: 20px;
- 	z-index: 5;
- 	transition: border .25s linear;
- 	-webkit-transition: border .25s linear;
+  z-index: 5;
+  transition: border .25s linear;
+  -webkit-transition: border .25s linear;
  }
 
  ul li:hover .check {
@@ -101,27 +116,32 @@ ul{
  ul li .check::before {
    display: block;
    position: absolute;
- 	content: '';
+  content: '';
    border-radius: 100%;
    height: 15px;
    width: 15px;
    top: 5px;
- 	 left: 5px;
+   left: 5px;
    margin: auto;
- 	transition: background 0.25s linear;
- 	-webkit-transition: background 0.25s linear;
+  transition: background 0.25s linear;
+  -webkit-transition: background 0.25s linear;
  }
 
- input[type=radio]:checked ~ .check {
-   border: 5px solid #0046FF;
- }
-
- input[type=radio]:checked ~ .check::before{
-   background: #0046FF;
- }
-
- input[type=radio]:checked ~ label{
-   color: #0099FF;
+ ul li button{
+     background-color: Transparent;
+      background-repeat:no-repeat;
+      border: none;
+      cursor:pointer;
+      overflow: hidden;
+      outline:none;
+      display: block;
+      font-size: 1.5em;
+      margin: 10px auto;
+      height: 30px;
+      padding: 25px 25px 35px 60px;
+       font-family: sans-serif;
+     color:  #AAAAAA;
+     font-weight: bold;
  }
  button,a{
       background-color: Transparent;
@@ -130,18 +150,19 @@ ul{
        cursor:pointer;
        overflow: hidden;
        outline:none;
-       display: block;
+
        font-size: 1.5em;
-       margin: 10px auto;
-       height: 30px;
-       padding: 25px 25px 35px 60px;
-       	font-family: sans-serif;
+
+        font-family: sans-serif;
       color:  #AAAAAA;
       font-weight: bold;
  }
  button:hover, ul li a:hover{
-   color: #0046FF;
+   color:  #0046FF;
  }
+  input[type=radio] ~ label:hover{
+    color:#0099FF;
+  }
 
  ul li a{
 
@@ -160,35 +181,51 @@ ul{
    color:  #AAAAAA;
    font-weight: bold;
  }
+ div button{
+
+   dbackground-color: Transparent;
+    background-repeat:no-repeat;
+    position:relative;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    display: block;
+    margin: 3%;
+    font-size: 1.5em;
+     font-family: sans-serif;
+   color:  #AAAAAA;
+
+ }
  .signature {
- 	margin: 10px auto;
- 	padding: 10px 0;
- 	width: 100%;
+  margin: 10px auto;
+  padding: 10px 0;
+  width: 100%;
  }
 
  .signature p{
- 	text-align: center;
- 	font-family: Helvetica, Arial, Sans-Serif;
- 	font-size: 0.85em;
- 	color: #AAAAAA;
+  text-align: center;
+  font-family: Helvetica, Arial, Sans-Serif;
+  font-size: 0.85em;
+  color: #AAAAAA;
  }
 
  .signature .much-heart{
- 	display: inline-block;
- 	position: relative;
- 	margin: 0 4px;
- 	height: 10px;
- 	width: 10px;
- 	background: #AC1D3F;
- 	border-radius: 4px;
- 	-ms-transform: rotate(45deg);
+  display: inline-block;
+  position: relative;
+  margin: 0 4px;
+  height: 10px;
+  width: 10px;
+  background: #AC1D3F;
+  border-radius: 4px;
+  -ms-transform: rotate(45deg);
      -webkit-transform: rotate(45deg);
      transform: rotate(45deg);
  }
 
  .signature .much-heart::before,
  .signature .much-heart::after {
- 	  display: block;
+    display: block;
    content: '';
    position: absolute;
    margin: auto;
@@ -200,15 +237,15 @@ ul{
  }
 
  .signature .much-heart::after {
- 	bottom: 0;
- 	top: auto;
- 	left: -4px;
+  bottom: 0;
+  top: auto;
+  left: -4px;
  }
 
  .signature a {
- 	color: #AAAAAA;
- 	text-decoration: none;
- 	font-weight: bold;
+  color: #AAAAAA;
+  text-decoration: none;
+  font-weight: bold;
  }
 
 
@@ -216,31 +253,31 @@ ul{
  by the way it is so weird when you look at your code a couple of years after you wrote it XD */
 
  .alert {
- 	box-sizing: border-box;
- 	background-color: #0DFF92;
- 	width: 100%;
- 	position: relative;
- 	top: 0;
- 	left: 0;
- 	z-index: 300;
- 	padding: 20px 40px;
- 	color: #333;
+  box-sizing: border-box;
+  background-color: #0DFF92;
+  width: 100%;
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 300;
+  padding: 20px 40px;
+  color: #333;
  }
 
  .alert h2 {
- 	font-size: 22px;
- 	color: #232323;
- 	margin-top: 0;
+  font-size: 22px;
+  color: #232323;
+  margin-top: 0;
  }
 
  .alert p {
- 	line-height: 1.6em;
- 	font-size:18px;
+  line-height: 1.6em;
+  font-size:18px;
  }
 
  .alert a {
- 	color: #232323;
- 	font-weight: bold;
+  color: #232323;
+  font-weight: bold;
  }/*# sourceMappingURL=bootstrap.min.css.map */
 
  table {
@@ -250,28 +287,28 @@ ul{
  }
 
  .myButton {
- 	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
- 	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
- 	box-shadow:inset 0px 1px 0px 0px #ffffff;
- 	background-color:transparent;
- 	-moz-border-radius:6px;
- 	-webkit-border-radius:6px;
- 	border-radius:6px;
- 	border:1px solid #0044ff;
- 	display:inline-block;
- 	cursor:pointer;
- 	color:#0044ff;
- 	font-family:Arial;
- 	font-size:15px;
- 	font-weight:bold;
- 	padding:6px 24px;
- 	text-decoration:none;
- 	text-shadow:0px 1px 0px #ffffff;
+  -moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
+  -webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+  box-shadow:inset 0px 1px 0px 0px #ffffff;
+  background-color:transparent;
+  -moz-border-radius:6px;
+  -webkit-border-radius:6px;
+  border-radius:6px;
+  border:1px solid #0044ff;
+  display:inline-block;
+  cursor:pointer;
+  color:#0044ff;
+  font-family:Arial;
+  font-size:15px;
+  font-weight:bold;
+  padding:6px 24px;
+  text-decoration:none;
+  text-shadow:0px 1px 0px #ffffff;
  }
  .myButton:hover {
- 	background-color:transparent;
+  background-color:transparent;
  }
  .myButton:active {
- 	position:relative;
- 	top:1px;
+  position:relative;
+  top:1px;
  }
