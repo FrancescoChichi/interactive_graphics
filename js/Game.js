@@ -1,4 +1,4 @@
-
+console.time('init');
 			if ( ! Detector.webgl ) {
 				Detector.addGetWebGLMessage();
 				document.getElementById( 'container' ).innerHTML = "";
@@ -20,7 +20,7 @@
 
 			var time = Math.random();
 			var pause = false;
-			var velocity = 0.0;
+			var velocity = 0.3;
 			var dimension = 0.5;
 			var wallThick = 0.8;
 			var startGame = false;
@@ -119,7 +119,7 @@
 
 	init();
 	animate();
-
+console.timeEnd('init');
 			function init() {
 				container = document.getElementById( 'container' );
  						
@@ -347,11 +347,12 @@
 
 
 				//POWER UP
-				animatedLights.push(new THREE.animatedLight( planeHeight,planeWidth,0xff0040,10));
-				animatedLights.push(new THREE.animatedLight( planeHeight,planeWidth,0x0040ff,10));
-				animatedLights.push(new THREE.animatedLight( planeHeight,planeWidth,0x80ff80,10));
-				animatedLights.push(new THREE.animatedLight( planeHeight,planeWidth,0xffaa00,10));
-
+				animatedLights.push(new THREE.animatedLight( planeHeight,planeWidth,Math.random() * 0xffffff,15));
+				animatedLights.push(new THREE.animatedLight( planeHeight,planeWidth,Math.random() * 0xffffff,15));
+				animatedLights.push(new THREE.animatedLight( planeHeight,planeWidth,Math.random() * 0xffffff,15));
+				animatedLights.push(new THREE.animatedLight( planeHeight,planeWidth,Math.random() * 0xffffff,15));
+				animatedLights.push(new THREE.animatedLight( planeHeight,planeWidth,Math.random() * 0xffffff,15));
+				
 				var light = new THREE.AmbientLight( 0x404040, 5 ); // soft white light
 				menuScene.add(light);
 
@@ -360,6 +361,7 @@
 				container.innerHTML = "";
 				container.appendChild( renderer.domElement );
 				stats = new Stats();
+				stats.showPanel( 1 );
 				container.appendChild( stats.dom );
 				//
 				window.addEventListener( 'resize', onWindowResize, false );
@@ -384,8 +386,10 @@
 				{
 					if (!pause)
 					{
+
 						collision();
 						checkEnd();
+					
 					}
 
 					else
@@ -538,11 +542,14 @@
 
 
 					for (var i = 0; i < alive; i++)
+					{
 						if(players[i].render( time, playersControl[i], sound, music )){
 							players.splice(i,1);
 							playersControl.splice(i,1);
 							alive--;
+							//pause = true;
 						}
+					}
 
 				}
 
@@ -567,6 +574,7 @@
 
 			function collision()
 			{
+
 				for (var i = 0; i < alive; i++){
 				if (Math.abs(this.players[i].getPosition().x)>planeWidth/2 || 
 					Math.abs(this.players[i].getPosition().z)>planeHeight/2 )
@@ -618,11 +626,12 @@
 						}
 					}
 				}
-			
+				
 			}
 
 			function checkEnd()
 			{
+
 				var c = 0;
 				var indexPlayer = 0;
 				for (var i = 0; i < alive; i++)

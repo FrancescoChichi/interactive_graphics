@@ -13,7 +13,7 @@ THREE.explosionParticle = function (particlesNumber, color,wordRotation,position
 				      color: color,
 				      map: new THREE.TextureLoader().load("textures/esplosione.png"),
 				     transparent: false,
-				     opacity:0.5
+				     opacity:1.0
 				      });
 	      
 	      this.particles.matrixAutoUpdate=false;
@@ -24,6 +24,7 @@ THREE.explosionParticle = function (particlesNumber, color,wordRotation,position
 	  	  materiale.rotation =  Math.random() * (Math.PI*2);
 	      var particle  = new THREE.Sprite(materiale);
 	      particle.position.copy(position);
+	      //particle.position.y = 0;
 		  particle.scale.copy(new THREE.Vector3(this.particleScale,this.particleScale,this.particleScale));
 	      this.particles.add(particle);
 
@@ -34,7 +35,7 @@ THREE.explosionParticle = function (particlesNumber, color,wordRotation,position
 		  x *= Math.floor(Math.random()*2) == 1 ? 1 : -1; 
 		  var z = Math.random() * raggio*2;
 		  z *= Math.floor(Math.random()*2) == 1 ? 1 : -1; 
-		  var y =0;
+		  var y = 0;
 		  var vec =new THREE.Vector3(x,y,z);
 		  vec.applyMatrix4(wordRotation);
 
@@ -61,7 +62,6 @@ THREE.explosionParticle = function (particlesNumber, color,wordRotation,position
 	   		 gameScene.add(line);*/
 			
 		    }
-		    console.log(this.curveDirection)
 			gameScene.add(this.particles);
 
 		this.render = function(animationStep){

@@ -8,8 +8,8 @@ THREE.Ship = function (controls) {
 	this.texture;
 	this.material;
 		
-	this.group = new THREE.Group();
-  this.ship = new THREE.Group();
+  this.group = new THREE.Group();
+  this.topShip = new THREE.Group();
   this.motors = new THREE.Group();
   this.motorL = new THREE.Group();
   this.motorR= new THREE.Group();
@@ -43,24 +43,17 @@ THREE.Ship = function (controls) {
 
 	var torusGeometry = new THREE.TorusBufferGeometry( 6, 2, 32, 64 );
 	var cubeGeometry = new THREE.BoxBufferGeometry( 2, 2, 4 );
-	//var cilinderGeometry = new THREE.CylinderBufferGeometry( 1, 1, 3, 64);
 	var cilinderGeometry = new Geometry([1, 1, 3, 64]).cylinder;
 
 	this.light = new THREE.PointLight( controls.color, 5, 5, 2 );
 
 	this.light.add( new THREE.Mesh( sphereGeometry, metalBallMaterial));
-		/*new THREE.MeshToonMaterial( { 
-			color: controls.color,
-			specular:0xFFFFFF,
-			reflectivity: 1 } ) ) );*/
-
 	this.light.position.x = 0;
 	this.light.position.y = 7;
 	this.light.position.z = 0;
 
 
 	//CREAZIONE GRUPPI
-	//	scene.add( this.light );
 	var torus = addObject( torusGeometry, toruslMaterial, 0, 5, 0, Math.PI/2, 0, 0 );
 	torus.name = "torus";
 
@@ -75,18 +68,17 @@ THREE.Ship = function (controls) {
 
 	this.motors.add(this.motorR);
 	this.motors.add(this.motorL);
-	this.ship.add(this.motors);
-	this.group.add(this.ship);
-	//	this.group.add(addObject( sphereGeometry, metalMaterial, 0, 7, 0, 0, 0, 0 ));
+	this.motors.name = 'motors';
+	this.topShip.add(this.motors);
+	this.group.add(this.topShip);
 
 	this.glass = addObject( cubeGeometry, glassMaterial, 4, 9, 0, 0, 0, 0 );
-	//this.cabin.add(this.cubeCamera);
 
 	this.cabin.add(this.glass); //vetro
 	this.cabin.add(this.light); //palla di luce
-	this.ship.add(this.cabin);
+	this.topShip.add(this.cabin);
 
-	this.particleCount = 200;
+	this.particleCount = 20;
   this.particlesL = [];
   this.particlesR = [];
 
@@ -126,7 +118,7 @@ THREE.Ship = function (controls) {
 
 
 	this.getShip = function(){
-		return this.ship;
+		return this.topShip;
 	};
 	this.getCabin = function(){
 		return this.cabin;
@@ -146,9 +138,7 @@ THREE.Ship = function (controls) {
 
 	this.render = function(angle){
 		this.group.position.y = Math.sin( time*5 ) + 1.3 ;
-
 		ship.getObjectByName("torus").rotateZ(THREE.Math.degToRad(angle));
-
 	}
 	
 
@@ -165,6 +155,7 @@ THREE.Ship = function (controls) {
 
 		return tmpMesh;
 	};
+	
 	
 	var caso = 10;
 
