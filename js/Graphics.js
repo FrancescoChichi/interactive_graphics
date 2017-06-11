@@ -25,7 +25,6 @@ function Material(shininess,color,specular, reflectivity){
 		shininess: shininess,
 		color: color,
 		specular: specular,
-		reflectivity: reflectivity,
 		map: this.haloTexture
 	} );
 

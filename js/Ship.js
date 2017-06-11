@@ -165,44 +165,53 @@ THREE.Ship = function (controls) {
 
 		return tmpMesh;
 	};
-var caso = 10;
-	this.updateParticle = function(){
-		for (var i = 0; i < this.particlesL.length; i++) {
-	    var particle = this.particlesL[i];
-	    if (Math.random() > 0.8)
-	    	caso = 40;
-	    else if (Math.random() < 0.1)
-	    	caso = 0;
-	    else 
-	    	caso = 10;
-	    if(particle.position.x < -caso) {
-	      particle.position.x = -4;
-	      particle.velocity.x = -Math.random()-1;
-	      particle.material.opacity = 1;
-	    }
+	
+	var caso = 10;
 
-	    particle.material.opacity -= 0.1;
-	    particle.velocity.x -= 0.001;
-	    particle.position.add(particle.velocity);
+	this.updateParticle = function(){
+
+		for (var i = 0; i < this.particlesL.length; i++) {
+
+		    var particle = this.particlesL[i];
+
+
+		    if (Math.random() > 0.8)
+		    	caso = 40;
+		    else if (Math.random() < 0.1)
+		    	caso = 0;
+		    else 
+		    	caso = 10;
+
+		    if(particle.position.x < -caso) {
+		      particle.position.x = -4;
+		      particle.velocity.x = -Math.random()-1;
+		      particle.material.opacity = 1;
+		    }
+
+		    particle.material.opacity -= 0.1;
+		    particle.velocity.x -= 0.001;
+		    particle.position.add(particle.velocity);
+
 		}
 
 		for (var i = 0; i < this.particlesR.length; i++) {
-	    var particle = this.particlesR[i];
-	    if (Math.random() > 0.8)
-	    	caso = 40;
-	    else if (Math.random() < 0.1)
-	    	caso = 0;
-	    else 
-	    	caso = 10;
-	    if(particle.position.x < -caso) {
-	      particle.position.x = -4;
-	      particle.velocity.x = -Math.random()-1;
-	      particle.material.opacity = 1;
-	    }
+		    var particle = this.particlesR[i];
+		    if (Math.random() > 0.8)
+		    	caso = 40;
+		    else if (Math.random() < 0.1)
+		    	caso = 0;
+		    else 
+		    	caso = 10;
+		    if(particle.position.x < -caso) {
+		      particle.position.x = -4;
+		      particle.velocity.x = -Math.random()-1;
+		      particle.material.opacity = 1;
+		    }
 
-	    particle.material.opacity -= 0.1;
-	    particle.velocity.x -= 0.001;
-	    particle.position.add(particle.velocity);
-		}
+		    particle.material.opacity -= 0.1;
+		    particle.velocity.x -= 0.001;
+		    particle.position.add(particle.velocity);
+
+			}
 	};
 };

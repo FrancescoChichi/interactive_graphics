@@ -20,13 +20,14 @@
 
 			var time = Math.random();
 			var pause = false;
-			var velocity = 0.2;
+			var velocity = 0.0;
 			var dimension = 0.5;
 			var wallThick = 0.8;
 			var startGame = false;
 			var music = 0;
 			var hemiLight;
 			var halo;
+			var animatedLights = [];
 
 			var firstPlayerControls = {
 				number: 1,
@@ -118,6 +119,7 @@
 
 	init();
 	animate();
+
 			function init() {
 				container = document.getElementById( 'container' );
  						
@@ -229,6 +231,7 @@
 
 
 
+
 			sound = new Sound();
 
 			//CAMERA SETTINGS
@@ -263,6 +266,7 @@
 
 				gameScene = new THREE.Scene();
 				menuScene = new THREE.Scene();
+
 
 				var skyBoxGeometry = new THREE.CubeGeometry( 10000, 10000, 10000 );
 				var skyBoxMaterial = new THREE.MeshBasicMaterial( { color: 0x9999ff});
@@ -343,26 +347,10 @@
 
 
 				//POWER UP
-				var sphere = new THREE.SphereGeometry( 0.5, 16, 8 );
-
-
-				light1 = new THREE.PointLight( 0xff0040, 2, lightPower );
-				light1.add( new THREE.Mesh( sphere, new THREE.MeshBasicMaterial( { color: 0xff0040 } ) ) );
-				gameScene.add( light1 );
-				
-				light2 = new THREE.PointLight( 0x0040ff, 2, lightPower );
-				light2.add( new THREE.Mesh( sphere, new THREE.MeshBasicMaterial( { color: 0x0040ff } ) ) );
-				gameScene.add( light2 );
-
-
-				light3 = new THREE.PointLight( 0x80ff80, 2, lightPower );
-				light3.add( new THREE.Mesh( sphere, new THREE.MeshBasicMaterial( { color: 0x80ff80 } ) ) );
-				gameScene.add( light3 );
-
-				light4 = new THREE.PointLight( 0xffaa00, 2, lightPower );
-				light4.add( new THREE.Mesh( sphere, new THREE.MeshBasicMaterial( { color: 0xffaa00 } ) ) );
-				gameScene.add( light4 );
-
+				animatedLights.push(new THREE.animatedLight( planeHeight,planeWidth,0xff0040,10));
+				animatedLights.push(new THREE.animatedLight( planeHeight,planeWidth,0x0040ff,10));
+				animatedLights.push(new THREE.animatedLight( planeHeight,planeWidth,0x80ff80,10));
+				animatedLights.push(new THREE.animatedLight( planeHeight,planeWidth,0xffaa00,10));
 
 				var light = new THREE.AmbientLight( 0x404040, 5 ); // soft white light
 				menuScene.add(light);
@@ -375,7 +363,8 @@
 				container.appendChild( stats.dom );
 				//
 				window.addEventListener( 'resize', onWindowResize, false );
-				
+				//this.prova = new THREE.animatedLight(planeWidth,planeHeight,0xff0040,20);
+
 			}
 
 				
@@ -536,41 +525,27 @@
 				var delta = clock.getDelta();
 				controls.update( delta );
 
-
-
-
-				var dist = 30;
-				var scale = 0.9;
-				var vel = 3;
-				var boh = 100;
 				if(!pause)
 				{				
 					time += 0.005;				
 
-					light1.position.x = Math.sin( time * vel * 0.7 ) * boh;
-					light1.position.y = 1;
-					light1.position.z = Math.cos( time * vel * 0.3 ) * boh;
-					light2.position.x = Math.cos( time * vel * 0.3 ) * boh;
-					light2.position.y = 1;
-					light2.position.z = Math.sin( time * vel * 0.7 ) * boh;
-					light3.position.x = Math.sin( time * vel * 0.7 ) * boh;
-					light3.position.y = 1;
-					light3.position.z = Math.sin( time * vel * 0.5 ) * boh;
-					light4.position.x = Math.sin( time * vel * 0.3 ) * boh;
-					light4.position.y = 1;
-					light4.position.z = Math.sin( time * vel * 0.5 ) * boh;
-						
 					if(lightModality == "cycle")
 						halo.animate();
 
+					for (var i = animatedLights.length - 1; i >= 0; i--) {
+						animatedLights[i].render();
+					};
+
+
+					for (var i = 0; i < alive; i++)
+						if(players[i].render( time, playersControl[i], sound, music )){
+							players.splice(i,1);
+							playersControl.splice(i,1);
+							alive--;
+						}
+
 				}
 
-				for (var i = 0; i < alive; i++)
-					if(players[i].render( time, playersControl[i], sound, music )){
-						players.splice(i,1);
-						playersControl.splice(i,1);
-						alive--;
-					}
 				if(cameraPose.x!=cameraPoseBK.x||cameraPose.y!=cameraPoseBK.y||cameraPose.z!=cameraPoseBK.z){
 					camera.position.set(cameraPose.x,cameraPose.y,cameraPose.z);
 					cameraPoseBK.set(cameraPose.x,cameraPose.y,cameraPose.z);

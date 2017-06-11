@@ -123,7 +123,6 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 	{
 		controls.alive=false;
 
-
 		gameScene.remove(this.ship);
 
 		for (var i = 0; i < controls.walls.length; i++) 
@@ -131,18 +130,20 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 	}
 
 	this.render = function(time, controls, sound, music){
+
+		
 		if (controls.alive){ //ANIMAZIONE MOVIMENTO UFO
 			this.player.render(-1.5);
+		this.player.updateParticle();
 		}
 		else{
 
 			if (this.deathAnimationFrameCounter== 0)
 			{
-				//sound.muted = true;
-				this.explosionParticle = new THREE.explosionParticle(100,this.ship.getWorldPosition(),controls.color,this.ship.matrixWorld);
+				this.explosionParticle = new THREE.explosionParticle(50,controls.color,this.ship.matrixWorld,this.ship.getWorldPosition() );
 			}
 			this.deathAnimationFrameCounter++;
-			this.explosionParticle.render(this.deathAnimationFrame);
+			this.explosionParticle.render(this.deathAnimationFrame*7);
 
 			this.player.getCabin().position.y++;
 			this.player.getCabin().position.x++;
@@ -209,8 +210,6 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 
 		this.ship.position.x=this.ship.position.x+(this.orientation.x*controls.velocity);
 		this.ship.position.z=this.ship.position.z+(this.orientation.z*controls.velocity);
-
-		this.player.updateParticle();
 
 		this.ship.getObjectByName("torus").rotateZ(THREE.Math.degToRad(-1.5));
 
