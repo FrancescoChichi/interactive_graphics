@@ -116,7 +116,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 
 		
 		if (controls.alive){ //ANIMAZIONE MOVIMENTO UFO
-			this.player.render(-1.5);
+			this.player.render(-2);
 			this.player.updateParticle();
 		}
 		else{
@@ -156,14 +156,6 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 			
 			this.ship.scale.add(scale);
 			
-			/*
-			if (this.ship.scale.x>=0)
-				this.ship.scale.x -= 0.1;
-			if (this.ship.scale.y>=0)
-				this.ship.scale.y -= 0.1;
-			if (this.ship.scale.z>=0)
-				this.ship.scale.z -= 0.1;
-			*/
 			if (this.ship.getObjectByName("torus").position.y>=-this.ship.position.y*1.5)
 				this.ship.getObjectByName("torus").position.y--;
 		}

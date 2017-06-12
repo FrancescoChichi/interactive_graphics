@@ -7,12 +7,19 @@ background-color: Transparent;  font-family: 'Arial', sans-serif;
 .container{
   display: block;
   position: absolute;
-  margin: 40px auto;
+  /*margin: 40px auto;
   height: auto;
   width: 40%;
   padding: 20px;
   top:15%;
-  left: 30%;
+  left: 30%;*/
+  width: 45%;
+  height: 100%;
+  padding-top:5%;
+  padding-bottom: 5%;
+  left: 50%;
+  background-color: rgb(138, 138, 92);
+  background-color: rgba(138, 138, 92,0.7);
 }
 
 .keySettings{
@@ -41,6 +48,10 @@ background-color: Transparent;  font-family: 'Arial', sans-serif;
 
 h2 {
   color: #0066ff;
+  padding-left: 10px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  margin: 0;
 }
 td {
   color: #0066ff;
@@ -74,18 +85,21 @@ button{
 
 }
 
-
+ul {
+  position: relative;
+  /*height: 15%;*/
+}
 ul li{
   color: #0066ff;
+  display:inline-block;
   background-color: Transparent;
-  display: block;
   position: relative;
-  float: left;
+  /*float: left;
   width: auto;
   height: 100px;
   border-bottom: 1px solid #333;
   float: left;
-  margin-left: 3em;
+  margin-left: 3em;*/
 }
 
 ul li input[type=radio]{

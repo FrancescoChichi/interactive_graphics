@@ -44,6 +44,9 @@ console.time('init');
 				walls: [],
 				wallThickness: wallThick,
 				boxTesta: new  THREE.Box3(),
+				keyL: 87,
+				keyR: 81
+
 			};
 			var secondPlayerControls = {
 				number: 2,
@@ -58,6 +61,9 @@ console.time('init');
 				walls: [],
 				wallThickness: wallThick,
 				boxTesta: new  THREE.Box3(),
+				keyL: 105,
+				keyR: 104
+
 			};
 
 			var thirdPlayerControls = {
@@ -73,6 +79,9 @@ console.time('init');
 				walls: [],
 				wallThickness: wallThick,
 				boxTesta: new  THREE.Box3(),
+				keyL: 67,
+				keyR: 88
+
 			};
 			var fourthPlayerControls = {
 				number: 4,
@@ -87,10 +96,11 @@ console.time('init');
 				walls: [],
 				wallThickness: wallThick,
 				boxTesta: new  THREE.Box3(),
+				keyL: 190,
+				keyR: 188
 			};
 			
 			
-			var lightPower = 10; //power up intensity 
 
 			playersControl = [firstPlayerControls, secondPlayerControls, thirdPlayerControls, fourthPlayerControls];
 			players = [];
@@ -124,115 +134,7 @@ console.time('init');
 console.timeEnd('init');
 			function init() {
 				container = document.getElementById( 'container' );
- 						
- 			/*sound = new Sound();
-			sound.menu_sound.play();*/
-
-			//KEYBOARD CONTROLS
-			/*
-				var onKeyDown = function ( event ) {
-					switch ( event.keyCode ) {
-						case 87: // q
-							firstPlayerControls.moveLeft = true;
-							break;
-						case 81: // w
-							firstPlayerControls.moveRight = true;
-							break;
-
-						case 105: // a
-							secondPlayerControls.moveLeft = true;
-							break;
-						case 104: // d
-							secondPlayerControls.moveRight = true;
-							break;
-						
-						case 86: // a
-							thirdPlayerControls.moveLeft = true;
-							break;
-						case 67: // d
-							thirdPlayerControls.moveRight = true;
-							break;
-													
-						case 188: // a
-							fourthPlayerControls.moveLeft = true;
-							break;
-						case 190: // d
-							fourthPlayerControls.moveRight = true;
-							break;
-						case 27: // ESC
-							pause = !pause;
-							break;
-						case 49:
-							follow = false;
-							cameraPose.set(0.0,90.0,0.0);
-							break;
-						case 50:
-							follow = false;
-							cameraPose.set(-61.5,16.0,-63.7);
-							break;
-						case 51:
-							follow = false;
-							cameraPose.set(-61.5,16.0,63.7);
-							break;
-						case 52:
-							follow = false;
-							cameraPose.set(61.5,16.0,63.7);
-							break;
-						case 53:
-							follow = false;
-							cameraPose.set(61.5,16.0,-63.7);
-							break;
-						case 54:
-						if(nPlayer == 1){
-							follow = true;
-							cameraPose.set(players[0].getPosition().x,players[0].getPosition().y,players[0].getPosition().z);
-							playerToFollow = 0;
-						}
-							break;
-					}
-				};
-				var onKeyUp = function ( event ) {
-					switch( event.keyCode ) {
-						case 87: // w
-							firstPlayerControls.moveLeft = false;
-							firstPlayerControls.pushed = false;
-							break;
-						case 81: // q
-							firstPlayerControls.moveRight = false;
-							firstPlayerControls.pushed = false;
-							break;
-
-						case 105: // numpad 8
-							secondPlayerControls.moveLeft = false;
-							secondPlayerControls.pushed = false;
-							break;
-						case 104: // numpad 9
-							secondPlayerControls.moveRight = false;
-							secondPlayerControls.pushed = false;
-							break;
-						
-						case 86: // c
-							thirdPlayerControls.moveLeft = false;
-							thirdPlayerControls.pushed = false;
-							break;
-						case 67: // v
-							thirdPlayerControls.moveRight = false;
-							thirdPlayerControls.pushed = false;
-							break;
-													
-						case 188: // period
-							fourthPlayerControls.moveLeft = false;
-							fourthPlayerControls.pushed = false;
-							break;
-						case 190: // comma
-							fourthPlayerControls.moveRight = false;
-							fourthPlayerControls.pushed = false;
-							break;
-					}
-				};
-
-			*/
-
+ 
 
 
 			sound = new Sound();
@@ -302,15 +204,19 @@ console.timeEnd('init');
 
 				ground.receiveShadow = true;
 
-				gameScene.add( ground );
+				gameScene.add(ground);
 
 				shipControl = new THREE.Ship(firstPlayerControls);
 				ship = shipControl.getAll();
 				ship.scale.set(.5,.5,.5);
 				menuScene.add(ship);
-				menuScene.add(new THREE.Mesh(new Geometry([5, 5, 3, 64]).cylinder, new Material(50,0xffffff,0xffffff,5,1).metalDoubleSide));
+				var piedistallo = new THREE.Mesh(new Geometry([5, 5, 1, 64]).cylinder,
+					new Material(50,0xffffff,0xffffff,5,1).metalDoubleSide);
+				piedistallo.position.set(0,1,0);
 
+				menuScene.add(piedistallo);
 
+				menuScene.add(ground.clone());
 
 			//SKYBOX
 	
@@ -321,7 +227,8 @@ console.timeEnd('init');
 									 prefix+"haloBELLO"+suffix, 	//front
 									 prefix+"haloBELLO"+suffix,  //up
 									 prefix+"halo"+suffix,  //down
-									 prefix+"haloBELLO90"+suffix,  //left
+
+							 prefix+"haloBELLO90"+suffix,  //left
 									 prefix+"haloBELLO90"+suffix]; //right
 			
 			var reflectionCube = new THREE.CubeTextureLoader().load( urls );
@@ -329,6 +236,7 @@ console.timeEnd('init');
 
 			gameScene.background = reflectionCube;
 
+			menuScene.background =reflectionCube
 
 
 				//MAP WALLS
@@ -434,6 +342,30 @@ console.timeEnd('init');
 				else //GIOCO IN PAUSA
  				{
 
+	document.getElementById("FirstL").onclick = function(){
+			playersControl[0].keyL = -1;
+		}
+		document.getElementById("FirstR").onclick = function(){
+			playersControl[0].keyR = -1;
+		}
+		document.getElementById("SecondL").onclick = function(){
+			playersControl[1].keyL = -1;
+		}
+		document.getElementById("SecondR").onclick = function(){
+			playersControl[1].keyR = -1;
+		}
+		document.getElementById("ThirdL").onclick = function(){
+			playersControl[2].keyL = -1;
+		}
+		document.getElementById("ThirdR").onclick = function(){
+			playersControl[2].keyR = -1;
+		}
+		document.getElementById("FourthL").onclick = function(){
+			playersControl[3].keyL = -1;
+		}
+		document.getElementById("FourthR").onclick = function(){
+			playersControl[3].keyR = -1;
+		}
 
 					document.getElementById("key").onclick = function()
 					{
@@ -448,6 +380,7 @@ console.timeEnd('init');
 
  					document.getElementById("start").onclick = function()
 					{
+						var shipClone = ship.clone();
 
 						if(  document.getElementById("1").checked)
 						nPlayer = 1;
@@ -524,12 +457,10 @@ console.timeEnd('init');
  				time += 0.005;				
  				shipControl.render(0.0);
  				ship.rotateY(THREE.Math.degToRad(+0.2));
+ 				shipControl.render(2);
  				shipControl.updateParticle();
 				renderer.render( menuScene, menuCamera );
 			}
-
-
-
 
 			function render() {
 

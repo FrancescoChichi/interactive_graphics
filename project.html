@@ -1,39 +1,39 @@
 <!DOCTYPE html>
-	<head background="images/background.jpg">
-		<title>Interactive Project</title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <head background="images/background.jpg">
+    <title>Interactive Project</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet"
       href="css/style.css">
 
-		<style>
-			body {
-				margin: 0px;
-				background-color: #000000;
-				overflow: hidden;
-			}
-		</style>
-	</head>
-	<body>
-		<script src="build/three.js"></script>
-		<script src="build/three.min.js"></script>
+    <style>
+      body {
+        margin: 0px;
+        background-color: #000000;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="build/three.js"></script>
+    <script src="build/three.min.js"></script>
 
-		<script src="js/controls/OrbitControls.js"></script>
+    <script src="js/controls/OrbitControls.js"></script>
 
-		<script src="js/Detector.js"></script>
-		<script src="js/libs/stats.min.js"></script>
-		<script src="./js/GPUParticleSystem.js"></script>
+    <script src="js/Detector.js"></script>
+    <script src="js/libs/stats.min.js"></script>
+    <script src="./js/GPUParticleSystem.js"></script>
 
-		<script src="js/Graphics.js"></script>
-		<script src="js/KeyboardControls.js"></script>
+    <script src="js/Graphics.js"></script>
+    <script src="js/KeyboardControls.js"></script>
 
 
 <div class="container"  id="mainPage">
-		
-	<ul style="position:relative; left:30%">
+    
+  <ul style="height:10%">
   <button id = "start" >Start The Game!</button>
 </ul>
-  <ul style="position:relative; left:40%">
+  <ul>
     <h2>Player selection:</h2>
 
   <li>
@@ -65,7 +65,7 @@
   </li>
   
 </ul>
-<ul style="position:relative; left:40%">
+<ul>
   <h2>Music:</h2>
   <li>
     <input type="radio" id="all" name="music" checked>
@@ -83,7 +83,7 @@
     <div class="check"><div class="inside"></div></div>
   </li>
 </ul>
-<ul style="position:relative; left:40%">
+<ul>
   <h2>Mode:</h2>
 
   <li>
@@ -101,21 +101,21 @@
     <label for="cycle">Cycle</label>
     <div class="check"><div class="inside"></div></div>
   </li>
-	</ul>
-	 <ul style="position:relative; left:30%">
-	  <button id = "key" >Key Settings</button>
-	</ul>
+  </ul>
+   <ul >
+    <button id = "key" >Key Settings</button>
+  </ul>
 </div>
 
 <div class="pause" id="pause" style="display:none">
-			<ul >
-				<li>	<button id = "resume">Resume</button> </li>
-				<li> <button id="keyPause">Key Settings</button> </li>
-				<li> <button id = "menu">Main Menu</button> </li>
-			</ul>
-		</div>
+      <ul >
+        <li>  <button id = "resume">Resume</button> </li>
+        <li> <button id="keyPause">Key Settings</button> </li>
+        <li> <button id = "menu">Main Menu</button> </li>
+      </ul>
+    </div>
 <div id="keyMenu" class="keySettings" style="display:none">
-      <ul style="left:50%">
+      <ul>
         <table >
           <tr>
             <td>Player</td>
@@ -146,15 +146,16 @@
         <li>  <button id = "back" style="position:relative; top:50%;">Back</button> </li>
       </ul>
   </div>
-		<label id = "winner"  style = "color:white; display:none; font-size: 300px; top: 20%; left: 30%">"></label>
-		<div id="container"></div>
+    <label id = "winner"  style = "color:white; display:none; font-size: 300px; top: 20%; left: 30%">"></label>
+    <div id="container"></div>
 
-		<script src="js/explosionParticle.js"></script>
-		<script src="js/Player.js"></script>
-		<script src="js/animatedLight.js"></script>
-		<script src="js/Halo.js"></script>
-		<script src="js/Ship.js"></script>
-		<script src="js/Game.js"></script>
+    <script src="js/Player.js"></script>
+            <script src="js/explosionParticle.js"></script>
+                <script src="js/animatedLight.js"></script>
 
-	</body>
+    <script src="js/Halo.js"></script>
+    <script src="js/Ship.js"></script>
+    <script src="js/Game.js"></script>
+
+  </body>
 </html>
