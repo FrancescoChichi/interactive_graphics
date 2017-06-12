@@ -4,47 +4,29 @@ THREE.Halo = function (size) {
 	this.group = new THREE.Group();
 	this.lightOn = true;
 	var dimension = size*2 ;
+	var vectorAngle = new THREE.Vector3(0,0,1);
 	//TORUS
-	var geom = new THREE.TorusBufferGeometry( dimension, 1, 32, 64 );
-	//var material = new THREE.MeshBasicMaterial( {
-			//	color: 0xff3300 });
-	var torusTexture = new THREE.TextureLoader().load( "textures/halo/halo.jpg" );
-	torusTexture.repeat.set( 100, 1 );
-	torusTexture.wrapS = torusTexture.wrapT = THREE.RepeatWrapping;
-	torusTexture.magFilter = THREE.NearestFilter;
-	torusTexture.format = THREE.RGBFormat;
+	var geom = new THREE.TorusBufferGeometry( size, 1, 32, 64 );
+	//this.group.matrixAutoUpdate=false
+	this.group.add(new THREE.Mesh(geom,new Material(1,0xffffff,0xffffff,100,1).halo));
 
-
-	var toruslMaterial = new THREE.MeshPhongMaterial( {
-		shininess: 0,
-		//color: 0x0000ff,
-		reflectivity: 0,
-		specular: 0xffffff,
-		map: torusTexture
-	} );
-
-	this.group.add(new THREE.Mesh(geom,toruslMaterial));
-
-	this.lightSun = new THREE.DirectionalLight( 0xffffff, 1.2 );
-	this.lightSun.position.set( 0, dimension, 0 );
-	var helper = new THREE.DirectionalLightHelper( this.lightSun, 5 );	
+	this.lightSun = new THREE.SpotLight( 0xffffff, 1,size);
+	this.lightSun.decay = 0.0;
+	this.lightSun.angle = 	Math.PI/2;
+	this.lightSun.position.set( 0, size, 0 );
 	this.group.add(this.lightSun);
-	this.lightSun.target.position= new THREE.Vector3(0,-1,0);
-	gameScene.add(helper);
-	this.lightMoon = new THREE.DirectionalLight( 0x0000cc, 1 );
-	this.lightMoon.position.set( 0, -dimension, 0 );
-	this.lightMoon.target.position= new THREE.Vector3(0,-1,0);
-	var helper = new THREE.DirectionalLightHelper( this.lightMoon, 5 );	
-	gameScene.add(helper);
 
-	this.lightMoon.shadowCameraVisible = true;
+	this.lightMoon = new THREE.SpotLight( 0x0000cc, 1,size);
+	this.lightMoon.position.set( 0, -size, 0 );
+	this.lightMoon.decay = 0.0;
+	this.lightMoon.angle = 	Math.PI/2;
 
 	this.group.add(this.lightMoon);
-//	this.group.position.y+=100;
+
+	//this.group.position.y+=100;
 
 	//this.group.rotateY(THREE.Math.degToRad(+45));
 	
-
 	//this.group.rotateX(Math.PI/6);
 	//this.group.rotateZ(THREE.Math.degToRad(+45));
 

@@ -10,6 +10,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 
 	var position = [0,controls.dimension,0];
 	var rotation = [- Math.PI / 2, 0,0];
+	var explosionParticleNumber = 50;
 
 	var textureLoader = new THREE.TextureLoader();
 
@@ -122,21 +123,21 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 
 			if (this.deathAnimationFrameCounter== 0)
 			{
-				this.explosionParticle = new THREE.explosionParticle(50,controls.color,this.ship.matrixWorld,this.ship.getWorldPosition() );
+				console.log(planeHeight);
+				this.explosionParticle = new THREE.explosionParticle(explosionParticleNumber,controls.color,this.ship.matrixWorld,this.ship.getWorldPosition() , planeWidth,planeHeight);
 			}
 
 			this.deathAnimationFrameCounter++;
 
 			if(this.deathAnimationFrameCounter>this.deathAnimationFrame){
 				this.death(controls);
-				//this.explosionParticle.remove();
+				this.explosionParticle.remove();
 				if (music > 0)
 					sound.death_sound.play();
 				return true;
 			}
 			
-
-			this.explosionParticle.render(this.deathAnimationFrame*15);
+			this.explosionParticle.render(this.deathAnimationFrame*explosionParticleNumber);
 
 			this.player.getCabin().position.y++;
 			this.player.getCabin().position.x++;
@@ -165,11 +166,6 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 			*/
 			if (this.ship.getObjectByName("torus").position.y>=-this.ship.position.y*1.5)
 				this.ship.getObjectByName("torus").position.y--;
-
-
-
-			
-
 		}
 		return false;
 	}

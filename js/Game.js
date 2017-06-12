@@ -20,13 +20,15 @@ console.time('init');
 
 			var time = Math.random();
 			var pause = false;
-			var velocity = 0.3;
+			var velocity = 0.0;
 			var dimension = 0.5;
 			var wallThick = 0.8;
 			var startGame = false;
 			var music = 0;
 			var hemiLight;
 			var halo;
+			var keyPause = false;
+
 			var animatedLights = [];
 
 			var firstPlayerControls = {
@@ -127,6 +129,7 @@ console.timeEnd('init');
 			sound.menu_sound.play();*/
 
 			//KEYBOARD CONTROLS
+			/*
 				var onKeyDown = function ( event ) {
 					switch ( event.keyCode ) {
 						case 87: // q
@@ -228,7 +231,7 @@ console.timeEnd('init');
 					}
 				};
 
-
+			*/
 
 
 
@@ -273,10 +276,9 @@ console.timeEnd('init');
 				var skyBox = new THREE.Mesh( skyBoxGeometry, skyBoxMaterial );
 				gameScene.add(skyBox);
 	
-				groundGeometry = new THREE.PlaneBufferGeometry( planeWidth, planeHeight );
-				groundGeometry.rotateX( - Math.PI / 2 );
+				groundGeometry = new THREE.BoxBufferGeometry( planeWidth,1, planeHeight );
+				//groundGeometry.rotateX( - Math.PI / 2 );
 				//geometry.rotateY( - Math.PI / 4 );
-
 				var groundTexture = new THREE.TextureLoader().load( "textures/Tron_Background256.jpg" );
 				//var texture = new THREE.TextureLoader().load( "textures/patterns/bright_squares256.png" );
 				groundTexture.repeat.set( 10, 10 );
@@ -289,6 +291,8 @@ console.timeEnd('init');
 					shininess: 0,
 					color: 0xffffff,
 					side: THREE.DoubleSide,
+					transparent:true,
+					opacity:0.7,
 					map: groundTexture
 				} );
 
@@ -304,9 +308,8 @@ console.timeEnd('init');
 				ship = shipControl.getAll();
 				ship.scale.set(.5,.5,.5);
 				menuScene.add(ship);
+				menuScene.add(new THREE.Mesh(new Geometry([5, 5, 3, 64]).cylinder, new Material(50,0xffffff,0xffffff,5,1).metalDoubleSide));
 
-				piedistallo = new Geometry([1, 1, 3, 64]).cylinder;
-				//menuScene.add(piedistallo);
 
 
 			//SKYBOX
@@ -329,29 +332,32 @@ console.timeEnd('init');
 
 
 				//MAP WALLS
-				gameScene.add(new THREE.Mesh(
+				var mesh = new THREE.Mesh(
 					new THREE.BoxBufferGeometry(
-							-worldWidth*4/5,
+							-worldWidth*1.001,
 							0.01,
-							worldWidth*4/5), 
+							worldWidth*1.001), 
 					new THREE.MeshBasicMaterial( {
 							color: 0xff3300, 
-							opacity: 0.5,
-							transparent: true })
-					));
+							opacity: 0.2,
+							transparent: true,
+
+						}));
+				mesh.position.set(0,-1,0);
+
+				gameScene.add(mesh);
 
 
-				halo = new THREE.Halo(worldWidth/2);
+				halo = new THREE.Halo(worldWidth);
 
 				gameScene.add(halo.getTorus());
 
 
 				//POWER UP
-				animatedLights.push(new THREE.animatedLight( planeHeight,planeWidth,Math.random() * 0xffffff,15));
-				animatedLights.push(new THREE.animatedLight( planeHeight,planeWidth,Math.random() * 0xffffff,15));
-				animatedLights.push(new THREE.animatedLight( planeHeight,planeWidth,Math.random() * 0xffffff,15));
-				animatedLights.push(new THREE.animatedLight( planeHeight,planeWidth,Math.random() * 0xffffff,15));
-				animatedLights.push(new THREE.animatedLight( planeHeight,planeWidth,Math.random() * 0xffffff,15));
+				animatedLights.push(new THREE.animatedLight( planeHeight,planeWidth,Math.random() * 0xffffff,50));
+				animatedLights.push(new THREE.animatedLight( planeHeight,planeWidth,Math.random() * 0xffffff,50));
+				animatedLights.push(new THREE.animatedLight( planeHeight,planeWidth,Math.random() * 0xffffff,50));
+				animatedLights.push(new THREE.animatedLight( planeHeight,planeWidth,Math.random() * 0xffffff,50));
 				
 				var light = new THREE.AmbientLight( 0x404040, 5 ); // soft white light
 				menuScene.add(light);
@@ -365,7 +371,6 @@ console.timeEnd('init');
 				container.appendChild( stats.dom );
 				//
 				window.addEventListener( 'resize', onWindowResize, false );
-				//this.prova = new THREE.animatedLight(planeWidth,planeHeight,0xff0040,20);
 
 			}
 
@@ -413,11 +418,13 @@ console.timeEnd('init');
 								}
 								document.getElementById("keyPause").onclick = function()
 								{
+									keyPause = true;
 									document.getElementById("pause").setAttribute("style","display:none");
 									document.getElementById("keyMenu").setAttribute("style","display:inline");
 								}
 								document.getElementById("back").onclick = function()
 								{
+									keyPause = false;
 									document.getElementById("pause").setAttribute("style","display:inline");
 									document.getElementById("keyMenu").setAttribute("style","display:none");
 								}

@@ -19,7 +19,7 @@ THREE.animatedLight = function (planeWidth, planeHeight, color, nPunti) {
 	{
 		var x = Math.random()*(planeHeight/2);
 		x *= Math.floor(Math.random()*2) == 1 ? 1 : -1;
-		var y = Math.random()*4+0.5;
+		var y = Math.random()*8+0.5;
 		var z = Math.random()*(planeWidth/2);
 		z*= Math.floor(Math.random()*2) == 1 ? 1 : -1; 
 		punti.push(new THREE.Vector3(x,y,z));
@@ -40,7 +40,7 @@ this.render = function()
 	{
 		var pos = this.curve.getPoint(this.position);
 		this.light.position.copy(pos);
-		this.position+=0.001;
+		this.position+=0.0001;
 	}
 	else
 	{

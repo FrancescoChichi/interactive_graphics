@@ -1,4 +1,4 @@
-THREE.explosionParticle = function (particlesNumber, color,wordRotation,position) {
+THREE.explosionParticle = function (particlesNumber, color,wordRotation,position,planeWidth,planeHeight) {
 	
 	this.particles = new THREE.Group();
 	this.particles.position.copy(position);
@@ -17,6 +17,7 @@ THREE.explosionParticle = function (particlesNumber, color,wordRotation,position
 				      });
 	      
 	      this.particles.matrixAutoUpdate=false;
+	      console.log(planeWidth)
 
 	  for (var i = 0; i < particlesNumber; i++) {
 
@@ -24,21 +25,23 @@ THREE.explosionParticle = function (particlesNumber, color,wordRotation,position
 	  	  materiale.rotation =  Math.random() * (Math.PI*2);
 	      var particle  = new THREE.Sprite(materiale);
 	      particle.position.copy(position);
-	      //particle.position.y = 0;
 		  particle.scale.copy(new THREE.Vector3(this.particleScale,this.particleScale,this.particleScale));
 	      this.particles.add(particle);
-
-		  //particle.rotation.set(Math.random() * Math.PI,Math.random() * Math.PI,Math.random() * Math.PI);
 
 		  var position = this.particles.position;
 		  position.setComponent(1, 0);
 		  var x = Math.random() * raggio*2;
-		  x *= Math.floor(Math.random()*2) == 1 ? 1 : -1; 
+		  var mul = Math.floor(Math.random()*2) == 1 ? 1 : -1; 
+		  x *= mul;
+
 		  var z = Math.random() * raggio*2;
-		  z *= Math.floor(Math.random()*2) == 1 ? 1 : -1; 
-		  var y = -1;
+		  mul= Math.floor(Math.random()*2) == 1 ? 1 : -1; 
+		  z *= mul;
+
+		  var y = -5;
 		  var vec =new THREE.Vector3(x,y,z);
-		  vec.applyMatrix4(wordRotation);
+		  console.log(vec);
+		  //vec.applyMatrix4(wordRotation);
 
 		  var midPoint1 = new THREE.Vector3();
 		  midPoint1.addVectors(vec,position);
@@ -50,7 +53,7 @@ THREE.explosionParticle = function (particlesNumber, color,wordRotation,position
 		  curve.type = 'catmullrom'
 			this.curveDirection.push(curve);
 
-			/*
+			
 		   var geometry = new THREE.Geometry();
 			geometry.vertices.push(position);
 			geometry.vertices.push(midPoint1);
@@ -60,7 +63,7 @@ THREE.explosionParticle = function (particlesNumber, color,wordRotation,position
 	 		var line = new THREE.Line(geometry,  new THREE.LineBasicMaterial({
 	        color: color,
 	    }));
-	   		 gameScene.add(line);*/
+	   		 //gameScene.add(line);
 			
 		    }
 			gameScene.add(this.particles);

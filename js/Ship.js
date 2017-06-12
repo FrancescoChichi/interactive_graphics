@@ -14,7 +14,7 @@ THREE.Ship = function (controls) {
   this.motorL = new THREE.Group();
   this.motorR= new THREE.Group();
   this.cabin = new THREE.Group();
-
+  
 
 //MATERIALI
 	var materialPhong = new THREE.MeshPhongMaterial( { shininess: 5, color: 0xffffff, specular: 0x999999 } );
@@ -24,9 +24,9 @@ THREE.Ship = function (controls) {
 				reflectivity: 1 } );
 
 
-	var metalMaterial = new Material(50,0xffffff,0xffffff).metalDoubleSide;
-	var metalBallMaterial = new Material(50,controls.color,controls.color).metalDoubleSide;
-	var toruslMaterial = new Material(5,0xffffff,0xffffff,1).halo;
+	var metalMaterial = new Material(50,0xffffff,0xffffff,3,1).metalDoubleSide;
+	var metalBallMaterial = new Material(50,controls.color,controls.color,1,1).metalDoubleSide;
+	var toruslMaterial = new Material(2,	0xFFFFFF,	0xffffff,10,5).torus;
 	var glassMaterial =new Material(0,controls.color,controls.color).glass;
 
 //GEOMETRY
