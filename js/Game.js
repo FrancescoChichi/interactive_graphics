@@ -27,6 +27,7 @@ var startGame = false;
 var music = 0;
 var hemiLight;
 var halo;
+var keyPause = false;
 
 var firstPlayerControls = {
 	number: 1,
@@ -392,11 +393,13 @@ function animate()
 					}
 					document.getElementById("keyPause").onclick = function()
 					{
+						keyPause = true;
 						document.getElementById("pause").setAttribute("style","display:none");
 						document.getElementById("keyMenu").setAttribute("style","display:inline");
 					}
 					document.getElementById("back").onclick = function()
 					{
+						keyPause = false;
 						document.getElementById("pause").setAttribute("style","display:inline");
 						document.getElementById("keyMenu").setAttribute("style","display:none");
 					}

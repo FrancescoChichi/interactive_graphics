@@ -85,7 +85,7 @@ THREE.Ship = function (controls) {
 	this.cabin.add(this.light); //palla di luce
 	this.ship.add(this.cabin);
 
-	this.particleCount = 200;
+	this.particleCount = 50;
   this.particlesL = [];
   this.particlesR = [];
 

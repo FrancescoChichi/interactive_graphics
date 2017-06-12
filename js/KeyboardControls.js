@@ -51,8 +51,11 @@ var onKeyDown = function ( event ) {
 
 				if(pause)
 					document.getElementById("pause").setAttribute("style","display:inline");
-				else
+				else{
+					if (keyPause)
+						document.getElementById("keyMenu").setAttribute("style","display:none");
 					document.getElementById("pause").setAttribute("style","display:none");
+				}
 			}
 
 			break;
