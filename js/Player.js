@@ -103,8 +103,8 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 		controls.alive=false;
 		//this.ship.visible = false;
 		//gameScene.remove(this.ship);
-		gameScene.remove(this.player.getMotorL())
-		gameScene.remove(this.player.getCabin())
+				this.ship.scale.copy(new THREE.Vector3(0.0001,0.0001,0.0001));
+
 
 		for (var i = 0; i < controls.walls.length; i++) 
 			gameScene.remove(controls.walls[i]);

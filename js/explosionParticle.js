@@ -7,7 +7,7 @@ THREE.explosionParticle = function (particlesNumber, color,wordRotation,position
 	this.curvePosition = 0;
 	this.particleScale = 1;
 
-	var raggio = 30;
+	var raggio = 40;
 	
  	var material = new THREE.SpriteMaterial({
 				      color: color,
@@ -31,17 +31,18 @@ THREE.explosionParticle = function (particlesNumber, color,wordRotation,position
 		  //particle.rotation.set(Math.random() * Math.PI,Math.random() * Math.PI,Math.random() * Math.PI);
 
 		  var position = this.particles.position;
+		  position.setComponent(1, 0);
 		  var x = Math.random() * raggio*2;
 		  x *= Math.floor(Math.random()*2) == 1 ? 1 : -1; 
 		  var z = Math.random() * raggio*2;
 		  z *= Math.floor(Math.random()*2) == 1 ? 1 : -1; 
-		  var y = 0;
+		  var y = -1;
 		  var vec =new THREE.Vector3(x,y,z);
 		  vec.applyMatrix4(wordRotation);
 
 		  var midPoint1 = new THREE.Vector3();
 		  midPoint1.addVectors(vec,position);
-		  midPoint1.setComponent(1, Math.random() * raggio*1.5);
+		  midPoint1.setComponent(1, Math.random() * (raggio));
 		  midPoint1.multiplyScalar (0.50);
 
 		  var curve = new  THREE.CatmullRomCurve3([position,midPoint1,vec]);
