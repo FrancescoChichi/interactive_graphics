@@ -1,7 +1,11 @@
-THREE.Ship = function (controls) {
+THREE.Ship = function (controls,scale) {
 	var scope = this;
+	var deathAnimationFrameCounter = 0;
+	var deathAnimationFrame = 100;
+	var particleCount = 25;
+	var explosionParticleNumber = 50;
+	var explosionParticle;
 
-	this.particleCount;
 	this.particlesL;
 	this.particlesR;
 	    
@@ -73,12 +77,11 @@ THREE.Ship = function (controls) {
 	this.group.add(this.topShip);
 
 	this.glass = addObject( cubeGeometry, glassMaterial, 4, 9, 0, 0, 0, 0 );
-
 	this.cabin.add(this.glass); //vetro
 	this.cabin.add(this.light); //palla di luce
+	this.topShip.position.y=1;
 	this.topShip.add(this.cabin);
 
-	this.particleCount = 20;
   this.particlesL = [];
   this.particlesR = [];
 
@@ -92,7 +95,7 @@ THREE.Ship = function (controls) {
   });
   
   
-  for (var i = 0; i < this.particleCount; i++) {
+  for (var i = 0; i < particleCount; i++) {
       var particle = new THREE.Sprite(this.material.clone());
       particle.scale.multiplyScalar(Math.random() * 4);
 
@@ -115,7 +118,8 @@ THREE.Ship = function (controls) {
       this.motorR.add(particleR);
   }
 
-
+  	this.group.scale.set(scale, scale, scale);
+ 	 var shipScale = this.group.scale;
 
 	this.getShip = function(){
 		return this.topShip;
@@ -136,10 +140,51 @@ THREE.Ship = function (controls) {
 		return this.group;
 	}
 
-	this.render = function(angle){
+	this.render = function(alive, angle){
+		if(alive)
+		{
 		this.group.position.y = Math.sin( time*5 ) + 1.3 ;
 		ship.getObjectByName("torus").rotateZ(THREE.Math.degToRad(angle));
+		this.updateParticle();
+		}
+		else
+		{
+			if (deathAnimationFrameCounter== 0)
+			{
+				explosionParticle = new THREE.explosionParticle(explosionParticleNumber,controls.color,this.group.matrixWorld,this.group.getWorldPosition() , planeWidth,planeHeight);
+			}
+			deathAnimationFrameCounter++;
+
+			if(deathAnimationFrameCounter>deathAnimationFrame){
+				this.remove();
+				explosionParticle.remove();
+				if (music > 0)
+					sound.death_sound.play();
+				return true;
+			}
+
+			explosionParticle.render(deathAnimationFrame*explosionParticleNumber);
+		
+			this.cabin.position.y++;
+			//this.cabin.position.x++;
+			this.cabin.rotateZ(THREE.Math.degToRad(-5));
+
+			this.motorR.position.x++;
+			this.motorL.position.x++;
+
+			scale = 1/deathAnimationFrame;
+			var scale = new THREE.Vector3();
+			scale.addScaledVector(shipScale,-1/deathAnimationFrame);
+			
+			this.group.scale.add(scale);
+			
+			if (this.group.getObjectByName("torus").position.y>=-this.group.position.y*1.5)
+				this.group.getObjectByName("torus").position.y--;
+		}
+		return false;
+
 	}
+
 	
 
 	function addObject( geometry, material, x, y, z, rx, ry, rz ) {
@@ -204,5 +249,10 @@ THREE.Ship = function (controls) {
 		    particle.position.add(particle.velocity);
 
 			}
+	};
+
+	this.remove = function(controls)
+	{
+	this.group.scale.copy(new THREE.Vector3(0.0001,0.0001,0.0001));
 	};
 };

@@ -8,7 +8,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 	this.deathAnimationFrame = 100;
 	this.shipScale ;
 
-	var position = [0,controls.dimension,0];
+	var position = new THREE.Vector3(0,controls.dimension,0);
 	var rotation = [- Math.PI / 2, 0,0];
 	var explosionParticleNumber = 50;
 
@@ -27,36 +27,36 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 		map: shipTexture
 	} );
 
-	this.player = new THREE.Ship(controls);
+	this.player = new THREE.Ship(controls,0.25);
 	this.ship = this.player.getAll();
 	this.shipScale = this.ship.scale;
 
 	switch( playerN ) {
 			case 0: // player 1
-				position[0] = planeWidth/3;
-				position[2] = 0;
+				position.x = planeWidth/3;
+				position.z = 0;
 				this.orientation = new THREE.Vector3(-1,0,0);
 				this.ship.rotateY(Math.PI);
 				break;
 			
 			case 1: // player 2
-				position[0] = 0;
-				position[2] = planeWidth/3;
+				position.x = 0;
+				position.z = planeWidth/3;
 				this.orientation = new THREE.Vector3(0,0,-1);
 				this.ship.rotateY(Math.PI/2);
 
 				break;
 				
 			case 2: // player 3
-				position[0] = -planeWidth/3;
-				position[2] = 0;
+				position.x = -planeWidth/3;
+				position.z = 0;
 				this.orientation = new THREE.Vector3(1,0,0);
 
 				break;
 			
 			case 3: // player 4
-				position[0] = 0;
-				position[2] = -planeWidth/3;
+				position.x = 0;
+				position.z = -planeWidth/3;
 				this.orientation = new THREE.Vector3(0,0,1);
 				this.ship.rotateY(-Math.PI/2);
 
@@ -65,10 +65,8 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 		}
 		
 		var scale = 0.25;
-		this.ship.position.x = position[0];
-		this.ship.position.y = position[1];
-		this.ship.position.z = position[2];
-		this.ship.scale.set(scale, scale, scale);
+		this.ship.position.copy(position);
+		//this.ship.scale.set(scale, scale, scale);
 		gameScene.add(this.ship);
 		this.ship.updateMatrixWorld();
 
@@ -104,8 +102,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 		controls.alive=false;
 		//this.ship.visible = false;
 		//gameScene.remove(this.ship);
-				this.ship.scale.copy(new THREE.Vector3(0.0001,0.0001,0.0001));
-
+		//this.ship.scale.copy(new THREE.Vector3(0.0001,0.0001,0.0001));
 
 		for (var i = 0; i < controls.walls.length; i++) 
 			gameScene.remove(controls.walls[i]);
@@ -114,52 +111,16 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 
 	this.render = function(time, controls, sound, music){
 
-		
-		if (controls.alive){ //ANIMAZIONE MOVIMENTO UFO
-			this.player.render(-2);
-			this.player.updateParticle();
+		if(this.player.render(controls.alive,2))
+		{
+			this.death(controls);
+			return true;
 		}
-		else{
-
-			if (this.deathAnimationFrameCounter== 0)
-			{
-				console.log(planeHeight);
-				this.explosionParticle = new THREE.explosionParticle(explosionParticleNumber,controls.color,this.ship.matrixWorld,this.ship.getWorldPosition() , planeWidth,planeHeight);
-			}
-
-			this.deathAnimationFrameCounter++;
-
-			if(this.deathAnimationFrameCounter>this.deathAnimationFrame){
-				this.death(controls);
-				this.explosionParticle.remove();
-				if (music > 0)
-					sound.death_sound.play();
-				return true;
-			}
-			
-			this.explosionParticle.render(this.deathAnimationFrame*explosionParticleNumber);
-
-			this.player.getCabin().position.y++;
-			this.player.getCabin().position.x++;
-			this.player.getCabin().rotateZ(THREE.Math.degToRad(-5));
-
-			this.player.getMotorL().position.x++;
-			this.player.getMotorR().position.x++;
-
-			for (var i = 0; i<controls.walls.length; i++)
-				if (controls.walls[i].scale.y >= 0 )
-					controls.walls[i].scale.y -= 0.1;
-
-			scale = 1/this.deathAnimationFrame;
-			var scale = new THREE.Vector3();
-			scale.addScaledVector(this.shipScale,-1/this.deathAnimationFrame);
-			
-			this.ship.scale.add(scale);
-			
-			if (this.ship.getObjectByName("torus").position.y>=-this.ship.position.y*1.5)
-				this.ship.getObjectByName("torus").position.y--;
+		else
+		{
+			return false;
 		}
-		return false;
+
 	}
 
 	this.getPosition = function (){

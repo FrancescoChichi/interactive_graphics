@@ -14,7 +14,7 @@ background-color: Transparent;  font-family: 'Arial', sans-serif;
   top:15%;
   left: 30%;*/
   width: 45%;
-  height: 100%;
+  height: 60%;
   padding-top:5%;
   padding-bottom: 5%;
   left: 50%;
@@ -26,13 +26,14 @@ background-color: Transparent;  font-family: 'Arial', sans-serif;
   display: block;
   position: absolute;
   left: 50%;
-  top: 20%;
+  top: 0%;
   text-align: center;
-  height: auto;
-  width: auto;
+  height: 100%;
+  width: 25%;
   font-size: 1.2em;
-  background-color: #000000;
+
 }
+
 
 .pause{
   display: block;
@@ -54,8 +55,14 @@ h2 {
   margin: 0;
 }
 td {
+  position: relative;
   color: #0066ff;
-  font-size: 2.35em;
+  height: 20px;
+  font-size: 1.5em;
+}
+tr {
+  position: relative;;
+  height: 15%;
 }
 
 .container ul, .keySettings ul, .pause ul{
@@ -73,9 +80,9 @@ td {
 
 button{
   color: #0066ff;
-  display: block;
+  /*display: block;*/
   position: relative;
-  font-size: 2.35em;
+  font-size: 1.5em;
   background-color: Transparent;
   background-repeat:no-repeat;
   border: none;
@@ -83,6 +90,16 @@ button{
   overflow: hidden;
   outline:none;
 
+}
+
+.keySettings ul,ul table,ul table tbody
+{
+  position: relative;
+  width: 100%;
+  height: 90%;
+  background-color: rgb(138, 138, 92);
+  background-color: rgba(138, 138, 92,0.5);
+  font-size: 1em;
 }
 
 ul {
@@ -94,6 +111,10 @@ ul li{
   display:inline-block;
   background-color: Transparent;
   position: relative;
+  padding-left:2%;
+  padding-right: 2%;
+  margin:0;
+  padding-right: auto;
   /*float: left;
   width: auto;
   height: 100px;

@@ -17,7 +17,6 @@ THREE.explosionParticle = function (particlesNumber, color,wordRotation,position
 				      });
 	      
 	      this.particles.matrixAutoUpdate=false;
-	      console.log(planeWidth)
 
 	  for (var i = 0; i < particlesNumber; i++) {
 
@@ -40,7 +39,6 @@ THREE.explosionParticle = function (particlesNumber, color,wordRotation,position
 
 		  var y = -5;
 		  var vec =new THREE.Vector3(x,y,z);
-		  console.log(vec);
 		  //vec.applyMatrix4(wordRotation);
 
 		  var midPoint1 = new THREE.Vector3();

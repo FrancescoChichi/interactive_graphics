@@ -206,9 +206,9 @@ console.timeEnd('init');
 
 				gameScene.add(ground);
 
-				shipControl = new THREE.Ship(firstPlayerControls);
+				shipControl = new THREE.Ship(firstPlayerControls,0.5);
 				ship = shipControl.getAll();
-				ship.scale.set(.5,.5,.5);
+				//ship.scale.set(.5,.5,.5);
 				menuScene.add(ship);
 				var piedistallo = new THREE.Mesh(new Geometry([5, 5, 1, 64]).cylinder,
 					new Material(50,0xffffff,0xffffff,5,1).metalDoubleSide);
@@ -302,7 +302,6 @@ console.timeEnd('init');
 
 						collision();
 						checkEnd();
-					
 					}
 
 					else
@@ -382,6 +381,8 @@ console.timeEnd('init');
 					{
 						var shipClone = ship.clone();
 
+						//while(this.ship.render(false,1));
+
 						if(  document.getElementById("1").checked)
 						nPlayer = 1;
 						else if(document.getElementById("2").checked)
@@ -390,13 +391,11 @@ console.timeEnd('init');
 						nPlayer = 3;
 						else nPlayer = 4;
 
-
 						//MUSIC SELECTION
 						if(document.getElementById("all").checked)
 							music = 2; //MUSIC + EVENT
 						else if(document.getElementById("events").checked)
 							music = 1;
-
 
 						//LIGHT MODE
 						if (document.getElementById("night").checked){
@@ -407,9 +406,6 @@ console.timeEnd('init');
 							lightModality = "day";
 						else
 							lightModality = "cycle";
-
-
-						
 
 						if(music>1)
 						{
@@ -451,13 +447,13 @@ console.timeEnd('init');
 			}
 
 			function renderMenu() {
+
 				var delta = clock.getDelta();
-				controlsMenu.update(delta);
- 										
+				controlsMenu.update(delta);			
  				time += 0.005;				
- 				shipControl.render(0.0);
+ 				//shipControl.render(1.0);
  				ship.rotateY(THREE.Math.degToRad(+0.2));
- 				shipControl.render(2);
+ 				//shipControl.render(2);
  				shipControl.updateParticle();
 				renderer.render( menuScene, menuCamera );
 			}
