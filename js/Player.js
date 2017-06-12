@@ -27,7 +27,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 		map: shipTexture
 	} );
 
-	this.player = new THREE.Ship(controls,0.25);
+	this.player = new THREE.Ship(controls,0.18);
 	this.ship = this.player.getAll();
 	this.shipScale = this.ship.scale;
 
@@ -109,9 +109,9 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 
 	}
 
-	this.render = function(time, controls, sound, music){
+	this.render = function(time, controls, sound){
 
-		if(this.player.render(controls.alive,2))
+		if(this.player.render(controls,2,sound))
 		{
 			this.death(controls);
 			return true;

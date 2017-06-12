@@ -1,4 +1,3 @@
-console.time('init');
 			if ( ! Detector.webgl ) {
 				Detector.addGetWebGLMessage();
 				document.getElementById( 'container' ).innerHTML = "";
@@ -8,6 +7,8 @@ console.time('init');
 			var mesh, texture, geometry, material;
 			var worldWidth = 128, worldDepth = 128;
 			var ship, shipControl;
+			var sound;
+			var gameEnd = false;
 
 			var piedistallo;
 			/*=====================*\
@@ -20,16 +21,16 @@ console.time('init');
 
 			var time = Math.random();
 			var pause = false;
-			var velocity = 0.0;
+			var velocity = 0.3;
 			var dimension = 0.5;
 			var wallThick = 0.8;
 			var startGame = false;
-			var music = 0;
 			var hemiLight;
-			var halo;
+			var halo,haloMenu;
 			var keyPause = false;
 
 			var animatedLights = [];
+			var wins = [0,0,0,0];
 
 			var firstPlayerControls = {
 				number: 1,
@@ -131,10 +132,8 @@ console.time('init');
 
 	init();
 	animate();
-console.timeEnd('init');
 			function init() {
 				container = document.getElementById( 'container' );
- 
 
 
 			sound = new Sound();
@@ -257,9 +256,11 @@ console.timeEnd('init');
 
 
 				halo = new THREE.Halo(worldWidth);
+				haloMenu = new THREE.Halo(worldWidth);
 
 				gameScene.add(halo.getTorus());
 
+				menuScene.add(haloMenu.getTorus());
 
 				//POWER UP
 				animatedLights.push(new THREE.animatedLight( planeHeight,planeWidth,Math.random() * 0xffffff,50));
@@ -267,11 +268,7 @@ console.timeEnd('init');
 				animatedLights.push(new THREE.animatedLight( planeHeight,planeWidth,Math.random() * 0xffffff,50));
 				animatedLights.push(new THREE.animatedLight( planeHeight,planeWidth,Math.random() * 0xffffff,50));
 				
-				var light = new THREE.AmbientLight( 0x404040, 5 ); // soft white light
-				menuScene.add(light);
-
-
-				//******renderer******
+					//******renderer******
 				container.innerHTML = "";
 				container.appendChild( renderer.domElement );
 				stats = new Stats();
@@ -299,17 +296,18 @@ console.timeEnd('init');
 				{
 					if (!pause)
 					{
-
-						collision();
-						checkEnd();
+						if(!gameEnd)
+						{
+							collision();
+							checkEnd();
+						}
 					}
-
 					else
 						{
 							//gioco in pausa;
 								document.getElementById("resume").onclick = function()
 								{
-									if(music>1)
+									if(sound.music>1)
 									{
 										sound.menu_sound.play();
 									}	
@@ -393,10 +391,16 @@ console.timeEnd('init');
 
 						//MUSIC SELECTION
 						if(document.getElementById("all").checked)
+						{
 							music = 2; //MUSIC + EVENT
+							sound.music=2;
+						}
 						else if(document.getElementById("events").checked)
-							music = 1;
-
+							{
+								music = 1;
+								sound.music=1;
+							
+							}
 						//LIGHT MODE
 						if (document.getElementById("night").checked){
 							lightModality = "night";
@@ -407,7 +411,7 @@ console.timeEnd('init');
 						else
 							lightModality = "cycle";
 
-						if(music>1)
+						if(sound.music>1)
 						{
 							sound.menu_sound.play();
 						}	
@@ -434,7 +438,6 @@ console.timeEnd('init');
  				}
  				if(startGame)
  				{
-
 					render();
 					stats.update();
 				}	
@@ -453,6 +456,7 @@ console.timeEnd('init');
  				time += 0.005;				
  				//shipControl.render(1.0);
  				ship.rotateY(THREE.Math.degToRad(+0.2));
+ 				haloMenu.animate();
  				//shipControl.render(2);
  				shipControl.updateParticle();
 				renderer.render( menuScene, menuCamera );
@@ -477,7 +481,7 @@ console.timeEnd('init');
 
 					for (var i = 0; i < alive; i++)
 					{
-						if(players[i].render( time, playersControl[i], sound, music )){
+						if(players[i].render( time, playersControl[i], sound )){
 							players.splice(i,1);
 							playersControl.splice(i,1);
 							alive--;
@@ -565,6 +569,7 @@ console.timeEnd('init');
 
 			function checkEnd()
 			{
+				console.log(alive)
 
 				var c = 0;
 				var indexPlayer = 0;
@@ -595,7 +600,11 @@ console.timeEnd('init');
 						controls.target = players[0].getPosition();
 						//pause = true;
 						console.log("player "+playersControl[0].number+" win ");
-						
+						document.getElementById("winner").innerHTML = "player "+playersControl[0].number+" win ";
+						document.getElementById("winner").style.display="block";
+						wins[playersControl[0].number-1]+=1;
+						console.log(wins);
+						gameEnd = true;
 					}
 
 				}
@@ -610,15 +619,31 @@ console.timeEnd('init');
 					}
 					else{
 						console.log("GAME OVER!");
+						document.getElementById("winner").innerHTML = "Game Over";
+						document.getElementById("winner").style.display="block";
 					}
+					gameEnd = true;
 				}
-
-			}
 			
+			}
+		
+function resetPlayerControls()
+{
+	for (var i = playersControl.length - 1; i >= 0; i--) {
+		playersControl[i].alive = true;
+		playersControl[i].pushed = false;
+		playersControl[i].moveLeft = false;
+		playersControl[i].moveRight = false;
+		playersControl[i].boxTesta = new THREE.Box3();
+		playersControl[i].walls = [];
+		playersControl[i].boxWall = [];
+	};
+}
+
 
 
 function Sound() {
-
+	this.music = 0;
 	this.death_sound  = new Audio("audio/explode.mp3");
 	this.paddle_sound = new Audio("audio/laser.mp3");
 	this.brick_sound  = new Audio("audio/beep.mp3");

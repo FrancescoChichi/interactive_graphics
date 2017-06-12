@@ -88,6 +88,7 @@ var onKeyDown = function ( event ) {
 				document.getElementById("FirstR").innerHTML = String.fromCharCode(firstPlayerControls.keyR);
 			}
 			else if(secondPlayerControls.keyL<0){
+				
 				secondPlayerControls.keyL=event.keyCode;
 				document.getElementById("SecondL").innerHTML = String.fromCharCode(secondPlayerControls.keyL);
 			}

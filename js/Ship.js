@@ -140,8 +140,9 @@ THREE.Ship = function (controls,scale) {
 		return this.group;
 	}
 
-	this.render = function(alive, angle){
-		if(alive)
+	this.render = function(control, angle,sound){
+
+		if(control.alive)
 		{
 		this.group.position.y = Math.sin( time*5 ) + 1.3 ;
 		ship.getObjectByName("torus").rotateZ(THREE.Math.degToRad(angle));
@@ -149,8 +150,11 @@ THREE.Ship = function (controls,scale) {
 		}
 		else
 		{
+
 			if (deathAnimationFrameCounter== 0)
 			{
+				if (sound.music>0)
+					sound.death_sound.play();
 				explosionParticle = new THREE.explosionParticle(explosionParticleNumber,controls.color,this.group.matrixWorld,this.group.getWorldPosition() , planeWidth,planeHeight);
 			}
 			deathAnimationFrameCounter++;
@@ -158,8 +162,6 @@ THREE.Ship = function (controls,scale) {
 			if(deathAnimationFrameCounter>deathAnimationFrame){
 				this.remove();
 				explosionParticle.remove();
-				if (music > 0)
-					sound.death_sound.play();
 				return true;
 			}
 
@@ -171,6 +173,10 @@ THREE.Ship = function (controls,scale) {
 
 			this.motorR.position.x++;
 			this.motorL.position.x++;
+
+			for (var i = 0; i < control.walls.length; i++) {
+				control.walls[i].scale.y -= (1/deathAnimationFrame)
+			};
 
 			scale = 1/deathAnimationFrame;
 			var scale = new THREE.Vector3();
