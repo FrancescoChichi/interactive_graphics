@@ -106,7 +106,6 @@
 			playersControl = [firstPlayerControls, secondPlayerControls, thirdPlayerControls, fourthPlayerControls];
 			players = [];
 			nPlayer = 4;
-			alive = nPlayer;
 
 			var clock = new THREE.Clock();
 			var gui, shadowCameraHelper, shadowConfig = {
@@ -130,8 +129,9 @@
 			\*===================*/
 			
 
-	init();
-	animate();
+			init();
+			animate();
+
 			function init() {
 				container = document.getElementById( 'container' );
 
@@ -143,7 +143,7 @@
 				menuCamera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 1000 );
 
 				camera.position.set(0.0,90.0,0.0);
-				menuCamera.position.set(10.0,4.0,20.0);
+				menuCamera.position.set(15.0,4.0,25.0);
 
 	
 				document.addEventListener( 'keydown', onKeyDown, false );
@@ -168,20 +168,11 @@
 				controls.maxDistance= worldWidth *1.5;
 
 
-				gameScene = new THREE.Scene();
 				menuScene = new THREE.Scene();
 
 
-				var skyBoxGeometry = new THREE.CubeGeometry( 10000, 10000, 10000 );
-				var skyBoxMaterial = new THREE.MeshBasicMaterial( { color: 0x9999ff});
-				var skyBox = new THREE.Mesh( skyBoxGeometry, skyBoxMaterial );
-				gameScene.add(skyBox);
-	
 				groundGeometry = new THREE.BoxBufferGeometry( planeWidth,1, planeHeight );
-				//groundGeometry.rotateX( - Math.PI / 2 );
-				//geometry.rotateY( - Math.PI / 4 );
 				var groundTexture = new THREE.TextureLoader().load( "textures/Tron_Background256.jpg" );
-				//var texture = new THREE.TextureLoader().load( "textures/patterns/bright_squares256.png" );
 				groundTexture.repeat.set( 10, 10 );
 				groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
 				groundTexture.magFilter = THREE.NearestFilter;
@@ -199,15 +190,9 @@
 
 				material = new THREE.MeshBasicMaterial( { color: 0xffffff, map: groundTexture } ); 
 				ground = new THREE.Mesh( groundGeometry, groundMaterial );
-				//ground.scale.set( 1000, 1000, 1000 );
-
-				ground.receiveShadow = true;
-
-				gameScene.add(ground);
 
 				shipControl = new THREE.Ship(firstPlayerControls,0.5);
 				ship = shipControl.getAll();
-				//ship.scale.set(.5,.5,.5);
 				menuScene.add(ship);
 				var piedistallo = new THREE.Mesh(new Geometry([5, 5, 1, 64]).cylinder,
 					new Material(50,0xffffff,0xffffff,5,1).metalDoubleSide);
@@ -233,41 +218,15 @@
 			var reflectionCube = new THREE.CubeTextureLoader().load( urls );
 			reflectionCube.format = THREE.RGBFormat;
 
-			gameScene.background = reflectionCube;
-
 			menuScene.background =reflectionCube
 
 
-				//MAP WALLS
-				var mesh = new THREE.Mesh(
-					new THREE.BoxBufferGeometry(
-							-worldWidth*1.001,
-							0.01,
-							worldWidth*1.001), 
-					new THREE.MeshBasicMaterial( {
-							color: 0xff3300, 
-							opacity: 0.2,
-							transparent: true,
 
-						}));
-				mesh.position.set(0,-1,0);
-
-				gameScene.add(mesh);
-
-
-				halo = new THREE.Halo(worldWidth);
 				haloMenu = new THREE.Halo(worldWidth);
-
-				gameScene.add(halo.getTorus());
 
 				menuScene.add(haloMenu.getTorus());
 
 				//POWER UP
-				animatedLights.push(new THREE.animatedLight( planeHeight,planeWidth,Math.random() * 0xffffff,50));
-				animatedLights.push(new THREE.animatedLight( planeHeight,planeWidth,Math.random() * 0xffffff,50));
-				animatedLights.push(new THREE.animatedLight( planeHeight,planeWidth,Math.random() * 0xffffff,50));
-				animatedLights.push(new THREE.animatedLight( planeHeight,planeWidth,Math.random() * 0xffffff,50));
-				
 					//******renderer******
 				container.innerHTML = "";
 				container.appendChild( renderer.domElement );
@@ -307,6 +266,8 @@
 							//gioco in pausa;
 								document.getElementById("resume").onclick = function()
 								{
+						if (sound.music >1)
+									sound.beep_sound.play();
 									if(sound.music>1)
 									{
 										sound.menu_sound.play();
@@ -317,18 +278,24 @@
 								}
 								document.getElementById("menu").onclick = function()
 								{
+						if (sound.music >1)
+									sound.beep_sound.play();
 									window.location.reload(true);
 									//document.getElementById("container").setAttribute("style","display:inline");
 									document.getElementById("pause").setAttribute("style","display:none");
 								}
 								document.getElementById("keyPause").onclick = function()
 								{
+						if (sound.music >1)
+									sound.beep_sound.play();
 									keyPause = true;
 									document.getElementById("pause").setAttribute("style","display:none");
 									document.getElementById("keyMenu").setAttribute("style","display:inline");
 								}
 								document.getElementById("back").onclick = function()
 								{
+						if (sound.music >1)
+									sound.beep_sound.play();
 									keyPause = false;
 									document.getElementById("pause").setAttribute("style","display:inline");
 									document.getElementById("keyMenu").setAttribute("style","display:none");
@@ -366,19 +333,46 @@
 
 					document.getElementById("key").onclick = function()
 					{
+						if (sound.music >1)
+							sound.beep_sound.play();
 						document.getElementById("mainPage").setAttribute("style","display:none");
 						document.getElementById("keyMenu").setAttribute("style","display:inline");
 					}
 					document.getElementById("back").onclick = function()
 					{
+						if (sound.music >1)
+							sound.beep_sound.play();
 						document.getElementById("mainPage").setAttribute("style","display:inline");
 						document.getElementById("keyMenu").setAttribute("style","display:none");
 					}
 
+					document.getElementById("startAgain").onclick = function()
+					{
+						gameScene = null;
+						createGameScene()
+						gameEnd = false;
+						startGame = true; 
+ 						alive = nPlayer;
+						halo.rotateHalo(Math.PI);
+						players = [0,0,0,0];
+ 						for (var i = 0; i < alive; i++)
+							players[i] =  new THREE.Player( playersControl[i],planeWidth, planeHeight, i);
+
+					}
+
  					document.getElementById("start").onclick = function()
 					{
-						var shipClone = ship.clone();
-
+						if(document.getElementById("all").checked)
+						{
+							sound.music=2;
+							sound.beep_sound.play();
+						}
+						else if(document.getElementById("events").checked)
+							{
+								sound.music=1;							
+							}
+							
+						createGameScene();
 						//while(this.ship.render(false,1));
 
 						if(  document.getElementById("1").checked)
@@ -390,17 +384,7 @@
 						else nPlayer = 4;
 
 						//MUSIC SELECTION
-						if(document.getElementById("all").checked)
-						{
-							music = 2; //MUSIC + EVENT
-							sound.music=2;
-						}
-						else if(document.getElementById("events").checked)
-							{
-								music = 1;
-								sound.music=1;
-							
-							}
+						
 						//LIGHT MODE
 						if (document.getElementById("night").checked){
 							lightModality = "night";
@@ -419,6 +403,7 @@
 
  						startGame = true; 
  						alive = nPlayer;
+
  						for (var i = 0; i < alive; i++)
 							players[i] = new THREE.Player( playersControl[i],planeWidth, planeHeight, i);
 						
@@ -427,7 +412,7 @@
 
 						if(nPlayer == 1){
 							follow = true;
-							camera.position.set(players[0].getPosition().x,players[0].getPosition().y,players[0].getPosition().z);
+							camera.position.copy(players[0].getPosition());
 
 							playerToFollow = 0;
 						}
@@ -569,7 +554,6 @@
 
 			function checkEnd()
 			{
-				console.log(alive)
 
 				var c = 0;
 				var indexPlayer = 0;
@@ -600,7 +584,7 @@
 						controls.target = players[0].getPosition();
 						//pause = true;
 						console.log("player "+playersControl[0].number+" win ");
-						document.getElementById("winner").innerHTML = "player "+playersControl[0].number+" win ";
+						//document.getElementById("winner").innerHTML = "player "+playersControl[0].number+" win ";
 						document.getElementById("winner").style.display="block";
 						wins[playersControl[0].number-1]+=1;
 						console.log(wins);
@@ -627,13 +611,125 @@
 			
 			}
 		
+
+function createGameScene()
+{
+
+			container = document.getElementById( 'container' );
+
+			resetPlayerControls();
+
+			sound = new Sound();
+
+			//CAMERA SETTINGS
+				camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 1000 );
+
+				camera.position.set(0.0,90.0,0.0);
+
+				controls = new THREE.OrbitControls( camera, renderer.domElement );
+				controls.maxPolarAngle = 1.5;
+				controls.minDistance= 0;
+				controls.maxDistance= worldWidth *1.5;
+
+
+				gameScene = new THREE.Scene();
+
+
+				var skyBoxGeometry = new THREE.CubeGeometry( 10000, 10000, 10000 );
+				var skyBoxMaterial = new THREE.MeshBasicMaterial( { color: 0x9999ff});
+				var skyBox = new THREE.Mesh( skyBoxGeometry, skyBoxMaterial );
+				gameScene.add(skyBox);
+	
+				groundGeometry = new THREE.BoxBufferGeometry( planeWidth,1, planeHeight );
+				var groundTexture = new THREE.TextureLoader().load( "textures/Tron_Background256.jpg" );
+				groundTexture.repeat.set( 10, 10 );
+				groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
+				groundTexture.magFilter = THREE.NearestFilter;
+				groundTexture.format = THREE.RGBFormat;
+
+				// GROUND
+				var groundMaterial = new THREE.MeshPhongMaterial( {
+					shininess: 0,
+					color: 0xffffff,
+					side: THREE.DoubleSide,
+					transparent:true,
+					opacity:0.7,
+					map: groundTexture
+				} );
+
+				material = new THREE.MeshBasicMaterial( { color: 0xffffff, map: groundTexture } ); 
+				ground = new THREE.Mesh( groundGeometry, groundMaterial );
+				//ground.scale.set( 1000, 1000, 1000 );
+
+				//ground.receiveShadow = true;
+
+				gameScene.add(ground);
+
+			//SKYBOX
+	
+
+			var prefix = "textures/halo/";
+			var suffix = ".jpg";
+			var urls  = [prefix+"haloBELLO"+suffix,  //back
+									 prefix+"haloBELLO"+suffix, 	//front
+									 prefix+"haloBELLO"+suffix,  //up
+									 prefix+"halo"+suffix,  //down
+
+							 prefix+"haloBELLO90"+suffix,  //left
+									 prefix+"haloBELLO90"+suffix]; //right
+			
+			var reflectionCube = new THREE.CubeTextureLoader().load( urls );
+			reflectionCube.format = THREE.RGBFormat;
+
+			gameScene.background = reflectionCube;
+
+				//MAP WALLS
+				var mesh = new THREE.Mesh(
+					new THREE.BoxBufferGeometry(
+							-worldWidth*1.001,
+							0.01,
+							worldWidth*1.001), 
+					new THREE.MeshBasicMaterial( {
+							color: 0xff3300, 
+							opacity: 0.2,
+							transparent: true,
+
+						}));
+				mesh.position.set(0,-0.5,0);
+
+				gameScene.add(mesh);
+
+
+				halo = new THREE.Halo(worldWidth);
+
+				gameScene.add(halo.getTorus());
+
+				//POWER UP
+				animatedLights.push(new THREE.animatedLight( planeHeight,planeWidth,Math.random() * 0xffffff,50));
+				animatedLights.push(new THREE.animatedLight( planeHeight,planeWidth,Math.random() * 0xffffff,50));
+				animatedLights.push(new THREE.animatedLight( planeHeight,planeWidth,Math.random() * 0xffffff,50));
+				animatedLights.push(new THREE.animatedLight( planeHeight,planeWidth,Math.random() * 0xffffff,50));
+				
+				//******renderer******
+				/*
+				container.innerHTML = "";
+				container.appendChild( renderer.domElement );
+				stats = new Stats();
+				stats.showPanel( 1 );
+				container.appendChild( stats.dom );*/
+				//
+};
 function resetPlayerControls()
 {
+	playersControl = [firstPlayerControls, secondPlayerControls, thirdPlayerControls, fourthPlayerControls];
+
 	for (var i = playersControl.length - 1; i >= 0; i--) {
+
 		playersControl[i].alive = true;
 		playersControl[i].pushed = false;
 		playersControl[i].moveLeft = false;
 		playersControl[i].moveRight = false;
+		playersControl[i].velocity = velocity;
 		playersControl[i].boxTesta = new THREE.Box3();
 		playersControl[i].walls = [];
 		playersControl[i].boxWall = [];
@@ -645,11 +741,7 @@ function resetPlayerControls()
 function Sound() {
 	this.music = 0;
 	this.death_sound  = new Audio("audio/explode.mp3");
-	this.paddle_sound = new Audio("audio/laser.mp3");
-	this.brick_sound  = new Audio("audio/beep.mp3");
-	this.brick_sound2 = new Audio("audio/laser.mp3");
-	this.level_sound = new Audio("audio/powerup.mp3");
 	this.menu_sound = new Audio("audio/menu.mp3");
+	this.beep_sound = new Audio("audio/beep.mp3");
 	this.menu_sound.loop=true;
-
 };

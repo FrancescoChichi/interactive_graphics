@@ -35,10 +35,9 @@ var onKeyDown = function ( event ) {
 
 				if (pause){
 					sound.menu_sound.pause();
-					if(music > 0)
-						sound.brick_sound.play();
+					
 				}
-				else if(music == 2)
+				else if(sound.music == 2)
 					sound.menu_sound.play();
 
 				if(pause)
