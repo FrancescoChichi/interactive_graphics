@@ -9,7 +9,6 @@
 			var ship, shipControl;
 			var sound;
 			var gameEnd = false;
-			var currentScene;
 
 			var piedistallo;
 			/*=====================*\
@@ -46,8 +45,8 @@
 				walls: [],
 				wallThickness: wallThick,
 				boxTesta: new  THREE.Box3(),
-				keyL: 87,
-				keyR: 81
+				keyL: 81,
+				keyR: 87
 
 			};
 			var secondPlayerControls = {
@@ -63,8 +62,8 @@
 				walls: [],
 				wallThickness: wallThick,
 				boxTesta: new  THREE.Box3(),
-				keyL: 105,
-				keyR: 104
+				keyL: 104,
+				keyR: 105
 
 			};
 
@@ -81,8 +80,8 @@
 				walls: [],
 				wallThickness: wallThick,
 				boxTesta: new  THREE.Box3(),
-				keyL: 67,
-				keyR: 88
+				keyL: 88,
+				keyR: 67
 
 			};
 			var fourthPlayerControls = {
@@ -98,8 +97,8 @@
 				walls: [],
 				wallThickness: wallThick,
 				boxTesta: new  THREE.Box3(),
-				keyL: 190,
-				keyR: 188
+				keyL: 188,
+				keyR: 190
 			};
 			
 			
@@ -188,74 +187,71 @@
 					else
 						{
 							//gioco in pausa;
-								document.getElementById("resume").onclick = function()
-								{
-						if (sound.music >1)
+							document.getElementById("resume").onclick = function()
+							{
+								if (sound.music>0)
 									sound.beep_sound.play();
-									if(sound.music>=	1)
-									{
-										sound.menu_sound.play();
-									}	
-									pause = false;
-									document.getElementById("container").setAttribute("style","display:inline");
-									document.getElementById("pause").setAttribute("style","display:none");
-								}
-								document.getElementById("menu").onclick = function()
-								{
-						if (sound.music >1)
-									sound.beep_sound.play();
-									window.location.reload(true);
-									currentScene=menuScene;
+								if(sound.music==2)
+									sound.menu_sound.play();
 
-									document.getElementById("container").setAttribute("style","display:inline");
-									document.getElementById("pause").setAttribute("style","display:none");
-								}
-								document.getElementById("keyPause").onclick = function()
-								{
-						if (sound.music >1)
+								pause = false;
+								document.getElementById("container").setAttribute("style","display:inline");
+								document.getElementById("pause").setAttribute("style","display:none");
+							}
+						document.getElementById("menu").onclick = function()
+							{
+								if (sound.music >1)
+									sound.beep_sound.play();
+								window.location.reload(true);
+								document.getElementById("container").setAttribute("style","display:inline");
+								document.getElementById("pause").setAttribute("style","display:none");
+							}
+						document.getElementById("keyPause").onclick = function()
+							{
+								if (sound.music >1)
 									sound.beep_sound.play();
 									keyPause = true;
 									document.getElementById("pause").setAttribute("style","display:none");
 									document.getElementById("keyMenu").setAttribute("style","display:inline");
 								}
-								document.getElementById("back").onclick = function()
-								{
-						if (sound.music >1)
+						document.getElementById("back").onclick = function()
+							{
+								if (sound.music >1)
 									sound.beep_sound.play();
 									keyPause = false;
 									document.getElementById("pause").setAttribute("style","display:inline");
 									document.getElementById("keyMenu").setAttribute("style","display:none");
-								}
+							}
 
-						}
+					}
 				}
 				else //GIOCO IN PAUSA
  				{
 
-	document.getElementById("FirstL").onclick = function(){
-			playersControl[0].keyL = -1;
-		}
-		document.getElementById("FirstR").onclick = function(){
-			playersControl[0].keyR = -1;
-		}
-		document.getElementById("SecondL").onclick = function(){
-			playersControl[1].keyL = -1;
-		}
-		document.getElementById("SecondR").onclick = function(){
-			playersControl[1].keyR = -1;
-		}
-		document.getElementById("ThirdL").onclick = function(){
-			playersControl[2].keyL = -1;
-		}
-		document.getElementById("ThirdR").onclick = function(){
-			playersControl[2].keyR = -1;
-		}
-		document.getElementById("FourthL").onclick = function(){
-			playersControl[3].keyL = -1;
-		}
-		document.getElementById("FourthR").onclick = function(){
-			playersControl[3].keyR = -1;
-		}
+					document.getElementById("FirstL").onclick = function(){
+						playersControl[0].keyL = -1;
+					}
+					document.getElementById("FirstR").onclick = function(){
+						playersControl[0].keyR = -1;
+					}
+					document.getElementById("SecondL").onclick = function(){
+						playersControl[1].keyL = -1;
+					}
+					document.getElementById("SecondR").onclick = function(){
+						playersControl[1].keyR = -1;
+					}
+					document.getElementById("ThirdL").onclick = function(){
+						playersControl[2].keyL = -1;
+					}
+					document.getElementById("ThirdR").onclick = function(){
+						playersControl[2].keyR = -1;
+					}
+					document.getElementById("FourthL").onclick = function(){
+						playersControl[3].keyL = -1;
+					}
+					document.getElementById("FourthR").onclick = function(){
+						playersControl[3].keyR = -1;
+					}
 
 					document.getElementById("key").onclick = function()
 					{
@@ -279,7 +275,6 @@
 						gameEnd = false;
 						startGame = true; 
  						alive = nPlayer;
-						halo.rotateHalo(Math.PI);
 						players = [0,0,0,0];
  						for (var i = 0; i < alive; i++)
 							players[i] =  new THREE.Player( playersControl[i],planeWidth, planeHeight, i);
@@ -288,6 +283,7 @@
 
  					document.getElementById("start").onclick = function()
 					{
+
 
 						if(document.getElementById("all").checked)
 						{
@@ -298,7 +294,7 @@
 							{
 								sound.music=1;							
 							}
-
+							
 						createGameScene();
 						//while(this.ship.render(false,1));
 
@@ -308,7 +304,22 @@
 						nPlayer = 2;
 						else if(document.getElementById("3").checked)
 						nPlayer = 3;
-						else nPlayer = 4;
+
+
+						switch ( nPlayer ) {
+							case 1:
+								document.getElementById("scoreTwo").style.color = 'grey';
+														
+							case 2:
+								document.getElementById("scoreThree").style.color = 'grey';
+							
+							case 3:
+								document.getElementById("scoreFour").style.color = 'grey';
+														
+							break;
+						}
+
+						//MUSIC SELECTION
 						
 						//LIGHT MODE
 						if (document.getElementById("night").checked){
@@ -320,7 +331,7 @@
 						else
 							lightModality = "cycle";
 
-						if(sound.music>=1)
+						if(sound.music>1)
 						{
 							sound.menu_sound.play();
 						}	
@@ -514,7 +525,7 @@
 						controls.target = players[0].getPosition();
 						//pause = true;
 						console.log("player "+playersControl[0].number+" win ");
-						//document.getElementById("winner").innerHTML = "player "+playersControl[0].number+" win ";
+						document.getElementById("winner").innerHTML = "player "+playersControl[0].number+" win ";
 						document.getElementById("winner").style.display="block";
 						wins[playersControl[0].number-1]+=1;
 						console.log(wins);
@@ -536,20 +547,29 @@
 						document.getElementById("winner").innerHTML = "Game Over";
 						document.getElementById("winner").style.display="block";
 					}
+
 					gameEnd = true;
 				}
-			
+				
+				if(gameEnd){
+					document.getElementById("endMenu").setAttribute("style","display:inline");
+					document.getElementById("scoreFirst").innerHTML = wins[0];
+					document.getElementById("scoreSecond").innerHTML = wins[1];
+					document.getElementById("scoreThird").innerHTML = wins[2];
+					document.getElementById("scoreFourth").innerHTML = wins[3];
+				}
+				else
+					document.getElementById("endMenu").setAttribute("style","display:none");
+
 			}
 		
 
-function createGameScene()
-{
-
+	function createGameScene()
+	{
 			container = document.getElementById( 'container' );
 
 			resetPlayerControls();
 
-			sound = new Sound();
 
 			//CAMERA SETTINGS
 				camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 1000 );
@@ -564,7 +584,6 @@ function createGameScene()
 
 				gameScene = new THREE.Scene();
 
-				currentScene=gameScene;
 
 				var skyBoxGeometry = new THREE.CubeGeometry( 10000, 10000, 10000 );
 				var skyBoxMaterial = new THREE.MeshBasicMaterial( { color: 0x9999ff});
@@ -632,6 +651,8 @@ function createGameScene()
 
 
 				halo = new THREE.Halo(worldWidth);
+				if (lightModality == "night")
+							halo.rotateHalo(Math.PI);
 
 				gameScene.add(halo.getTorus());
 
@@ -641,15 +662,25 @@ function createGameScene()
 				animatedLights.push(new THREE.animatedLight( planeHeight,planeWidth,Math.random() * 0xffffff,50));
 				animatedLights.push(new THREE.animatedLight( planeHeight,planeWidth,Math.random() * 0xffffff,50));
 				
-				//******renderer******
-				/*
-				container.innerHTML = "";
-				container.appendChild( renderer.domElement );
-				stats = new Stats();
-				stats.showPanel( 1 );
-				container.appendChild( stats.dom );*/
-				//
 };
+function resetPlayerControls()
+{
+	playersControl = [firstPlayerControls, secondPlayerControls, thirdPlayerControls, fourthPlayerControls];
+
+	for (var i = playersControl.length - 1; i >= 0; i--) {
+
+		playersControl[i].alive = true;
+		playersControl[i].pushed = false;
+		playersControl[i].moveLeft = false;
+		playersControl[i].moveRight = false;
+		playersControl[i].velocity = velocity;
+		playersControl[i].boxTesta = new THREE.Box3();
+		playersControl[i].walls = [];
+		playersControl[i].boxWall = [];
+	};
+}
+
+
 
 function createMenuScene()
 {

@@ -8,7 +8,7 @@ THREE.Halo = function (size) {
 	//TORUS
 	var geom = new THREE.TorusBufferGeometry( size, 1, 32, 64 );
 	//this.group.matrixAutoUpdate=false
-	this.group.add(new THREE.Mesh(geom,new Material(1,0xffffff,0xffffff,100,1).halo));
+	this.group.add(new THREE.Mesh(geom,new Material(1,0xffffff,100,1).halo));
 
 	this.lightSun = new THREE.SpotLight( 0xffffff, 1,size);
 	this.lightSun.decay = 0.0;

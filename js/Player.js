@@ -4,7 +4,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 	
 	this.deathAnimationFrameCounter = 0;
 	this.wallHeight = 2;
-	this.wallY = 2;
+	this.wallY = 1.2;
 	this.deathAnimationFrame = 100;
 	this.shipScale ;
 
@@ -19,7 +19,6 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 		shipTexture.wrapS = shipTexture.wrapT = THREE.RepeatWrapping;
 		shipTexture.format = THREE.RGBFormat;
 
-				
 	var shipMaterial = new THREE.MeshPhongMaterial( {
 		shininess: 10,
 		color: 0xffffff,
@@ -67,7 +66,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 		var scale = 0.25;
 		this.ship.position.copy(position);
 		//this.ship.scale.set(scale, scale, scale);
-		currentScene.add(this.ship);
+		gameScene.add(this.ship);
 		this.ship.updateMatrixWorld();
 
 		this.torus = new THREE.Box3().setFromObject(this.player.getCabin());
@@ -100,8 +99,13 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 	this.death = function(controls)
 	{
 		controls.alive=false;
+		//this.ship.visible = false;
+		//gameScene.remove(this.ship);
+		//this.ship.scale.copy(new THREE.Vector3(0.0001,0.0001,0.0001));
+
 		for (var i = 0; i < controls.walls.length; i++) 
-			currentScene.remove(controls.walls[i]);
+			gameScene.remove(controls.walls[i]);
+
 	}
 
 	this.render = function(time, controls, sound){
@@ -129,20 +133,20 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 		this.torus = new THREE.Box3().setFromObject(this.player.getCabin());
 
 		if ( !controls.pushed  && controls.moveLeft ) {
-			this.orientation.applyMatrix3(this.ry);
-			controls.pushed = true;
-			this.poseBK = this.ship.position.clone();
-			this.turn = true;
-			this.ship.rotateY(-Math.PI/2);
-		}
-
-		//GIRA A DESTRA
-		else if ( !controls.pushed  && controls.moveRight ) {
 			this.orientation.applyMatrix3(this.ryt);
 			controls.pushed = true;
 			this.poseBK = this.ship.position.clone();
 			this.turn = true;
 			this.ship.rotateY(+Math.PI/2);
+		}
+
+		//GIRA A DESTRA
+		else if ( !controls.pushed  && controls.moveRight ) {
+			this.orientation.applyMatrix3(this.ry);
+			controls.pushed = true;
+			this.poseBK = this.ship.position.clone();
+			this.turn = true;
+			this.ship.rotateY(-Math.PI/2);
 		}
 
 		//AVANZA NELLA DIREZIONE AGGIORNATA
@@ -195,7 +199,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 
 				var cube = new THREE.Mesh( geometry, this.wallMaterial);
 				controls.walls.push(cube);
-				currentScene.add(cube);
+				gameScene.add(cube);
 
 				this.turn = false;
 

@@ -48,7 +48,6 @@ var onKeyDown = function ( event ) {
 					document.getElementById("pause").setAttribute("style","display:none");
 				}
 			}
-
 			break;
 		case 49:
 			follow = false;

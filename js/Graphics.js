@@ -7,7 +7,7 @@ function Geometry(params){
 		this.cylinder = new THREE.CylinderBufferGeometry( params[0], params[1], params[2], params[3]);
 }
 
-function Material(shininess,color,specular, rx, ry){
+function Material(shininess,color, rx, ry){
 
 	var textureMetal = "textures/metal-texture256.jpg";
 	
@@ -42,34 +42,29 @@ function Material(shininess,color,specular, rx, ry){
 	this.halo = new THREE.MeshPhongMaterial( {
 		shininess: shininess,
 		color: color,
-		specular: specular,
 		map: haloTexture
 	} );
 
 	this.torus = new THREE.MeshPhongMaterial( {
 		shininess: shininess,
 		color: color,
-		specular: specular,
 		map: torusTexture
 	} );
 
 	this.metal = new THREE.MeshPhongMaterial( {
 		shininess: shininess,
 		color: color,
-		specular: specular,
 		map: metalTexture
 	} );
 	this.metalDoubleSide = new THREE.MeshPhongMaterial( {
 		shininess: shininess,
 		color: color,
-		specular: specular,
 		side: THREE.DoubleSide,
 		map: metalTexture
 	} );
 
 	this.glass = new THREE.MeshToonMaterial( {
 		color: color,
-		specular: color
 			} );
 
 	// GROUND

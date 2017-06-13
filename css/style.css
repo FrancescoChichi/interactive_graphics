@@ -13,13 +13,13 @@ background-color: Transparent;  font-family: 'Arial', sans-serif;
   padding: 20px;
   top:15%;
   left: 30%;*/
-  width: 45%;
+  width: 35%;
   height: 100%;
   padding-top:5%;
   padding-bottom: 5%;
-  left: 50%;
-  background-color: rgb(138, 138, 92);
-  background-color: rgba(138, 138, 92,0.85);
+  left: 65%;
+  background-color: rgb(138, 138, 138);
+  background-color: rgba(138, 138, 138,0.85);
 }
 
 .keySettings{
@@ -31,9 +31,18 @@ background-color: Transparent;  font-family: 'Arial', sans-serif;
   height: 100%;
   width: 25%;
   font-size: 1.2em;
-
 }
 
+.restartMenu{
+  display: block;
+  position: absolute;
+  left: 35%;
+  top: 10%;
+  text-align: center;
+  height: auto;
+  width: 25%;
+  font-size: 1.2em;
+}
 
 .pause{
   display: block;
@@ -52,6 +61,8 @@ h2 {
   padding-left: 10px;
   padding-top: 1px;
   padding-bottom: 1px;
+    font-size: 2.35em;
+
   margin: 0;
 }
 td {
@@ -65,15 +76,7 @@ tr {
   height: 15%;
 }
 
-p{
-    transform:rotate(90deg);
-    -moz-transform:rotate(90deg);
-    -o-transform:rotate(90deg);
-    -webkit-transform:rotate(90deg);
-    -ms-transform:rotate(90deg);
-}
-
-.container ul, .keySettings ul, .pause ul{
+.container ul,  .pause ul{
   list-style: none;
   margin: 0;
   padding: 0;
@@ -83,6 +86,15 @@ p{
   background-color: rgba(0, 0, 0,0.5);
 }
 
+.restartMenu ul{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  overflow:hidden;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0,0.7);
+}
 
 .container button{
   list-style: none;
@@ -95,7 +107,7 @@ button{
   color: #0066ff;
   /*display: block;*/
   position: relative;
-  font-size: 1.5em;
+  font-size: 3.5em;
   background-color: Transparent;
   background-repeat:no-repeat;
   border: none;
@@ -110,8 +122,8 @@ button{
   position: relative;
   width: 100%;
   height: 90%;
-  background-color: rgb(138, 138, 92);
-  background-color: rgba(138, 138, 92,0.5);
+  background-color: rgb(138, 138, 138);
+  background-color: rgba(138, 138, 138,0.5);
   font-size: 1em;
 }
 
@@ -127,7 +139,8 @@ ul li{
   padding-left:2%;
   padding-right: 2%;
   margin:0;
-  height: 10px;
+  height: auto;
+  width: auto;
   padding-right: auto;
   /*float: left;
   width: auto;
@@ -148,7 +161,7 @@ ul li label{
   display: block;
   position: relative;
   font-weight: 300;
-  font-size: 1.35em;
+  font-size: 2.35em;
   padding: 22px 1px 1px 50px;
   margin: 10px;
   height: 30px;
@@ -182,8 +195,8 @@ ul li:hover .check {
 {
   display: none;
  
-  background-color: rgb(138, 138, 92);
-  background-color: rgba(138, 138, 92,0.85);
+  background-color: rgb(138, 138, 138);
+  background-color: rgba(138, 138, 138,0.85);
 }
 
 ul li .check::before {

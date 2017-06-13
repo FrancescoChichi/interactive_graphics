@@ -82,7 +82,7 @@ THREE.explosionParticle = function (particlesNumber, color,wordRotation,position
 
 		this.remove = function()
 		{
-			currentScene.remove(this.particles);
+			gameScene.remove(this.particles);
 		};
 
 };
