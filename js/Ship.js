@@ -141,8 +141,8 @@ THREE.Ship = function (controls,scale, color) {
 
 		if(control.alive)
 		{
-		this.group.position.y = Math.sin( time*5 ) + 1 ;
-		ship.getObjectByName("torus").rotateZ(THREE.Math.degToRad(angle));
+		this.group.position.y =Math.min( Math.sin( time*5 ) + 1 ,1.3);
+		this.group.getObjectByName("torus").rotateZ(THREE.Math.degToRad(angle));
 		this.updateParticle();
 		}
 		else

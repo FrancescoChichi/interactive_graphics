@@ -130,6 +130,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 	}
 	this.updatePlayerModel = function ( controls, gameScene, planeWidth, planeHeight, sound ) {
 		//GIRA A SINISTRA
+		//cabin.position.y = 0;
 		this.torus = new THREE.Box3().setFromObject(this.player.getCabin());
 
 		if ( !controls.pushed  && controls.moveLeft ) {
@@ -202,7 +203,6 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 				gameScene.add(cube);
 
 				this.turn = false;
-
 				controls.boxTesta = this.torus.clone();
 		}
 	};

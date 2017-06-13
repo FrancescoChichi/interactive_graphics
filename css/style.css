@@ -117,7 +117,7 @@ button{
   color: #0066ff;
   /*display: block;*/
   position: relative;
-  font-size: 3.5em;
+  font-size: 2.5em;
   background-color: Transparent;
   background-repeat:no-repeat;
   border: none;
@@ -187,7 +187,7 @@ ul li label{
   display: block;
   position: relative;
   font-weight: 300;
-  font-size: 2.35em;
+  font-size: 1.35em;
   padding: 22px 1px 1px 50px;
   margin: 10px;
   height: 30px;
@@ -250,6 +250,3 @@ input[type=radio]:checked ~ .check::before{
 input[type=radio]:checked ~ label{
   color: #0DFF92;
 }
-
-
-  
