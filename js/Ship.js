@@ -140,11 +140,11 @@ THREE.Ship = function (controls,scale) {
 		return this.group;
 	}
 
-	this.render = function(control, angle,sound){
+	this.render = function(control, angle, sound){
 
 		if(control.alive)
 		{
-		this.group.position.y = Math.sin( time*5 ) + 1.3 ;
+		this.group.position.y = Math.sin( time*5 ) + 1 ;
 		ship.getObjectByName("torus").rotateZ(THREE.Math.degToRad(angle));
 		this.updateParticle();
 		}

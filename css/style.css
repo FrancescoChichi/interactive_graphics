@@ -178,8 +178,10 @@ ul li .check{
 ul li:hover .check {
   border: 5px solid #FFFFFF;
 }
-.winner 
+.startAgain button
 {
+  display: none;
+ 
   background-color: rgb(138, 138, 92);
   background-color: rgba(138, 138, 92,0.85);
 }

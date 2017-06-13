@@ -273,7 +273,7 @@
 										sound.menu_sound.play();
 									}	
 									pause = false;
-									//document.getElementById("container").setAttribute("style","display:inline");
+									document.getElementById("container").setAttribute("style","display:inline");
 									document.getElementById("pause").setAttribute("style","display:none");
 								}
 								document.getElementById("menu").onclick = function()
@@ -281,7 +281,7 @@
 						if (sound.music >1)
 									sound.beep_sound.play();
 									window.location.reload(true);
-									//document.getElementById("container").setAttribute("style","display:inline");
+									document.getElementById("container").setAttribute("style","display:inline");
 									document.getElementById("pause").setAttribute("style","display:none");
 								}
 								document.getElementById("keyPause").onclick = function()
