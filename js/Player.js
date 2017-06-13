@@ -67,7 +67,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 		var scale = 0.25;
 		this.ship.position.copy(position);
 		//this.ship.scale.set(scale, scale, scale);
-		gameScene.add(this.ship);
+		currentScene.add(this.ship);
 		this.ship.updateMatrixWorld();
 
 		this.torus = new THREE.Box3().setFromObject(this.player.getCabin());
@@ -100,13 +100,8 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 	this.death = function(controls)
 	{
 		controls.alive=false;
-		//this.ship.visible = false;
-		//gameScene.remove(this.ship);
-		//this.ship.scale.copy(new THREE.Vector3(0.0001,0.0001,0.0001));
-
 		for (var i = 0; i < controls.walls.length; i++) 
-			gameScene.remove(controls.walls[i]);
-
+			currentScene.remove(controls.walls[i]);
 	}
 
 	this.render = function(time, controls, sound){
@@ -200,7 +195,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 
 				var cube = new THREE.Mesh( geometry, this.wallMaterial);
 				controls.walls.push(cube);
-				gameScene.add(cube);
+				currentScene.add(cube);
 
 				this.turn = false;
 

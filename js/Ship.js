@@ -145,11 +145,11 @@ THREE.Ship = function (controls,scale) {
 		if(control.alive)
 		{
 		this.group.position.y = Math.sin( time*5 ) + 1 ;
-		ship.getObjectByName("torus").rotateZ(THREE.Math.degToRad(angle));
+		this.group.getObjectByName("torus").rotateZ(THREE.Math.degToRad(angle));
 		this.updateParticle();
 		}
 		else
-		{
+		{	
 
 			if (deathAnimationFrameCounter== 0)
 			{
@@ -158,7 +158,6 @@ THREE.Ship = function (controls,scale) {
 				explosionParticle = new THREE.explosionParticle(explosionParticleNumber,controls.color,this.group.matrixWorld,this.group.getWorldPosition() , planeWidth,planeHeight);
 			}
 			deathAnimationFrameCounter++;
-
 			if(deathAnimationFrameCounter>deathAnimationFrame){
 				this.remove();
 				explosionParticle.remove();
