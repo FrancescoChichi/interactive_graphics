@@ -1,10 +1,13 @@
-THREE.Ship = function (controls) {
-	var scope = this;
+THREE.Ship = function (controls,color) {
+
 
 	this.particleCount;
 	this.particlesL;
 	this.particlesR;
-	    
+	if(color)
+		this.color = color;
+	else
+		this.color = controls.color;
 	this.texture;
 		
 	this.group = new THREE.Group();
@@ -18,15 +21,15 @@ THREE.Ship = function (controls) {
 //MATERIALI
 	var materialPhong = new THREE.MeshPhongMaterial( { shininess: 5, color: 0xffffff, specular: 0x999999 } );
 	var materialPlayer = new THREE.MeshToonMaterial( { shininess: 5, 
-				color: controls.color,
+				color: this.color,
 				specular:0xFFFFFF,
 				reflectivity: 1 } );
 
 
 	var motorMaterial = new Material(50,0xffffff,0xffffff,1,1).metalDoubleSide;
-	var metalBallMaterial = new Material(50,controls.color,controls.color,5,1).metalDoubleSide;
+	var metalBallMaterial = new Material(50,this.color,this.color,5,1).metalDoubleSide;
 	var toruslMaterial = new Material(5,0xffffff,0xffffff,4,1).halo;
-	var glassMaterial =new Material(0,controls.color,controls.color).glass;
+	var glassMaterial =new Material(0,this.color,this.color).glass;
 
 //GEOMETRY
 	var points = [];
@@ -45,11 +48,11 @@ THREE.Ship = function (controls) {
 	//var cilinderGeometry = new THREE.CylinderBufferGeometry( 1, 1, 3, 64);
 	var cilinderGeometry = new Geometry([1, 1, 3, 64]).cylinder;
 
-	this.light = new THREE.PointLight( controls.color, 5, 5, 2 );
+	this.light = new THREE.PointLight( this.color, 5, 5, 2 );
 
 	this.light.add( new THREE.Mesh( sphereGeometry, metalBallMaterial));
 		/*new THREE.MeshToonMaterial( { 
-			color: controls.color,
+			color: this.color,
 			specular:0xFFFFFF,
 			reflectivity: 1 } ) ) );*/
 
@@ -90,7 +93,7 @@ THREE.Ship = function (controls) {
   this.particlesR = [];
 
 
-  var particleMaterial = new Material(0,controls.color,0,0,0).particle;
+  var particleMaterial = new Material(0,this.color,0,0,0).particle;
 
   
   
@@ -118,6 +121,12 @@ THREE.Ship = function (controls) {
   }
 
 
+  this.changeColor = function(){
+  	this.color = Math.random()*0xffffff;
+  	this.glass.material.color.setHex(this.color);
+  	metalBallMaterial.color.setHex(this.color);
+  	particleMaterial.color.setHex(this.color);
+  }
 
 	this.getShip = function(){
 		return this.ship;

@@ -131,7 +131,6 @@ init();
 animate();
 function init() {
 	container = document.getElementById( 'container' );
-
 	sound = new Sound();
 
 //CAMERA SETTINGS
@@ -182,11 +181,10 @@ function init() {
 
 	gameScene.add( ground );
 
-	shipControl = new THREE.Ship(secondPlayerControls);
+	shipControl = new THREE.Ship(secondPlayerControls,0x000551);
 	ship = shipControl.getAll();
 	ship.scale.set(.5,.5,.5);
 	menuScene.add(ship);
-
 
 	menuScene.add(new THREE.Mesh(new Geometry([5, 5, 3, 64]).cylinder, new Material(50,0xffffff,0xffffff,5,1).metalDoubleSide));
 
@@ -519,10 +517,12 @@ function renderMenu() {
 	var delta = clock.getDelta();
 	controlsMenu.update(delta);
 								
-		time += 0.005;				
-		shipControl.render(0.0);
-		ship.rotateY(THREE.Math.degToRad(+0.2));
-		shipControl.updateParticle();
+	time += 0.005;				
+	shipControl.render(0.0);
+	ship.rotateY(THREE.Math.degToRad(+0.2));
+	shipControl.updateParticle();
+	shipControl.changeColor();
+
 	renderer.render( menuScene, menuCamera );
 }
 
