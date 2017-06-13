@@ -1,4 +1,3 @@
-this.textureMetal = "textures/metal-texture256.jpg";
 
 
 
@@ -8,25 +7,34 @@ function Geometry(params){
 		this.cylinder = new THREE.CylinderBufferGeometry( params[0], params[1], params[2], params[3]);
 }
 
-function Material(shininess,color,specular, rx, ry){
-	this.metalTexture = new THREE.TextureLoader().load( "textures/metal-texture512.jpg" );
-		this.metalTexture.repeat.set( rx, ry );
-		this.metalTexture.wrapS = this.metalTexture.wrapT = THREE.RepeatWrapping;
-		this.metalTexture.magFilter = THREE.NearestFilter;
-		this.metalTexture.format = THREE.RGBFormat;
+function Material(shininess,color, rx, ry){
 
-	this.haloTexture = new THREE.TextureLoader().load( "textures/halo/halo.jpg" );
-		this.haloTexture.repeat.set( rx, ry );
-		this.haloTexture.wrapS = this.haloTexture.wrapT = THREE.RepeatWrapping;
-		this.haloTexture.magFilter = THREE.NearestFilter;
-		this.haloTexture.format = THREE.RGBFormat;
+	var textureMetal = "textures/metal-texture256.jpg";
+	
+	var metalTexture = new THREE.TextureLoader().load( "textures/metal-texture512.jpg" );
+		metalTexture.repeat.set( rx, ry );
+		metalTexture.wrapS = metalTexture.wrapT = THREE.RepeatWrapping;
+		metalTexture.magFilter = THREE.NearestFilter;
+		metalTexture.format = THREE.RGBFormat;
 
-	this.tronTexture = new THREE.TextureLoader().load( "textures/Tron_Background256.jpg" );
+	var haloTexture = new THREE.TextureLoader().load( "textures/halo/halo.jpg" );
+		haloTexture.repeat.set( rx, ry );
+		haloTexture.wrapS = haloTexture.wrapT = THREE.RepeatWrapping;
+		haloTexture.magFilter = THREE.NearestFilter;
+		haloTexture.format = THREE.RGBFormat;
+
+	var torusTexture = new THREE.TextureLoader().load( "textures/halo/halo.jpg" );
+		torusTexture.repeat.set( rx, ry );
+		torusTexture.wrapS = torusTexture.wrapT = THREE.RepeatWrapping;
+		torusTexture.magFilter = THREE.NearestFilter;
+		torusTexture.format = THREE.RGBFormat;
+
+	var tronTexture = new THREE.TextureLoader().load( "textures/Tron_Background256.jpg" );
 	//var texture = new THREE.TextureLoader().load( "textures/patterns/bright_squares256.png" );
-	this.tronTexture.repeat.set( rx, ry );
-	this.tronTexture.wrapS = this.tronTexture.wrapT = THREE.RepeatWrapping;
-	this.tronTexture.magFilter = THREE.NearestFilter;
-	this.tronTexture.format = THREE.RGBFormat;
+	tronTexture.repeat.set( rx, ry );
+	tronTexture.wrapS = tronTexture.wrapT = THREE.RepeatWrapping;
+	tronTexture.magFilter = THREE.NearestFilter;
+	tronTexture.format = THREE.RGBFormat;
 
 	this.particleTexture = new THREE.TextureLoader().load( "textures/oUBYu.png" );
 
@@ -34,34 +42,36 @@ function Material(shininess,color,specular, rx, ry){
 	this.halo = new THREE.MeshPhongMaterial( {
 		shininess: shininess,
 		color: color,
-		specular: specular,
-		map: this.haloTexture
+		map: haloTexture
+	} );
+
+	this.torus = new THREE.MeshPhongMaterial( {
+		shininess: shininess,
+		color: color,
+		map: torusTexture
 	} );
 
 	this.metal = new THREE.MeshPhongMaterial( {
 		shininess: shininess,
 		color: color,
-		specular: specular,
-		map: this.metalTexture
+		map: metalTexture
 	} );
 	this.metalDoubleSide = new THREE.MeshPhongMaterial( {
 		shininess: shininess,
 		color: color,
-		specular: specular,
 		side: THREE.DoubleSide,
-		map: this.metalTexture
+		map: metalTexture
 	} );
 
 	this.glass = new THREE.MeshToonMaterial( {
 		color: color,
-		specular: color
 			} );
 
 	// GROUND
 	this.ground = new THREE.MeshPhongMaterial( {
 		shininess: shininess,
 		color: color,
-		map: this.tronTexture
+		map: tronTexture
 	} );
 
 	this.basicTransparent = new THREE.MeshBasicMaterial( {

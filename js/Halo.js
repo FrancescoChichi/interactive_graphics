@@ -4,27 +4,31 @@ THREE.Halo = function (size) {
 	this.group = new THREE.Group();
 	this.lightOn = true;
 	var dimension = size*2 ;
+	var vectorAngle = new THREE.Vector3(0,0,1);
 	//TORUS
-	var geom = new THREE.TorusBufferGeometry( dimension, 1, 32, 64 );
-	//var material = new THREE.MeshBasicMaterial( {
-			//	color: 0xff3300 });
+	var geom = new THREE.TorusBufferGeometry( size, 1, 32, 64 );
+	//this.group.matrixAutoUpdate=false
+	this.group.add(new THREE.Mesh(geom,new Material(1,0xffffff,100,1).halo));
 
-	this.group.add(new THREE.Mesh(geom,new Material(5,0xffffff,0xffffff,100,1).halo));
-
-	this.lightSun = new THREE.DirectionalLight( 0xffffff, 1.5 );
-	this.lightSun.position.set( 0, dimension, 0 );
+	this.lightSun = new THREE.SpotLight( 0xffffff, 1,size);
+	this.lightSun.decay = 0.0;
+	this.lightSun.angle = 	Math.PI/2;
+	this.lightSun.position.set( 0, size, 0 );
 	this.group.add(this.lightSun);
 
-	this.lightMoon = new THREE.DirectionalLight( 0x0000cc, 1.5 );
-	this.lightMoon.position.set( 0, -dimension, 0 );
+	this.lightMoon = new THREE.SpotLight( 0x0000cc, 1,size);
+	this.lightMoon.position.set( 0, -size, 0 );
+	this.lightMoon.decay = 0.0;
+	this.lightMoon.angle = 	Math.PI/2;
+
 	this.group.add(this.lightMoon);
-//	this.group.position.y+=100;
 
-	this.group.rotateY(THREE.Math.degToRad(+45));
+	//this.group.position.y+=100;
+
+	//this.group.rotateY(THREE.Math.degToRad(+45));
 	
-
-	this.group.rotateX(Math.PI/6);
-	this.group.rotateZ(THREE.Math.degToRad(+45));
+	//this.group.rotateX(Math.PI/6);
+	//this.group.rotateZ(THREE.Math.degToRad(+45));
 
 	this.getTorus = function(){
 		return this.group;

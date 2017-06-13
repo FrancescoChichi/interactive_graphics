@@ -3,38 +3,30 @@ var onKeyDown = function ( event ) {
 	switch ( event.keyCode ) {
 		case firstPlayerControls.keyL: // q
 			firstPlayerControls.moveLeft = true;
-			firstPlayerControls.leftClicked++;
 			break;
 		case firstPlayerControls.keyR: // w
 			firstPlayerControls.moveRight = true;
-			firstPlayerControls.rightClicked++;
 			break;
 
 		case secondPlayerControls.keyL: // a
 			secondPlayerControls.moveLeft = true;
-			secondPlayerControls.leftClicked++;
 			break;
 		case secondPlayerControls.keyR: // d
 			secondPlayerControls.moveRight = true;
-			secondPlayerControls.rightClicked++;
 			break;
 		
 		case thirdPlayerControls.keyL: // a
 			thirdPlayerControls.moveLeft = true;
-			thirdPlayerControls.leftClicked++;
 			break;
 		case thirdPlayerControls.keyR: // d
 			thirdPlayerControls.moveRight = true;
-			thirdPlayerControls.rightClicked++;
 			break;
 									
 		case fourthPlayerControls.keyL: // a
 			fourthPlayerControls.moveLeft = true;
-			fourthPlayerControls.leftClicked++;
 			break;
 		case fourthPlayerControls.keyR: // d
 			fourthPlayerControls.moveRight = true;
-			fourthPlayerControls.rightClicked++;
 			break;
 		case 27: // ESC
 			if(startGame)
@@ -43,10 +35,9 @@ var onKeyDown = function ( event ) {
 
 				if (pause){
 					sound.menu_sound.pause();
-					if(music > 0)
-						sound.brick_sound.play();
+					
 				}
-				else if(music == 2)
+				else if(sound.music == 2)
 					sound.menu_sound.play();
 
 				if(pause)
@@ -57,7 +48,6 @@ var onKeyDown = function ( event ) {
 					document.getElementById("pause").setAttribute("style","display:none");
 				}
 			}
-
 			break;
 		case 49:
 			follow = false;
@@ -96,6 +86,7 @@ var onKeyDown = function ( event ) {
 				document.getElementById("FirstR").innerHTML = String.fromCharCode(firstPlayerControls.keyR);
 			}
 			else if(secondPlayerControls.keyL<0){
+				
 				secondPlayerControls.keyL=event.keyCode;
 				document.getElementById("SecondL").innerHTML = String.fromCharCode(secondPlayerControls.keyL);
 			}
@@ -126,38 +117,38 @@ var onKeyUp = function ( event ) {
 	switch( event.keyCode ) {
 		case firstPlayerControls.keyL: // w
 			firstPlayerControls.moveLeft = false;
-			firstPlayerControls.leftClicked = 0;
+			firstPlayerControls.pushed = false;
 			break;
 		case firstPlayerControls.keyR: // q
 			firstPlayerControls.moveRight = false;
-			firstPlayerControls.rightClicked = 0;
+			firstPlayerControls.pushed = false;
 			break;
 
 		case secondPlayerControls.keyL: // numpad 8
 			secondPlayerControls.moveLeft = false;
-			secondPlayerControls.leftClicked = 0;
+			secondPlayerControls.pushed = false;
 			break;
 		case secondPlayerControls.keyR: // numpad 9
 			secondPlayerControls.moveRight = false;
-			secondPlayerControls.rightClicked = 0;
+			secondPlayerControls.pushed = false;
 			break;
 		
 		case thirdPlayerControls.keyL: // c
 			thirdPlayerControls.moveLeft = false;
-			thirdPlayerControls.leftClicked = 0;
+			thirdPlayerControls.pushed = false;
 			break;
 		case thirdPlayerControls.keyR: // v
 			thirdPlayerControls.moveRight = false;
-			thirdPlayerControls.rightClicked = 0;
+			thirdPlayerControls.pushed = false;
 			break;
 									
 		case fourthPlayerControls.keyL: // period
 			fourthPlayerControls.moveLeft = false;
-			fourthPlayerControls.leftClicked = 0;
+			fourthPlayerControls.pushed = false;
 			break;
 		case fourthPlayerControls.keyR: // comma
 			fourthPlayerControls.moveRight = false;
-			fourthPlayerControls.rightClicked = 0;
+			fourthPlayerControls.pushed = false;
 			break;
 	}
 };
