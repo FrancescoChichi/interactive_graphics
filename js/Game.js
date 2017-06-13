@@ -733,33 +733,33 @@ function createMenuScene()
 				shipControl1 = new THREE.Ship(firstPlayerControls,0.30);
 				ship1 = shipControl1.getAll();
 				ship1.position.set(-4,wins[0]/2+0.5,3);
-				var piedistallo = new THREE.Mesh(new Geometry([2, 2, wins[0], 64]).cylinder,
+				var piedistallo = new THREE.Mesh(new Geometry([2, 2, wins[0]/2, 64]).cylinder,
 				new Material(50,0xffffff,0xffffff,5,1).metalDoubleSide);
-				piedistallo.position.set(-4,wins[0]/2+0.1,3);
+				piedistallo.position.set(-4,wins[0]/4,3);
 				menuScene.add(piedistallo);
 
 				shipControl2 = new THREE.Ship(secondPlayerControls,0.3);
 				ship2 = shipControl2.getAll();
 				ship2.position.set(1,wins[1]/2+0.5,0);
-				piedistallo = new THREE.Mesh(new Geometry([2, 2,  wins[1], 64]).cylinder,
+				piedistallo = new THREE.Mesh(new Geometry([2, 2,  wins[1]/2, 64]).cylinder,
 				new Material(50,0xffffff,0xffffff,5,1).metalDoubleSide);
-				piedistallo.position.set(1,wins[1]/2+0.1,0);
+				piedistallo.position.set(1,wins[1]/4,0);
 				menuScene.add(piedistallo);
 				
 				shipControl3 = new THREE.Ship(thirdPlayerControls,0.3);
 				ship3 = shipControl3.getAll();
 				ship3.position.set(8,wins[2]/2+0.5,0);
-				piedistallo = new THREE.Mesh(new Geometry([2, 2,  wins[2], 64]).cylinder,
+				piedistallo = new THREE.Mesh(new Geometry([2, 2,wins[2]/2, 64]).cylinder,
 				new Material(50,0xffffff,0xffffff,5,1).metalDoubleSide);
-				piedistallo.position.set(8,wins[2]/2+0.1,0);
+				piedistallo.position.set(8,wins[2]/4,0);
 				menuScene.add(piedistallo);
 				
 				shipControl4 = new THREE.Ship(fourthPlayerControls,0.3);
 				ship4 = shipControl4.getAll();
 				ship4.position.set(15,wins[3]/2+0.5,3);
-				piedistallo = new THREE.Mesh(new Geometry([2, 2,  wins[3], 64]).cylinder,
+				piedistallo = new THREE.Mesh(new Geometry([2, 2,  wins[3]/2, 64]).cylinder,
 				new Material(50,0xffffff,0xffffff,5,1).metalDoubleSide);
-				piedistallo.position.set(15,wins[3]/2+0.1,3);
+				piedistallo.position.set(15,wins[3]/4,3);
 				menuScene.add(piedistallo);
 				
 				
