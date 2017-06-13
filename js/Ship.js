@@ -90,7 +90,7 @@ THREE.Ship = function (controls,scale, color) {
 
 
   var particleMaterial = new Material(0,controls.color).particle;
-  
+
   for (var i = 0; i < particleCount; i++) {
 
       var particle = new THREE.Sprite(particleMaterial);
@@ -117,14 +117,6 @@ THREE.Ship = function (controls,scale, color) {
 
   	this.group.scale.set(scale, scale, scale);
  	 var shipScale = this.group.scale;
-
-
-  this.changeColor = function(){
-  /*	this.color = Math.random()*0xffffff;
-  	this.glass.material.color.setHex(this.color);
-  	metalBallMaterial.color.setHex(this.color);
-  	particleMaterial.color.setHex(this.color);*/
-  }
 
 	this.getShip = function(){
 		return this.topShip;
