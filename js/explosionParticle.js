@@ -64,7 +64,7 @@ THREE.explosionParticle = function (particlesNumber, color,wordRotation,position
 	   		 //gameScene.add(line);
 			
 		    }
-			gameScene.add(this.particles);
+			currentScene.add(this.particles);
 
 		this.render = function(animationStep){
 
@@ -72,17 +72,7 @@ THREE.explosionParticle = function (particlesNumber, color,wordRotation,position
 
 			var pos = this.curveDirection[i].getPoint(this.curvePosition);
 			this.particles.children[i].position.copy(pos);
-
-			this.particles.children[i].scale.add(
-					new THREE.Vector3(
-							-(this.particleScale)/animationStep,
-							-(this.particleScale)/animationStep,
-							-(this.particleScale)/animationStep,
-					)
-				)
-
 			var offset = 1/animationStep;	
-
 			this.curvePosition+=(offset);
 
 			if (this.curvePosition > 1)
