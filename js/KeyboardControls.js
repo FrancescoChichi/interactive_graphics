@@ -29,7 +29,7 @@ var onKeyDown = function ( event ) {
 			fourthPlayerControls.moveRight = true;
 			break;
 		case 27: // ESC
-			if(startGame)
+			if(startGame && !gameEnd)
 			{
 				pause = !pause;
 

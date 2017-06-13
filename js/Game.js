@@ -296,9 +296,11 @@
 							{
 								if (sound.music >1)
 									sound.beep_sound.play();
-									keyPause = false;
-									document.getElementById("pause").setAttribute("style","display:inline");
-									document.getElementById("keyMenu").setAttribute("style","display:none");
+
+								keyPause = false;
+								document.getElementById("pause").setAttribute("style","display:inline");
+								document.getElementById("keyMenu").setAttribute("style","display:none");
+
 							}
 
 					}
@@ -346,6 +348,18 @@
 						document.getElementById("keyMenu").setAttribute("style","display:none");
 					}
 
+
+						document.getElementById("backFromColor").onclick = function(){
+							document.getElementById("colorMenu").setAttribute("style","display:none");
+							document.getElementById("mainPage").setAttribute("style","display:inline");
+
+						}
+
+ 					document.getElementById("colorButton").onclick = function()
+					{
+						document.getElementById("mainPage").setAttribute("style","display:none");
+						document.getElementById("colorMenu").setAttribute("style","display:inline");
+					}
 					document.getElementById("startAgain").onclick = function()
 					{
 						gameScene = null;
@@ -359,7 +373,7 @@
 
 					}
 
- 					document.getElementById("start").onclick = function()
+ 					document.getElementById("start").onclick = function()  //START THE GAME
 					{
 
 
@@ -386,18 +400,17 @@
 
 						switch ( nPlayer ) {
 							case 1:
-								document.getElementById("scoreTwo").style.color = 'grey';
+								document.getElementById("score2").style.color = 'grey';
 														
 							case 2:
-								document.getElementById("scoreThree").style.color = 'grey';
+								document.getElementById("score3").style.color = 'grey';
 							
 							case 3:
-								document.getElementById("scoreFour").style.color = 'grey';
+								document.getElementById("score4").style.color = 'grey';
 														
 							break;
 						}
 
-						//MUSIC SELECTION
 						
 						//LIGHT MODE
 						if (document.getElementById("night").checked){
@@ -418,6 +431,18 @@
  						startGame = true; 
  						alive = nPlayer;
 
+ 						for(var i = 1; i<=nPlayer; i++)
+ 						{
+ 							var r = document.getElementById('valRedP'+i).innerHTML;
+    					var g = document.getElementById('valGreenP'+i).innerHTML;
+    					var b = document.getElementById('valBlueP'+i).innerHTML;
+    					var color = new THREE.Color("rgb("+r+","+g+","+b+")") ;
+    					playersControl[i-1].color = color;
+    					document.getElementById('score'+i).style.color="rgb("+r+","+g+","+b+")";
+ 						}
+						
+
+
  						for (var i = 0; i < alive; i++)
 							players[i] = new THREE.Player( playersControl[i],planeWidth, planeHeight, i);
 						
@@ -432,7 +457,8 @@
 						}
 
  					};
- 					
+ 										
+
 							
  				}
  				if(startGame)
@@ -458,7 +484,6 @@
  				haloMenu.animate();
  				//shipControl.render(2);
  				shipControl.updateParticle();
- 					shipControl.changeColor();
 
 				renderer.render( menuScene, menuCamera );
 			}
@@ -628,10 +653,10 @@
 				
 				if(gameEnd){
 					document.getElementById("endMenu").setAttribute("style","display:inline");
-					document.getElementById("scoreFirst").innerHTML = wins[0];
-					document.getElementById("scoreSecond").innerHTML = wins[1];
-					document.getElementById("scoreThird").innerHTML = wins[2];
-					document.getElementById("scoreFourth").innerHTML = wins[3];
+					document.getElementById("score1").innerHTML = wins[0];
+					document.getElementById("score2").innerHTML = wins[1];
+					document.getElementById("score3").innerHTML = wins[2];
+					document.getElementById("score4").innerHTML = wins[3];
 				}
 				else
 					document.getElementById("endMenu").setAttribute("style","display:none");

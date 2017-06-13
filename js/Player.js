@@ -3,7 +3,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 	var scope = this;
 	
 	this.deathAnimationFrameCounter = 0;
-	this.wallHeight = 2;
+	this.wallHeight = 2.5;
 	this.wallY = 1.2;
 	this.deathAnimationFrame = 100;
 	this.shipScale ;
