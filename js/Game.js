@@ -277,6 +277,10 @@
 
 
 						document.getElementById("backFromColor").onclick = function(){
+							menuCamera.position.set(15.0,4.0,25.0);
+							menuCamera.rotateZ(Math.PI/4);
+							menuCamera.rotateX(Math.PI/2);
+
 							document.getElementById("colorMenu").setAttribute("style","display:none");
 							document.getElementById("mainPage").setAttribute("style","display:inline");
 
@@ -284,6 +288,10 @@
 
  					document.getElementById("colorButton").onclick = function()
 					{
+						menuCamera.position.set(20.0,28.0,15.0);
+						menuCamera.rotateX(-Math.PI/2);
+						menuCamera.rotateZ(-Math.PI/4);
+
 						document.getElementById("mainPage").setAttribute("style","display:none");
 						document.getElementById("colorMenu").setAttribute("style","display:inline");
 					}

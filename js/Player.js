@@ -82,9 +82,6 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 	this.death = function(controls)
 	{
 		controls.alive=false;
-		//this.ship.visible = false;
-		//gameScene.remove(this.ship);
-		//this.ship.scale.copy(new THREE.Vector3(0.0001,0.0001,0.0001));
 
 		for (var i = 0; i < controls.walls.length; i++) 
 			gameScene.remove(controls.walls[i]);
@@ -113,7 +110,6 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 	}
 	this.updatePlayerModel = function ( controls, gameScene, planeWidth, planeHeight, sound ) {
 		//GIRA A SINISTRA
-		//cabin.position.y = 0;
 		this.torus = new THREE.Box3().setFromObject(this.player.getCabin());
 
 		if ( !controls.pushed  && controls.moveLeft ) {
