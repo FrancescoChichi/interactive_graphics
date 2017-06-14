@@ -798,13 +798,16 @@ function createMenuScene()
 			first = i;
 		}
 
-	var winnerSpotlight = new THREE.SpotLight( 0xffffff, 10 );
-	winnerSpotlight.castShadow = true;
-	winnerSpotlight.angle = 0.3;
-	winnerSpotlight.position.set( ships[first].position.x, 10, ships[first].position.z );
-	winnerSpotlight.target = ships[first];
+	if(best>0)
+	{
+		var winnerSpotlight = new THREE.SpotLight( 0xffffff, 10 );
+		winnerSpotlight.castShadow = true;
+		winnerSpotlight.angle = 0.3;
+		winnerSpotlight.position.set( ships[first].position.x, 10, ships[first].position.z );
+		winnerSpotlight.target = ships[first];
 
-	menuScene.add(winnerSpotlight);
+		menuScene.add(winnerSpotlight);
+	}
 
 
 	menuScene.add(ground.clone());
