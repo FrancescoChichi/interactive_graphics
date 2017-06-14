@@ -7,17 +7,11 @@ background-color: Transparent;  font-family: 'Arial', sans-serif;
 .container{
   display: block;
   position: absolute;
-  /*margin: 40px auto;
-  height: auto;
-  width: 40%;
-  padding: 20px;
-  top:15%;
-  left: 30%;*/
-  width: 35%;
+  width: 25%;
   height: 100%;
   padding-top:5%;
   padding-bottom: 5%;
-  left: 65%;
+  left: 75%;
   background-color: rgb(138, 138, 138);
   background-color: rgba(138, 138, 138,0.85);
 }

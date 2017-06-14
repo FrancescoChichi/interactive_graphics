@@ -30,11 +30,15 @@ function Material(shininess,color, rx, ry){
 		torusTexture.format = THREE.RGBFormat;
 
 	var tronTexture = new THREE.TextureLoader().load( "textures/Tron_Background256.jpg" );
-	//var texture = new THREE.TextureLoader().load( "textures/patterns/bright_squares256.png" );
 	tronTexture.repeat.set( rx, ry );
 	tronTexture.wrapS = tronTexture.wrapT = THREE.RepeatWrapping;
 	tronTexture.magFilter = THREE.NearestFilter;
 	tronTexture.format = THREE.RGBFormat;
+
+	var shipTexture = new THREE.TextureLoader().load( "textures/metal-texture256.jpg" );
+		shipTexture.repeat.set( 1, 1 );
+		shipTexture.wrapS = shipTexture.wrapT = THREE.RepeatWrapping;
+		shipTexture.format = THREE.RGBFormat;
 
 	this.particleTexture = new THREE.TextureLoader().load( "textures/oUBYu.png" );
 
@@ -77,8 +81,7 @@ function Material(shininess,color, rx, ry){
 	this.basicTransparent = new THREE.MeshBasicMaterial( {
 		color: color, 
 		transparent: true,
-	} 
-	);
+	});
 
 	this.particle = new THREE.SpriteMaterial({
       color: color, //0xff4502
@@ -86,6 +89,18 @@ function Material(shininess,color, rx, ry){
       transparent: true,
       blending: THREE.AdditiveBlending
   });
+
+  this.ship = new THREE.MeshPhongMaterial( {
+		shininess: shininess,
+		color: color,
+		map: shipTexture
+	});
+
+  this.basic = new THREE.MeshBasicMaterial( {
+		color: color, 
+		transparent: true
+	});
+
 }
 
 	function addObject( geometry, material, x, y, z, rx, ry, rz ) {
