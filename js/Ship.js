@@ -50,8 +50,8 @@ THREE.Ship = function (controls,scale) {
 	var cilinderGeometry = new Geometry([1, 1, 3, 64]).cylinder;
 
 	this.light = new THREE.PointLight( controls.color, 5, 5, 2 );
-
-	this.light.add( new THREE.Mesh( sphereGeometry, metalBallMaterial));
+  this.ball = new THREE.Mesh( sphereGeometry, metalBallMaterial);
+	this.light.add( this.ball );
 	this.light.position.x = 0;
 	this.light.position.y = 7;
 	this.light.position.z = 0;
@@ -78,10 +78,8 @@ THREE.Ship = function (controls,scale) {
 
 	this.glass = addObject( cubeGeometry, glassMaterial, 4, 9, 0, 0, 0, 0 );
 	this.cabin.add(this.glass); //vetro
-		this.glass.name = 'glass';
 
 	this.cabin.add(this.light); //palla di luce
-		this.light.name = 'light';
 	this.topShip.position.y=1;
 	this.topShip.add(this.cabin);
 
@@ -137,8 +135,20 @@ THREE.Ship = function (controls,scale) {
 	this.getAll = function(){
 		return this.group;
 	}
+	this.changeColor = function(color){
+		
+		this.glass.material.color = color;
+		this.light.color = color;
+		this.ball.material.color = color;
 
-	this.render = function(control, sound, angle){
+
+	  for (var i = 0; i < this.particlesL.length; i++) 
+	  	this.particlesL[i].material.color = color;
+	  for (var i = 0; i < this.particlesR.length; i++) 
+	  	this.particlesR[i].material.color = color;
+
+	}
+	this.render = function(control, angle, sound){
 
 		if(control.alive)
 		{

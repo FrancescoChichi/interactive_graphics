@@ -12,6 +12,8 @@
 			var gameEnd = false;
 
 			var piedistallo;
+			var ships = [];
+			var shipsControl = [];
 			/*=====================*\
 			 * START CONFIGURATION *
 			\*=====================*/
@@ -428,10 +430,10 @@
  				
  				haloMenu.animate();
  				//shipControl.render(2);
- 				shipControl1.updateParticle();
- 				shipControl2.updateParticle();
- 				shipControl3.updateParticle();
- 				shipControl4.updateParticle();
+ 				shipsControl[0].updateParticle();
+ 				shipsControl[1].updateParticle();
+ 				shipsControl[2].updateParticle();
+ 				shipsControl[3].updateParticle();
 
 
 				for(var i = 1; i<=nPlayer; i++)
@@ -440,12 +442,16 @@
 						var g = document.getElementById('valGreenP'+i).innerHTML;
 						var b = document.getElementById('valBlueP'+i).innerHTML;
 						var color = new THREE.Color("rgb("+r+","+g+","+b+")") ;
-						playersControl[i-1].color = color;
-						document.getElementById('score'+i).style.color="rgb("+r+","+g+","+b+")";
+						if (playersControl[i-1].color.r != color.r 
+							|| playersControl[i-1].color.g != color.g
+							|| playersControl[i-1].color.b != color.b)
+						{
+							playersControl[i-1].color = color;
+							document.getElementById('score'+i).style.color="rgb("+r+","+g+","+b+")";
+							shipsControl[i-1].changeColor(color);
+						}
 
 					}
-					
-					ship1.getObjectByName("glass").material.color = playersControl[0].color;
 
 				renderer.render( menuScene, menuCamera );
 			}
@@ -762,32 +768,32 @@ function createMenuScene()
 	groundGeometry = new THREE.BoxBufferGeometry( planeWidth,1, planeHeight );
 	ground = new THREE.Mesh( groundGeometry, new Material(0,0xffffff,10,10).ground );
 
-	shipControl1 = new THREE.Ship(firstPlayerControls,0.30);
-	ship1 = shipControl1.getAll();
+	shipsControl[0] = new THREE.Ship(firstPlayerControls,0.30);
+	ship1 = shipsControl[0].getAll();
 	ship1.position.set(-4,wins[0]/2+0.5,3);
 	var piedistallo = new THREE.Mesh(new Geometry([2, 2, wins[0]/2, 64]).cylinder,
 	new Material(50,0xffffff,0xffffff,5,1).metalDoubleSide);
 	piedistallo.position.set(-4,wins[0]/4,3);
 	menuScene.add(piedistallo);
 
-	shipControl2 = new THREE.Ship(secondPlayerControls,0.3);
-	ship2 = shipControl2.getAll();
+	shipsControl[1] = new THREE.Ship(secondPlayerControls,0.3);
+	ship2 = shipsControl[1].getAll();
 	ship2.position.set(1,wins[1]/2+0.5,0);
 	piedistallo = new THREE.Mesh(new Geometry([2, 2,  wins[1]/2, 64]).cylinder,
 	new Material(50,0xffffff,0xffffff,5,1).metalDoubleSide);
 	piedistallo.position.set(1,wins[1]/4,0);
 	menuScene.add(piedistallo);
 	
-	shipControl3 = new THREE.Ship(thirdPlayerControls,0.3);
-	ship3 = shipControl3.getAll();
+	shipsControl[2] = new THREE.Ship(thirdPlayerControls,0.3);
+	ship3 = shipsControl[2].getAll();
 	ship3.position.set(8,wins[2]/2+0.5,0);
 	piedistallo = new THREE.Mesh(new Geometry([2, 2,wins[2]/2, 64]).cylinder,
 	new Material(50,0xffffff,0xffffff,5,1).metalDoubleSide);
 	piedistallo.position.set(8,wins[2]/4,0);
 	menuScene.add(piedistallo);
 	
-	shipControl4 = new THREE.Ship(fourthPlayerControls,0.3);
-	ship4 = shipControl4.getAll();
+	shipsControl[3] = new THREE.Ship(fourthPlayerControls,0.3);
+	ship4 = shipsControl[3].getAll();
 	ship4.position.set(15,wins[3]/2+0.5,3);
 	piedistallo = new THREE.Mesh(new Geometry([2, 2,  wins[3]/2, 64]).cylinder,
 	new Material(50,0xffffff,0xffffff,5,1).metalDoubleSide);
