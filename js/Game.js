@@ -799,8 +799,8 @@ function createMenuScene()
 	{
 		var winnerSpotlight = new THREE.SpotLight( 0xffffff, 10 );
 		winnerSpotlight.castShadow = true;
-		winnerSpotlight.angle = 0.3;
-		winnerSpotlight.position.set( ships[first].position.x, 10, ships[first].position.z );
+		winnerSpotlight.angle = 0.2;
+		winnerSpotlight.position.set( ships[first].position.x, 20, ships[first].position.z );
 		winnerSpotlight.target = ships[first];
 
 		menuScene.add(winnerSpotlight);
