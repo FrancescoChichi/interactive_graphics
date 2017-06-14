@@ -771,17 +771,17 @@ function createMenuScene()
 		shipsControl[i] = new THREE.Ship(playersControl[i],0.30);
 		ships[i] = shipsControl[i].getAll();
 		ships[i].position.set(sx,sy,sz);
-		var piedistallo = new THREE.Mesh(new Geometry([2, 2, wins[i]/2+1, 64]).cylinder,
+		var piedistallo = new THREE.Mesh(new Geometry([2, 2, (wins[i]/2+1)+0.2, 64]).cylinder,
 		new Material(50,0xffffff,0xffffff,5,1).metalDoubleSide);
 		piedistallo.position.set(px,py,pz);
 		menuScene.add(piedistallo);
 		console.log(piedistallo.position)
 	}
 
-	piedistallo(0,-2,wins[0]/2+1.5,5,-2,wins[0]/4,5);
-	piedistallo(1,6.5,wins[1]/2+1.5,6,6.5,wins[1]/4,6);
-	piedistallo(2,13.5,wins[2]/2+1.5,6,13.5,wins[2]/4,6);
-	piedistallo(3,20.5,wins[3]/2+1.5,6,20.5,wins[3]/4,6);
+	piedistallo(0,-2,wins[0]/2+0.5,5,-2,wins[0]/4,5);
+	piedistallo(1,6.5,wins[1]/2+0.5,6,6.5,wins[1]/4,6);
+	piedistallo(2,13.5,wins[2]/2+0.5,6,13.5,wins[2]/4,6);
+	piedistallo(3,20.5,wins[3]/2+0.5,6,20.5,wins[3]/4,6);
 	
 	menuScene.add(ships[0]);
 	menuScene.add(ships[1]);
