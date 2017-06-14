@@ -3,7 +3,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 	var scope = this;
 	
 	this.deathAnimationFrameCounter = 0;
-	this.wallHeight = 2.5;
+	this.wallHeight = 1;
 	this.wallY = 1.2;
 	this.deathAnimationFrame = 100;
 	this.shipScale ;
@@ -187,6 +187,8 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 
 				this.turn = false;
 				controls.boxTesta = this.torus.clone();
+				controls.boxTesta.min.y = 0.0;
+
 		}
 	};
 
