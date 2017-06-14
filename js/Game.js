@@ -303,8 +303,6 @@
 							{
 								if (sound.music >1)
 									sound.beep_sound.play();
-								//window.location.reload(true);
-								console.log('TETTE')								
 								resetPlayerControls();
 								gameScene = null;
 								startGame = false;
@@ -376,17 +374,7 @@
  						startGame = true; 
  						alive = nPlayer;
 
- 						for(var i = 1; i<=nPlayer; i++)
- 						{
- 							var r = document.getElementById('valRedP'+i).innerHTML;
-    					var g = document.getElementById('valGreenP'+i).innerHTML;
-    					var b = document.getElementById('valBlueP'+i).innerHTML;
-    					var color = new THREE.Color("rgb("+r+","+g+","+b+")") ;
-    					playersControl[i-1].color = color;
-    					document.getElementById('score'+i).style.color="rgb("+r+","+g+","+b+")";
- 						}
-						
-
+ 		
 
  						for (var i = 0; i < alive; i++)
 							players[i] = new THREE.Player( playersControl[i],planeWidth, planeHeight, i);
@@ -449,6 +437,7 @@
 							playersControl[i-1].color = color;
 							document.getElementById('score'+i).style.color="rgb("+r+","+g+","+b+")";
 							shipsControl[i-1].changeColor(color);
+							document.getElementById('colorKey'+i).style.color="rgb("+r+","+g+","+b+")";
 						}
 
 					}
