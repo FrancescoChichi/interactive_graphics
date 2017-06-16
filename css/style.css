@@ -1,7 +1,14 @@
+@font-face {
+  font-family: myFont;
+  src: local("pixel font"),
+       local("pixel-font"),
+       url(font/LLPIXEL3.ttf);
+  font-weight: bold;
+}
 
 body, html{
   height: 100%;
-background-color: Transparent;  font-family: 'Arial', sans-serif;
+background-color: Transparent;  font-family: 'myFont', sans-serif;
 }
 
 .container{
@@ -30,12 +37,12 @@ background-color: Transparent;  font-family: 'Arial', sans-serif;
 .colors{
   display: block;
   position: absolute;
-  left: 48%;
+  left: 65%;
   top: 0%;
   text-align: center;
   height: 100%;
-  width: 50%;
-  font-size: 1.2em;
+  width: 35%;
+  font-size: 100%;
 }
 .restartMenu{
   display: block;
@@ -61,7 +68,7 @@ background-color: Transparent;  font-family: 'Arial', sans-serif;
 }
 
 h2 {
-  color: #0066ff;
+  color: #0DFF92;
   padding-left: 10px;
   padding-top: 1px;
   padding-bottom: 1px;
@@ -74,11 +81,15 @@ td {
   height: 20px;
   font-size: 1.5em;
 }
+
 tr {
   position: relative;;
   height: 15%;
 }
 
+.colors td{
+  width: 20px;
+}
 .container ul, .pause ul{
   list-style: none;
   margin: 0;
@@ -99,18 +110,22 @@ tr {
   background-color: rgba(0, 0, 0,0.7);
 }
 
+.restartMenu button{
+    font-family: 'myFont';
+}
 
 .container button{
   list-style: none;
   margin: 0;
+  font-family: 'myFont';
   padding: 0;
   overflow: auto;
 }
 
 button{
-  color: #0066ff;
-  /*display: block;*/
+  color: #0DFF92;
   position: relative;
+  font-family: 'myFont';
   font-size: 2.5em;
   background-color: Transparent;
   background-repeat:no-repeat;
@@ -120,16 +135,18 @@ button{
   outline:none;
 
 }
+
 .colors ul
 {
   position: relative;
   width: 100%;
-  padding-left:5%;
   height: auto;
   background-color: rgb(138, 138, 138);
   background-color: rgba(0, 0, 0,0.5);
   font-size: 1em;
 }
+
+
 .keySettings ul, ul table,ul table tbody
 {
   position: relative;
@@ -139,13 +156,14 @@ button{
   background-color: rgba(0, 0, 0,0.5);
   font-size: 1em;
 }
-{
-  position: relative;
-  width: 100%;
-  height: 90%;
-  background-color: rgb(138, 138, 138);
-  background-color: rgba(138, 138, 138,0.5);
-  font-size: 1em;
+
+.colors table tbody{
+  width: 20%;
+}
+.colors table{
+  width: 20%;
+
+
 }
 
 ul {
@@ -163,12 +181,6 @@ ul li{
   height: auto;
   width: auto;
   padding-right: auto;
-  /*float: left;
-  width: auto;
-  height: 100px;
-  border-bottom: 1px solid #333;
-  float: left;
-  margin-left: 3em;*/
 }
 
 ul li input[type=radio]{
@@ -215,7 +227,7 @@ ul li:hover .check {
 .startAgain button
 {
   display: none;
- 
+  font-family: 'myFont';
   background-color: rgb(138, 138, 138);
   background-color: rgba(138, 138, 138,0.85);
 }

@@ -345,7 +345,6 @@
 						else if(document.getElementById("3").checked)
 						nPlayer = 3;
 
-
 						switch ( nPlayer ) {
 							case 1:
 								document.getElementById("score2").style.color = 'grey';
@@ -425,7 +424,6 @@
  				ships[3].rotateY(THREE.Math.degToRad(+0.2));
  				
  				haloMenu.animate();
- 				//shipControl.render(2);
  				shipsControl[0].updateParticle();
  				shipsControl[1].updateParticle();
  				shipsControl[2].updateParticle();
