@@ -3,7 +3,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 	var scope = this;
 	
 	this.deathAnimationFrameCounter = 0;
-	this.wallHeight = 2;
+	this.wallHeight = 1;
 	this.wallY = 1.2;
 	this.deathAnimationFrame = 100;
 	this.shipScale ;
@@ -12,19 +12,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 	var rotation = [- Math.PI / 2, 0,0];
 	var explosionParticleNumber = 50;
 
-	var textureLoader = new THREE.TextureLoader();
-
-	var shipTexture = new textureLoader.load( "textures/metal-texture256.jpg" );
-		shipTexture.repeat.set( 1, 1 );
-		shipTexture.wrapS = shipTexture.wrapT = THREE.RepeatWrapping;
-		shipTexture.format = THREE.RGBFormat;
-
-	var shipMaterial = new THREE.MeshPhongMaterial( {
-		shininess: 10,
-		color: 0xffffff,
-		specular: 0x999999,
-		map: shipTexture
-	} );
+	var shipMaterial = new Material(10,0xffffff);
 
 	this.player = new THREE.Ship(controls,0.18);
 	this.ship = this.player.getAll();
@@ -71,12 +59,7 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 
 		this.torus = new THREE.Box3().setFromObject(this.player.getCabin());
 
-		this.wallMaterial = new THREE.MeshBasicMaterial( {
-							color: controls.color, 
-							opacity: 0.8,
-							transparent: true,
-							reflectivity: 1 } 
-						);
+		this.wallMaterial = new Material(0,controls.color).basic;
 
 		this.turn = false;
 		var bz = this.torus.clone();
@@ -99,9 +82,6 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 	this.death = function(controls)
 	{
 		controls.alive=false;
-		//this.ship.visible = false;
-		//gameScene.remove(this.ship);
-		//this.ship.scale.copy(new THREE.Vector3(0.0001,0.0001,0.0001));
 
 		for (var i = 0; i < controls.walls.length; i++) 
 			gameScene.remove(controls.walls[i]);
@@ -202,8 +182,9 @@ THREE.Player = function (controls, planeWidth, planeHeight, playerN) {
 				gameScene.add(cube);
 
 				this.turn = false;
-
 				controls.boxTesta = this.torus.clone();
+				controls.boxTesta.min.y = 0.0;
+
 		}
 	};
 

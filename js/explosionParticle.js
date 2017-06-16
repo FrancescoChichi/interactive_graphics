@@ -64,7 +64,7 @@ THREE.explosionParticle = function (particlesNumber, color,wordRotation,position
 	   		 //gameScene.add(line);
 			
 		    }
-			currentScene.add(this.particles);
+			gameScene.add(this.particles);
 
 		this.render = function(animationStep){
 
