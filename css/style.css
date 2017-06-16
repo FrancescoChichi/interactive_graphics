@@ -1,18 +1,30 @@
 
+@font-face {
+  font-family: myFont;
+  src: local("pixel font"),
+       local("pixel-font"),
+       url(font/LLPIXEL3.ttf);
+  font-weight: bold;
+}
+
 body, html{
   height: 100%;
 background-color: Transparent;  font-family: 'Arial', sans-serif;
 }
 
 .container{
-
   display: block;
   position: absolute;
-
+  /*margin: 40px auto;
+  height: auto;
+  width: 40%;
+  padding: 20px;
+  top:15%;
+  left: 30%;*/
   width: 35%;
   height: 100%;
-  /*padding-top:5%;*/
-  padding-bottom: 5%;
+  padding-top:10px;
+  padding-bottom: 10px;
   left: 65%;
   background-color: rgb(138, 138, 138);
   background-color: rgba(138, 138, 138,0.85);
@@ -21,7 +33,7 @@ background-color: Transparent;  font-family: 'Arial', sans-serif;
 .keySettings{
   display: block;
   position: absolute;
-  left: 73%;
+  left: 50%;
   top: 0%;
   text-align: center;
   height: 100%;
@@ -29,16 +41,6 @@ background-color: Transparent;  font-family: 'Arial', sans-serif;
   font-size: 1.2em;
 }
 
-.colors{
-  display: block;
-  position: absolute;
-  left: 48%;
-  top: 0%;
-  text-align: center;
-  height: 100%;
-  width: 52%;
-  font-size: 1.2em;
-}
 .restartMenu{
   display: block;
   position: absolute;
@@ -67,28 +69,27 @@ h2 {
   padding-left: 10px;
   padding-top: 1px;
   padding-bottom: 1px;
-  font-size: 1em;
-  width: auto;
+    font-size: 2.35em;
+
   margin: 0;
 }
 td {
   position: relative;
   color: #0066ff;
-  height: 5px;
-  font-size: 1em;
+  height: 20px;
+  font-size: 1.5em;
 }
 tr {
   position: relative;;
   height: 15%;
 }
 
-
-.container ul, .pause ul{
+.container ul,  .pause ul{
   list-style: none;
   margin: 0;
   padding: 0;
-    overflow: auto;
-
+  overflow: auto;
+  overflow:hidden;
     background-color: rgb(0, 0, 0);
   background-color: rgba(0, 0, 0,0.5);
 }
@@ -103,7 +104,6 @@ tr {
   background-color: rgba(0, 0, 0,0.7);
 }
 
-
 .container button{
   list-style: none;
   margin: 0;
@@ -112,6 +112,7 @@ tr {
 }
 
 button{
+  font-family: 'myFont';
   color: #0066ff;
   /*display: block;*/
   position: relative;
@@ -124,26 +125,8 @@ button{
   outline:none;
 
 }
-.colors ul
-{
-  position: relative;
-  width: auto;
-  padding-left: 10px;
-  /*padding-left:5%;*/
-  height: auto;
-  background-color: rgb(138, 138, 138);
-  background-color: rgba(0, 0, 0,0.5);
-  font-size: 1em;
-}
-.keySettings ul, ul table,ul table tbody
-{
-  position: relative;
-  width: 100%;
-  height: 90%;
-  background-color: rgb(138, 138, 138);
-  background-color: rgba(0, 0, 0,0.5);
-  font-size: 1em;
-}
+
+.keySettings ul,ul table,ul table tbody
 {
   position: relative;
   width: 100%;
@@ -155,20 +138,19 @@ button{
 
 ul {
   position: relative;
-
-  height: 20%;
+  height: 25%;
 }
 ul li{
   color: #0066ff;
   display:inline-block;
   background-color: Transparent;
   position: relative;
-  /*padding-left:2%;
-  padding-right: 2%;*/
+  padding-left:2%;
+  padding-right: 2%;
   margin:0;
   height: auto;
   width: auto;
-  /*padding-right: auto;*/
+  padding-right: auto;
   /*float: left;
   width: auto;
   height: 100px;
@@ -239,6 +221,49 @@ ul li .check::before {
   transition: background 0.25s linear;
   -webkit-transition: background 0.25s linear;
 }
+
+.colors
+{
+  position: absolute;
+  top: 10%;
+  margin: 0;
+  height: auto;
+  padding: 0;
+  width: 45%;
+  left: 55%;
+     background-color: rgb(138, 138, 138);
+  background-color: rgba(138, 138, 138,0.85);
+}
+
+.colors ul
+{
+  position: relative;
+  margin: 0;
+  padding: 0;
+  padding: 0;
+  margin: 0px;
+  height: auto;
+}
+
+.colors td
+{
+  position: relative;
+  margin: 0;
+  padding: 0;
+  padding: 0;
+  margin: 0px;
+  height: 10px;
+  font-size: 1em;
+  text-align: center;
+}
+
+.colors input
+{
+  position: relative;
+  width: auto;
+  height: 10px;
+}
+
 
 input[type=radio]:checked ~ .check {
   border: 5px solid #FFFFFF;

@@ -277,7 +277,7 @@
 
 
 						document.getElementById("backFromColor").onclick = function(){
-							menuCamera.position.set(18.0,4.0,25.0);
+							menuCamera.position.set(16.5,4.0,25.0);
 							menuCamera.rotateZ(Math.PI/4);
 							menuCamera.rotateX(Math.PI/2);
 
@@ -344,7 +344,6 @@
 						nPlayer = 2;
 						else if(document.getElementById("3").checked)
 						nPlayer = 3;
-
 
 						switch ( nPlayer ) {
 							case 1:
@@ -425,7 +424,6 @@
  				ships[3].rotateY(THREE.Math.degToRad(+0.2));
  				
  				haloMenu.animate();
- 				//shipControl.render(2);
  				shipsControl[0].updateParticle();
  				shipsControl[1].updateParticle();
  				shipsControl[2].updateParticle();
@@ -743,7 +741,7 @@ function createMenuScene()
 	menuCamera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 1000 );
 
 	camera.position.set(0.0,90.0,0.0);
-	menuCamera.position.set(18.0,4.0,25.0);
+	menuCamera.position.set(16.5,4.0,25.0);
 
 	//controls = new THREE.FirstPersonControls( camera );
 	controlsMenu = new THREE.OrbitControls( camera, renderer.domElement );
@@ -772,6 +770,7 @@ function createMenuScene()
 		new Material(50,0xffffff,0xffffff,5,1).metalDoubleSide);
 		piedistallo.position.set(px,py,pz);
 		menuScene.add(piedistallo);
+		console.log(piedistallo.position)
 	}
 
 	piedistallo(0,-2,wins[0]/2+0.5,5,-2,wins[0]/4,5);
@@ -796,14 +795,15 @@ function createMenuScene()
 
 	if(best>0)
 	{
-		var winnerSpotlight = new THREE.SpotLight( 0xffffff, 5 );
-		winnerSpotlight.castShadow = false;
+		var winnerSpotlight = new THREE.SpotLight( 0xffffff, 10 );
+		winnerSpotlight.castShadow = true;
 		winnerSpotlight.angle = 0.2;
 		winnerSpotlight.position.set( ships[first].position.x, 20, ships[first].position.z );
 		winnerSpotlight.target = ships[first];
+
 		menuScene.add(winnerSpotlight);
 	}
-	
+
 
 	menuScene.add(ground.clone());
 

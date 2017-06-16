@@ -30,7 +30,7 @@
 
     <div class="container"  id="mainPage">
         
-      <button id = "start" style="right: -15%" >Start!</button>
+     <button id = "start" ><font color="#0066ff">Start!</font></button>
       <ul>
         <h2>Player selection:</h2>
 
@@ -127,144 +127,136 @@ function changeAll(player) {
 
 </script>
 
-    <div class="colors" id="colorMenu" style="display:none ">
-        <ul style = "position:relative;">
-          <h2>PLAYER 1:</h2>
-          <ul>
-            <table  >
-              <tr>
-                <td id="valRedP1">255</td>
-                <td id="valGreenP1">51</td>
-                <td id="valBlueP1">153</td>
-              </tr>
+<div class="colors" id="colorMenu" style="display:none ">
+    <ul >
+      <h2>PLAYER 1:</h2>
+        <table >
+
+          <tr>
+            <td id="valRedP1" >255</td>
+            <td id="valGreenP1">51</td>
+            <td id="valBlueP1">153</td>
+          </tr>
                  
-              <tr>
-                <td id="redP1" style="background-color:red"></td>
-                <td id="greenP1" style="background-color:green"></td>
-                <td id="blueP1" style="background-color:blue"></td>
-              </tr>
-              <tr>
-                <td>
-                  <input oninput="changeRed(this.value,'P1')" onchange="changeRed(this.value,'P1')" type="range" id="slideRedP1" name="slideRedP1" min="0" max="255">
-                </td>
-                <td>
-                  <input oninput="changeGreen(this.value,'P1')" onchange="changeGreen(this.value,'P1')" type="range" id="slideGreenP1" name="slideGreenP1" min="0" max="255">
-                </td>
-                <td>
-                  <input oninput="changeBlue(this.value,'P1')" onchange="changeBlue(this.value,'P1')" type="range" id="slideBlueP1" name="slideBlueP1" min="0" max="255">
-                </td>
+          <tr >
+            <td id="redP1" style="background-color:red; height:10px"></td>
+            <td id="greenP1" style="background-color:green; height:10px"></td>
+            <td id="blueP1" style="background-color:blue; height:10px"></td>
+          </tr>
 
-              </tr>
-              </table>
-              <div id="changeP1" style="height: 10px;"></div>
-          </ul>
-        </ul>
+          <tr>
+            <td>
+              <input oninput="changeRed(this.value,'P1')" onchange="changeRed(this.value,'P1')" type="range" id="slideRedP1" name="slideRedP1" min="0" max="255">
+            </td>
+            <td>
+              <input oninput="changeGreen(this.value,'P1')" onchange="changeGreen(this.value,'P1')" type="range" id="slideGreenP1" name="slideGreenP1" min="0" max="255">
+            </td>
+            <td>
+              <input oninput="changeBlue(this.value,'P1')" onchange="changeBlue(this.value,'P1')" type="range" id="slideBlueP1" name="slideBlueP1" min="0" max="255">
+            </td>
+          </tr>
 
-        <ul >
-          <h2>PLAYER 2:</h2>
-          
-          <ul >
-            <table  >
-              <tr>
-                <td id="valRedP2">11</td>
-                <td id="valGreenP2">211</td>
-                <td id="valBlueP2">67</td>
-              </tr>
-              <tr>
-                <td id="redP2" style="background-color:red"></td>
-                <td id="greenP2" style="background-color:green"></td>
-                <td id="blueP2" style="background-color:blue"></td>
-              </tr>
-              <tr>
-                <td>
-                  <input oninput="changeRed(this.value,'P2')" onchange="changeRed(this.value,'P2')" type="range" id="slideRedP2" name="slideRedP2" min="0" max="255">
-                </td>
-                <td>
-                  <input oninput="changeGreen(this.value,'P2')" onchange="changeGreen(this.value,'P2')" type="range" id="slideGreenP2" name="slideGreenP2" min="0" max="255">
-                </td>
-                <td>
-                  <input oninput="changeBlue(this.value,'P2')" onchange="changeBlue(this.value,'P2')" type="range" id="slideBlueP2" name="slideBlueP2" min="0" max="255">
-                </td>
-
-              </tr>
-              </table>
-              <div id="changeP2" style="height: 10px;"></div>
-
-
-
-          </ul>
+        </table>
+        <div id="changeP1" style="height: 10px;"></div>
+      </ul>
+        
+      <ul >
+        <h2>PLAYER 2:</h2>
+          <table>
+            
+            <tr>
+              <td id="valRedP2">11</td>
+              <td id="valGreenP2">211</td>
+              <td id="valBlueP2">67</td>
+            </tr>
+            
+            <tr>
+              <td id="redP2" style="background-color:red; height:10px"></td>
+              <td id="greenP2" style="background-color:green; height:10px"></td>
+              <td id="blueP2" style="background-color:blue; height:10px"></td>
+            </tr>
+            
+            <tr>
+              <td>
+                <input oninput="changeRed(this.value,'P2')" onchange="changeRed(this.value,'P2')" type="range" id="slideRedP2" name="slideRedP2" min="0" max="255">
+              </td>
+              <td>
+                <input oninput="changeGreen(this.value,'P2')" onchange="changeGreen(this.value,'P2')" type="range" id="slideGreenP2" name="slideGreenP2" min="0" max="255">
+              </td>
+              <td>
+                <input oninput="changeBlue(this.value,'P2')" onchange="changeBlue(this.value,'P2')" type="range" id="slideBlueP2" name="slideBlueP2" min="0" max="255">
+              </td>
+            </tr>
+            
+          </table>
+          <div id="changeP2" style="height: 10px;"></div>
         </ul>
 
         <ul  >
           <h2>PLAYER 3:</h2>
-          
-          <ul >
-            <table  >
-              <tr>
-                <td id="valRedP3">255</td>
-                <td id="valGreenP3">153</td>
-                <td id="valBlueP3">0</td>
-              </tr>
-              <tr>
-                <td id="redP3" style="background-color:red"></td>
-                <td id="greenP3" style="background-color:green"></td>
-                <td id="blueP3" style="background-color:blue"></td>
-              </tr>
-              <tr>
-                <td>
-                  <input oninput="changeRed(this.value,'P3')" onchange="changeRed(this.value,'P3')" type="range" id="slideRedP3" name="slideRedP3" min="0" max="255">
-                </td>
-                <td>
-                  <input oninput="changeGreen(this.value,'P3')" onchange="changeGreen(this.value,'P3')" type="range" id="slideGreenP3" name="slideGreenP3" min="0" max="255">
-                </td>
-                <td>
-                  <input oninput="changeBlue(this.value,'P3')" onchange="changeBlue(this.value,'P3')" type="range" id="slideBlueP3" name="slideBlueP3" min="0" max="255">
-                </td>
+          <table >
 
-              </tr>
-              </table>
-              <div id="changeP3" style="height: 10px;"></div>
+            <tr>
+              <td id="valRedP3">255</td>
+              <td id="valGreenP3">153</td>
+              <td id="valBlueP3">0</td>
+            </tr>
 
+            <tr>
+              <td id="redP3" style="background-color:red; height:10px"></td>
+              <td id="greenP3" style="background-color:green; height:10px"></td>
+              <td id="blueP3" style="background-color:blue; height:10px"></td>
+            </tr>
 
+            <tr>
+              <td>
+                <input oninput="changeRed(this.value,'P3')" onchange="changeRed(this.value,'P3')" type="range" id="slideRedP3" name="slideRedP3" min="0" max="255">
+              </td>
+              <td>
+                <input oninput="changeGreen(this.value,'P3')" onchange="changeGreen(this.value,'P3')" type="range" id="slideGreenP3" name="slideGreenP3" min="0" max="255">
+              </td>
+              <td>
+                <input oninput="changeBlue(this.value,'P3')" onchange="changeBlue(this.value,'P3')" type="range" id="slideBlueP3" name="slideBlueP3" min="0" max="255">
+              </td>
+            </tr>
 
-          </ul>
+          </table>
+           <div id="changeP3" style="height: 10px;"></div>
         </ul>
-
         <ul >
-          <h2>PLAYER 4:</h2>
+
+        <h2>PLAYER 4:</h2>
           
-          <ul >
-            <table  >
-              <tr>
-                <td id="valRedP4">255</td>
-                <td id="valGreenP4">0</td>
-                <td id="valBlueP4">0</td>
-              </tr>
-              <tr>
-                <td id="redP4" style="background-color:red"></td>
-                <td id="greenP4" style="background-color:green"></td>
-                <td id="blueP4" style="background-color:blue"></td>
-              </tr>
-              <tr>
-                <td>
-                  <input oninput="changeRed(this.value,'P4')" onchange="changeRed(this.value,'P4')" type="range" id="slideRedP4" name="slideRedP4" min="0" max="255">
-                </td>
-                <td>
-                  <input oninput="changeGreen(this.value,'P4')" onchange="changeGreen(this.value,'P4')" type="range" id="slideGreenP4" name="slideGreenP4" min="0" max="255">
-                </td>
-                <td>
-                  <input oninput="changeBlue(this.value,'P4')" onchange="changeBlue(this.value,'P4')" type="range" id="slideBlueP4" name="slideBlueP4" min="0" max="255">
-                </td>
+          <table  >
+            <tr>
+              <td id="valRedP4">255</td>
+              <td id="valGreenP4">0</td>
+              <td id="valBlueP4">0</td>
+            </tr>
 
-              </tr>
-              </table>
-              <div id="changeP4" style="height: 10px;"></div>
+            <tr>
+              <td id="redP4" style="background-color:red; height:10px"></td>
+              <td id="greenP4" style="background-color:green; height:10px"></td>
+              <td id="blueP4" style="background-color:blue; height:10px"></td>
+            </tr>
 
+            <tr>
+              <td>
+                <input oninput="changeRed(this.value,'P4')" onchange="changeRed(this.value,'P4')" type="range" id="slideRedP4" name="slideRedP4" min="0" max="255">
+              </td>
+              <td>
+                <input oninput="changeGreen(this.value,'P4')" onchange="changeGreen(this.value,'P4')" type="range" id="slideGreenP4" name="slideGreenP4" min="0" max="255">
+              </td>
+              <td>
+                <input oninput="changeBlue(this.value,'P4')" onchange="changeBlue(this.value,'P4')" type="range" id="slideBlueP4" name="slideBlueP4" min="0" max="255">
+              </td>
+            </tr>
 
+          </table>
+          <div id="changeP4" style="height: 10px;"></div>
 
-        </ul>
-        <li> <button id = "backFromColor" style="position:relative; top:90%;">Back</button> </li>
-        </ul>
+        <button id = "backFromColor" style="position:relative; top:90%;">Back</button>
+      </ul>
     </div>
 
 <script>
@@ -280,7 +272,7 @@ function changeAll(player) {
 
     <div class="pause" id="pause" style="display:none">
       <ul >
-        <li>  <button id = "resume">Resume</button> </li>
+        <li> <button id = "resume">Resume</button> </li>
         <li> <button id= "keyPause">Key Settings</button> </li>
         <li> <button id = "menu">Main Menu</button> </li>
       </ul>
