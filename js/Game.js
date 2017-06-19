@@ -770,7 +770,6 @@ function createMenuScene()
 		new Material(50,0xffffff,0xffffff,5,1).metalDoubleSide);
 		piedistallo.position.set(px,py,pz);
 		menuScene.add(piedistallo);
-		console.log(piedistallo.position)
 	}
 
 	piedistallo(0,-2,wins[0]/2+0.5,5,-2,wins[0]/4,5);
