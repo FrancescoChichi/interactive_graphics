@@ -6,18 +6,18 @@ THREE.Ship = function (controls,scale) {
 	var explosionParticleNumber = 50;
 	var explosionParticle;
 
-	var particlesL;
-	var particlesR;
+	this.particlesL;
+	this.particlesR;
 	    
-	var texture;
-	var material;
+	this.texture;
+	this.material;
 		
-  var group = new THREE.Group();
-  var topShip = new THREE.Group();
-  var motors = new THREE.Group();
-  var motorL = new THREE.Group();
-  var motorR= new THREE.Group();
-  var cabin = new THREE.Group();
+  this.group = new THREE.Group();
+  this.topShip = new THREE.Group();
+  this.motors = new THREE.Group();
+  this.motorL = new THREE.Group();
+  this.motorR= new THREE.Group();
+  this.cabin = new THREE.Group();
   
 
 //MATERIALI
@@ -49,42 +49,42 @@ THREE.Ship = function (controls,scale) {
 	var cubeGeometry = new THREE.BoxBufferGeometry( 2, 2, 4 );
 	var cilinderGeometry = new Geometry([1, 1, 3, 64]).cylinder;
 
-	light = new THREE.PointLight( controls.color, 5, 5, 2 );
-  ball = new THREE.Mesh( sphereGeometry, metalBallMaterial);
-	light.add( ball );
-	light.position.x = 0;
-	light.position.y = 7;
-	light.position.z = 0;
+	this.light = new THREE.PointLight( controls.color, 5, 5, 2 );
+  this.ball = new THREE.Mesh( sphereGeometry, metalBallMaterial);
+	this.light.add( this.ball );
+	this.light.position.x = 0;
+	this.light.position.y = 7;
+	this.light.position.z = 0;
 
 
 	//CREAZIONE GRUPPI
 	var torus = addObject( torusGeometry, toruslMaterial, 0, 5, 0, Math.PI/2, 0, 0 );
 	torus.name = "torus";
 
-	group.add(torus); //torus
+	this.group.add(torus); //torus
 
-	motorR.add(addObject( cilinderGeometry, metalMaterial, -2, 8, 5.5, Math.PI/2, 0, Math.PI/2)); //razzo DX
-	motorL.add(addObject( cilinderGeometry, metalMaterial, -2, 8, -5.5, Math.PI/2, 0,Math.PI/2 )); //razzo SX
-	motorR.add(addObject( geometry, metalMaterial, -3.8, 8, 5.5, 0, Math.PI, Math.PI/2 )); //cono fondo razzo DX
-	motorL.add(addObject( geometry, metalMaterial, -3.8, 8, -5.5, 0, Math.PI, Math.PI/2 )); //cono fondo razzo SX
-	motorR.add(addObject( semiSphereGeometryR, metalMaterial, -0.6, 8, 5.5, 0, Math.PI, Math.PI/2 )); //punta razzo DX
-	motorL.add(addObject( semiSphereGeometryL, metalMaterial, -0.6, 8, -5.5, 0, Math.PI, Math.PI/2 )); //punta razzo SX
+	this.motorR.add(addObject( cilinderGeometry, metalMaterial, -2, 8, 5.5, Math.PI/2, 0, Math.PI/2)); //razzo DX
+	this.motorL.add(addObject( cilinderGeometry, metalMaterial, -2, 8, -5.5, Math.PI/2, 0,Math.PI/2 )); //razzo SX
+	this.motorR.add(addObject( geometry, metalMaterial, -3.8, 8, 5.5, 0, Math.PI, Math.PI/2 )); //cono fondo razzo DX
+	this.motorL.add(addObject( geometry, metalMaterial, -3.8, 8, -5.5, 0, Math.PI, Math.PI/2 )); //cono fondo razzo SX
+	this.motorR.add(addObject( semiSphereGeometryR, metalMaterial, -0.6, 8, 5.5, 0, Math.PI, Math.PI/2 )); //punta razzo DX
+	this.motorL.add(addObject( semiSphereGeometryL, metalMaterial, -0.6, 8, -5.5, 0, Math.PI, Math.PI/2 )); //punta razzo SX
 
-	motors.add(motorR);
-	motors.add(motorL);
-	motors.name = 'motors';
-	topShip.add(motors);
-	group.add(topShip);
+	this.motors.add(this.motorR);
+	this.motors.add(this.motorL);
+	this.motors.name = 'motors';
+	this.topShip.add(this.motors);
+	this.group.add(this.topShip);
 
-	glass = addObject( cubeGeometry, glassMaterial, 4, 9, 0, 0, 0, 0 );
-	cabin.add(glass); //vetro
+	this.glass = addObject( cubeGeometry, glassMaterial, 4, 9, 0, 0, 0, 0 );
+	this.cabin.add(this.glass); //vetro
 
-	cabin.add(light); //palla di luce
-	topShip.position.y=1;
-	topShip.add(cabin);
+	this.cabin.add(this.light); //palla di luce
+	this.topShip.position.y=1;
+	this.topShip.add(this.cabin);
 
-  particlesL = [];
-  particlesR = [];
+  this.particlesL = [];
+  this.particlesR = [];
 
 
   var particleMaterial = new Material(0,controls.color).particle;
@@ -105,55 +105,55 @@ THREE.Ship = function (controls,scale) {
       particleR.position.z=+5.6;
 
 
-      particlesL.push(particle);
-      motorL.add(particle);
+      this.particlesL.push(particle);
+      this.motorL.add(particle);
 
 
-      particlesR.push(particleR);
-      motorR.add(particleR);
+      this.particlesR.push(particleR);
+      this.motorR.add(particleR);
   }
 
-  	group.scale.set(scale, scale, scale);
- 	 var shipScale = group.scale;
+  	this.group.scale.set(scale, scale, scale);
+ 	 var shipScale = this.group.scale;
 
  	
 	this.getShip = function(){
-		return topShip;
+		return this.topShip;
 	};
 	this.getCabin = function(){
-		return cabin;
+		return this.cabin;
 	}
 	this.getMotors = function(){
-		return motors;
+		return this.motors;
 	}
 	this.getMotorL = function(){
-		return motorL;
+		return this.motorL;
 	}
 	this.getMotorR = function(){
-		return motorR;
+		return this.motorR;
 	}
 	this.getAll = function(){
-		return group;
+		return this.group;
 	}
 	this.changeColor = function(color){
 		
-		glass.material.color = color;
-		light.color = color;
-		ball.material.color = color;
+		this.glass.material.color = color;
+		this.light.color = color;
+		this.ball.material.color = color;
 
 
-	  for (var i = 0; i < particlesL.length; i++) 
-	  	particlesL[i].material.color = color;
-	  for (var i = 0; i < particlesR.length; i++) 
-	  	particlesR[i].material.color = color;
+	  for (var i = 0; i < this.particlesL.length; i++) 
+	  	this.particlesL[i].material.color = color;
+	  for (var i = 0; i < this.particlesR.length; i++) 
+	  	this.particlesR[i].material.color = color;
 
 	}
 	this.render = function(control, angle, sound){
 
 		if(control.alive)
 		{
-			group.position.y =Math.min( Math.sin( time*5 ) + 1 ,1.3);
-			group.getObjectByName("torus").rotateZ(THREE.Math.degToRad(angle));
+			this.group.position.y =Math.min( Math.sin( time*5 ) + 1 ,1.3);
+			this.group.getObjectByName("torus").rotateZ(THREE.Math.degToRad(angle));
 			this.updateParticle();
 		}
 		else
@@ -162,7 +162,7 @@ THREE.Ship = function (controls,scale) {
 			{
 				if (sound.music>0)
 					sound.death_sound.play();
-				explosionParticle = new THREE.explosionParticle(explosionParticleNumber,controls.color,group.matrixWorld,group.getWorldPosition() , planeWidth,planeHeight);
+				explosionParticle = new THREE.explosionParticle(explosionParticleNumber,controls.color,this.group.matrixWorld,this.group.getWorldPosition() , planeWidth,planeHeight);
 			}
 			deathAnimationFrameCounter++;
 
@@ -174,12 +174,12 @@ THREE.Ship = function (controls,scale) {
 
 			explosionParticle.render(deathAnimationFrame*explosionParticleNumber);
 		
-			cabin.position.y++;
-			//cabin.position.x++;
-			cabin.rotateZ(THREE.Math.degToRad(-5));
+			this.cabin.position.y++;
+			//this.cabin.position.x++;
+			this.cabin.rotateZ(THREE.Math.degToRad(-5));
 
-			motorR.position.x++;
-			motorL.position.x++;
+			this.motorR.position.x++;
+			this.motorL.position.x++;
 
 			for (var i = 0; i < control.walls.length; i++) {
 				control.walls[i].scale.y -= (1/deathAnimationFrame)
@@ -189,10 +189,10 @@ THREE.Ship = function (controls,scale) {
 			var scale = new THREE.Vector3();
 			scale.addScaledVector(shipScale,-1/deathAnimationFrame);
 			
-			group.scale.add(scale);
+			this.group.scale.add(scale);
 			
-			if (group.getObjectByName("torus").position.y>=-group.position.y*1.5)
-				group.getObjectByName("torus").position.y--;
+			if (this.group.getObjectByName("torus").position.y>=-this.group.position.y*1.5)
+				this.group.getObjectByName("torus").position.y--;
 		}
 		return false;
 
@@ -219,9 +219,9 @@ THREE.Ship = function (controls,scale) {
 
 	this.updateParticle = function(){
 
-		for (var i = 0; i < particlesL.length; i++) {
+		for (var i = 0; i < this.particlesL.length; i++) {
 
-		    var particle = particlesL[i];
+		    var particle = this.particlesL[i];
 
 
 		    if (Math.random() > 0.8)
@@ -243,8 +243,8 @@ THREE.Ship = function (controls,scale) {
 
 		}
 
-		for (var i = 0; i < particlesR.length; i++) {
-		    var particle = particlesR[i];
+		for (var i = 0; i < this.particlesR.length; i++) {
+		    var particle = this.particlesR[i];
 		    if (Math.random() > 0.8)
 		    	caso = 40;
 		    else if (Math.random() < 0.1)
@@ -266,6 +266,6 @@ THREE.Ship = function (controls,scale) {
 
 	this.remove = function(controls)
 	{
-	group.scale.copy(new THREE.Vector3(0.0001,0.0001,0.0001));
+	this.group.scale.copy(new THREE.Vector3(0.0001,0.0001,0.0001));
 	};
 };
