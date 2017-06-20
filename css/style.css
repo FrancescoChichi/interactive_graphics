@@ -1,3 +1,4 @@
+
 @font-face {
   font-family: myFont;
   src: local("pixel font"),
@@ -8,17 +9,23 @@
 
 body, html{
   height: 100%;
-background-color: Transparent;  font-family: 'myFont', sans-serif;
+background-color: Transparent;  font-family: 'Arial', sans-serif;
 }
 
 .container{
   display: block;
   position: absolute;
-  width: 25%;
+  /*margin: 40px auto;
+  height: auto;
+  width: 40%;
+  padding: 20px;
+  top:15%;
+  left: 30%;*/
+  width: 35%;
   height: 100%;
-  padding-top:5%;
-  padding-bottom: 5%;
-  left: 75%;
+  padding-top:10px;
+  padding-bottom: 10px;
+  left: 65%;
   background-color: rgb(138, 138, 138);
   background-color: rgba(138, 138, 138,0.85);
 }
@@ -26,7 +33,7 @@ background-color: Transparent;  font-family: 'myFont', sans-serif;
 .keySettings{
   display: block;
   position: absolute;
-  left: 73%;
+  left: 70%;
   top: 0%;
   text-align: center;
   height: 100%;
@@ -34,16 +41,6 @@ background-color: Transparent;  font-family: 'myFont', sans-serif;
   font-size: 1.2em;
 }
 
-.colors{
-  display: block;
-  position: absolute;
-  left: 65%;
-  top: 0%;
-  text-align: center;
-  height: 100%;
-  width: 35%;
-  font-size: 100%;
-}
 .restartMenu{
   display: block;
   position: absolute;
@@ -68,11 +65,12 @@ background-color: Transparent;  font-family: 'myFont', sans-serif;
 }
 
 h2 {
-  color: #0DFF92;
+  color: #0066ff;
   padding-left: 10px;
   padding-top: 1px;
   padding-bottom: 1px;
-  font-size: 2.35em;
+    font-size: 2.35em;
+
   margin: 0;
 }
 td {
@@ -81,16 +79,12 @@ td {
   height: 20px;
   font-size: 1.5em;
 }
-
 tr {
   position: relative;;
   height: 15%;
 }
 
-.colors td{
-  width: 20px;
-}
-.container ul, .pause ul{
+.container ul,  .pause ul{
   list-style: none;
   margin: 0;
   padding: 0;
@@ -110,22 +104,18 @@ tr {
   background-color: rgba(0, 0, 0,0.7);
 }
 
-.restartMenu button{
-    font-family: 'myFont';
-}
-
 .container button{
   list-style: none;
   margin: 0;
-  font-family: 'myFont';
   padding: 0;
   overflow: auto;
 }
 
 button{
-  color: #0DFF92;
-  position: relative;
   font-family: 'myFont';
+  color: #0066ff;
+  /*display: block;*/
+  position: relative;
   font-size: 2.5em;
   background-color: Transparent;
   background-repeat:no-repeat;
@@ -136,39 +126,19 @@ button{
 
 }
 
-.colors ul
-{
-  position: relative;
-  width: 100%;
-  height: auto;
-  background-color: rgb(138, 138, 138);
-  background-color: rgba(0, 0, 0,0.5);
-  font-size: 1em;
-}
-
-
-.keySettings ul, ul table,ul table tbody
+.keySettings ul,ul table,ul table tbody
 {
   position: relative;
   width: 100%;
   height: 90%;
   background-color: rgb(138, 138, 138);
-  background-color: rgba(0, 0, 0,0.5);
+  background-color: rgba(138, 138, 138,0.5);
   font-size: 1em;
-}
-
-.colors table tbody{
-  width: 20%;
-}
-.colors table{
-  width: 20%;
-
-
 }
 
 ul {
   position: relative;
-  height: 20%;
+  height: 25%;
 }
 ul li{
   color: #0066ff;
@@ -181,6 +151,12 @@ ul li{
   height: auto;
   width: auto;
   padding-right: auto;
+  /*float: left;
+  width: auto;
+  height: 100px;
+  border-bottom: 1px solid #333;
+  float: left;
+  margin-left: 3em;*/
 }
 
 ul li input[type=radio]{
@@ -227,7 +203,7 @@ ul li:hover .check {
 .startAgain button
 {
   display: none;
-  font-family: 'myFont';
+ 
   background-color: rgb(138, 138, 138);
   background-color: rgba(138, 138, 138,0.85);
 }
@@ -245,6 +221,49 @@ ul li .check::before {
   transition: background 0.25s linear;
   -webkit-transition: background 0.25s linear;
 }
+
+.colors
+{
+  position: absolute;
+  top: 10%;
+  margin: 0;
+  height: auto;
+  padding: 0;
+  width: 45%;
+  left: 55%;
+     background-color: rgb(138, 138, 138);
+  background-color: rgba(138, 138, 138,0.85);
+}
+
+.colors ul
+{
+  position: relative;
+  margin: 0;
+  padding: 0;
+  padding: 0;
+  margin: 0px;
+  height: auto;
+}
+
+.colors td
+{
+  position: relative;
+  margin: 0;
+  padding: 0;
+  padding: 0;
+  margin: 0px;
+  height: 10px;
+  font-size: 1em;
+  text-align: center;
+}
+
+.colors input
+{
+  position: relative;
+  width: auto;
+  height: 10px;
+}
+
 
 input[type=radio]:checked ~ .check {
   border: 5px solid #FFFFFF;
