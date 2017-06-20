@@ -277,7 +277,7 @@
 
 
 						document.getElementById("backFromColor").onclick = function(){
-							menuCamera.position.set(15.0,4.0,25.0);
+							menuCamera.position.set(16.5,4.0,25.0);
 							menuCamera.rotateZ(Math.PI/4);
 							menuCamera.rotateX(Math.PI/2);
 
@@ -741,7 +741,7 @@ function createMenuScene()
 	menuCamera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 1000 );
 
 	camera.position.set(0.0,90.0,0.0);
-	menuCamera.position.set(15.0,4.0,25.0);
+	menuCamera.position.set(16.5,4.0,25.0);
 
 	//controls = new THREE.FirstPersonControls( camera );
 	controlsMenu = new THREE.OrbitControls( camera, renderer.domElement );
