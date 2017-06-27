@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+  <head background="images/background.jpg">
+    <title>Interactive Project</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet"
+      href="css/style.css">
+
+    <style>
+      body {
+        margin: 0px;
+        background-color: #000000;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="build/three.js"></script>
+    <script src="build/three.min.js"></script>
+
+    <script src="js/controls/OrbitControls.js"></script>
+
+    <script src="js/Detector.js"></script>
+    <script src="js/libs/stats.min.js"></script>
+    <script src="./js/GPUParticleSystem.js"></script>
+
+    <script src="js/Graphics.js"></script>
+    <script src="js/KeyboardControls.js"></script>
+
+
+    <div class="container"  id="mainPage">
+        
+     <button id = "start" ><font color="#0066ff">Start!</font></button>
+      <ul>
+        <h2>Player selection:</h2>
+
+      <li>
+        <input type="radio" id="1" name="player" checked>
+        <label for="1">1</label>
+        
+        <div class="check"></div>
+      </li>
+      
+      <li>
+        <input type="radio" id="2" name="player">
+        <label for="2">2</label>
+        
+        <div class="check"><div class="inside"></div></div>
+      </li>
+      
+      <li>
+        <input type="radio" id="3" name="player">
+        <label for="3">3</label>
+        
+        <div class="check"><div class="inside"></div></div>
+      </li>
+
+      <li>
+        <input type="radio" id="4" name="player">
+        <label for="4" >4</label>
+        
+        <div class="check"><div class="inside"></div></div>
+      </li>
+      
+    </ul>
+    <ul>
+      <h2>Music:</h2>
+      <li>
+        <input type="radio" id="all" name="music" checked>
+        <label for="all">All</label>
+        <div class="check"><div class="inside"></div></div>
+      </li>
+      <li>
+        <input type="radio" id="events" name="music">
+        <label for="events">Only Events</label>
+        <div class="check"><div class="inside"></div></div>
+      </li>
+      <li>
+        <input type="radio" id="none" name="music">
+        <label for="none">None</label>
+        <div class="check"><div class="inside"></div></div>
+      </li>
+    </ul>
+    <ul>
+      <h2>Mode:</h2>
+
+      <li>
+        <input type="radio" id="day" name="mode" checked>
+        <label for="day">Day</label>
+        <div class="check"><div class="inside"></div></div>
+      </li>
+      <li>
+        <input type="radio" id="night" name="mode">
+        <label for="night">Night</label>
+        <div class="check"><div class="inside"></div></div>
+      </li>
+      <li>
+        <input type="radio" id="cycle" name="mode">
+        <label for="cycle">Cycle</label>
+        <div class="check"><div class="inside"></div></div>
+      </li>
+      </ul>
+       <ul >
+        <button id = "key" style="right: -5%">Key Settings</button>
+        <button id="colorButton" style="right: -15%" >Colors</button>
+      </ul>
+    </div>
+<script>
+  function changeRed(value, player) {
+    document.getElementById('valRed'+player).innerHTML = value;
+    changeAll(player);
+}
+function changeGreen(value, player) {
+    document.getElementById('valGreen'+player).innerHTML = value;
+    changeAll(player);
+}
+function changeBlue(value, player) {
+    document.getElementById('valBlue'+player).innerHTML = value;
+    changeAll(player);
+}
+function changeAll(player) {
+    var r = document.getElementById('valRed'+player).innerHTML;
+    var g = document.getElementById('valGreen'+player).innerHTML;
+    var b = document.getElementById('valBlue'+player).innerHTML;
+    document.getElementById('change'+player).style.backgroundColor = "rgb(" + r + "," + g + "," + b + ")";
+}
+
+</script>
+
+<div class="colors" id="colorMenu" style="display:none ">
+    <ul >
+      <h2>PLAYER 1:</h2>
+        <table >
+
+          <tr>
+            <td id="valRedP1" >255</td>
+            <td id="valGreenP1">51</td>
+            <td id="valBlueP1">153</td>
+          </tr>
+                 
+          <tr >
+            <td id="redP1" style="background-color:red; height:10px"></td>
+            <td id="greenP1" style="background-color:green; height:10px"></td>
+            <td id="blueP1" style="background-color:blue; height:10px"></td>
+          </tr>
+
+          <tr>
+            <td>
+              <input oninput="changeRed(this.value,'P1')" onchange="changeRed(this.value,'P1')" type="range" id="slideRedP1" name="slideRedP1" min="0" max="255">
+            </td>
+            <td>
+              <input oninput="changeGreen(this.value,'P1')" onchange="changeGreen(this.value,'P1')" type="range" id="slideGreenP1" name="slideGreenP1" min="0" max="255">
+            </td>
+            <td>
+              <input oninput="changeBlue(this.value,'P1')" onchange="changeBlue(this.value,'P1')" type="range" id="slideBlueP1" name="slideBlueP1" min="0" max="255">
+            </td>
+          </tr>
+
+        </table>
+        <div id="changeP1" style="height: 10px;"></div>
+      </ul>
+        
+      <ul >
+        <h2>PLAYER 2:</h2>
+          <table>
+            
+            <tr>
+              <td id="valRedP2">11</td>
+              <td id="valGreenP2">211</td>
+              <td id="valBlueP2">67</td>
+            </tr>
+            
+            <tr>
+              <td id="redP2" style="background-color:red; height:10px"></td>
+              <td id="greenP2" style="background-color:green; height:10px"></td>
+              <td id="blueP2" style="background-color:blue; height:10px"></td>
+            </tr>
+            
+            <tr>
+              <td>
+                <input oninput="changeRed(this.value,'P2')" onchange="changeRed(this.value,'P2')" type="range" id="slideRedP2" name="slideRedP2" min="0" max="255">
+              </td>
+              <td>
+                <input oninput="changeGreen(this.value,'P2')" onchange="changeGreen(this.value,'P2')" type="range" id="slideGreenP2" name="slideGreenP2" min="0" max="255">
+              </td>
+              <td>
+                <input oninput="changeBlue(this.value,'P2')" onchange="changeBlue(this.value,'P2')" type="range" id="slideBlueP2" name="slideBlueP2" min="0" max="255">
+              </td>
+            </tr>
+            
+          </table>
+          <div id="changeP2" style="height: 10px;"></div>
+        </ul>
+
+        <ul  >
+          <h2>PLAYER 3:</h2>
+          <table >
+
+            <tr>
+              <td id="valRedP3">255</td>
+              <td id="valGreenP3">153</td>
+              <td id="valBlueP3">0</td>
+            </tr>
+
+            <tr>
+              <td id="redP3" style="background-color:red; height:10px"></td>
+              <td id="greenP3" style="background-color:green; height:10px"></td>
+              <td id="blueP3" style="background-color:blue; height:10px"></td>
+            </tr>
+
+            <tr>
+              <td>
+                <input oninput="changeRed(this.value,'P3')" onchange="changeRed(this.value,'P3')" type="range" id="slideRedP3" name="slideRedP3" min="0" max="255">
+              </td>
+              <td>
+                <input oninput="changeGreen(this.value,'P3')" onchange="changeGreen(this.value,'P3')" type="range" id="slideGreenP3" name="slideGreenP3" min="0" max="255">
+              </td>
+              <td>
+                <input oninput="changeBlue(this.value,'P3')" onchange="changeBlue(this.value,'P3')" type="range" id="slideBlueP3" name="slideBlueP3" min="0" max="255">
+              </td>
+            </tr>
+
+          </table>
+           <div id="changeP3" style="height: 10px;"></div>
+        </ul>
+        <ul >
+
+        <h2>PLAYER 4:</h2>
+          
+          <table  >
+            <tr>
+              <td id="valRedP4">255</td>
+              <td id="valGreenP4">0</td>
+              <td id="valBlueP4">0</td>
+            </tr>
+
+            <tr>
+              <td id="redP4" style="background-color:red; height:10px"></td>
+              <td id="greenP4" style="background-color:green; height:10px"></td>
+              <td id="blueP4" style="background-color:blue; height:10px"></td>
+            </tr>
+
+            <tr>
+              <td>
+                <input oninput="changeRed(this.value,'P4')" onchange="changeRed(this.value,'P4')" type="range" id="slideRedP4" name="slideRedP4" min="0" max="255">
+              </td>
+              <td>
+                <input oninput="changeGreen(this.value,'P4')" onchange="changeGreen(this.value,'P4')" type="range" id="slideGreenP4" name="slideGreenP4" min="0" max="255">
+              </td>
+              <td>
+                <input oninput="changeBlue(this.value,'P4')" onchange="changeBlue(this.value,'P4')" type="range" id="slideBlueP4" name="slideBlueP4" min="0" max="255">
+              </td>
+            </tr>
+
+          </table>
+          <div id="changeP4" style="height: 10px;"></div>
+
+        <button id = "backFromColor" style="position:relative; top:90%;">Back</button>
+      </ul>
+    </div>
+
+<script>
+  changeAll("P1") 
+  changeAll("P2")
+  changeAll("P3")
+  changeAll("P4")
+</script>
+
+
+
+
+
+    <div class="pause" id="pause" style="display:none">
+      <ul >
+        <li> <button id = "resume">Resume</button> </li>
+        <li> <button id= "keyPause">Key Settings</button> </li>
+        <li> <button id = "menu">Main Menu</button> </li>
+      </ul>
+    </div>
+    <div id="keyMenu" class="keySettings" style="display:none">
+      <ul>
+        <table >
+          <tr>
+            <td>Player</td>
+            <td>Left</td>
+            <td>Right</td>
+          </tr>
+          <tr>
+            <td><font color="#ff3399" size="10" id="colorKey1">1</font></td>
+            <td><button id = "FirstL" >Q</button></td>
+            <td><button id = "FirstR" >W</button></td>
+          </tr>
+          <tr>
+            <td><font color="#0bdd43" size="10" id="colorKey2">2</font></td>
+            <td><button id = "SecondL" >8</button></td>
+            <td><button id = "SecondR">9</button></td>
+          </tr>
+          <tr>
+            <td><font color="#ff9900" size="10" id="colorKey3">3</font></td>
+            <td><button id = "ThirdL" >x</button></td>
+            <td><button id = "ThirdR" >c</button></td>
+          </tr>
+          <tr>
+            <td><font color="ff0000" size="10" id="colorKey4">4</font></td>
+            <td><button id = "FourthL" >,</button></td>
+            <td><button id = "FourthR" >.</button></td>
+          </tr>
+        </table>
+        <li>  <button id = "back" style="position:relative; top:50%;">Back</button> </li>
+      </ul>
+    </div>
+  
+    <div id="endMenu" class="restartMenu" style="display:none">
+      <ul>
+      <table>
+        <tr>
+          <td><label style = "color: white;">Player</label></td>
+          <td><label style = "color: white;">Wins</label></td>
+        </tr>
+        <tr>
+          <td><font color="#ff0000" id="score1">1</font></td>
+          <td><label id = "scoreFirst" style = "color: white;">0</label></td>
+        </tr>
+        <tr>
+          <td><font color="#0bdd43" id="score2">2</font></td>
+          <td><label id = "scoreSecond" style = "color: white;"style = "color: white;">0</label></td>
+        </tr>
+        <tr>
+          <td><font color="#ff9900" id="score3">3</font></td>
+          <td><label id = "scoreThird" style = "color: white;">0</label></td>
+        </tr>
+        <tr>
+          <td><font color="#ff3399" id="score4">4</font></td>
+          <td><label id = "scoreFourth" style = "color: white;">0</label></td>
+        </tr>
+      </table>
+      </ul>
+      <ul>
+        <font size="6"><label id = "winner" style = "color: white;"></label></font>
+        <button id = "menu2" >Main menu</button>
+        <button id = "startAgain" >Restart The Game!</button>
+      </ul>
+    </div>
+
+    <div id="container"></div>
+
+    <script src="js/Player.js"></script>
+    <script src="js/explosionParticle.js"></script>
+    <script src="js/animatedLight.js"></script>
+
+    <script src="js/Halo.js"></script>
+    <script src="js/Ship.js"></script>
+    <script src="js/Game.js"></script>
+
+  </body>
+</html>
