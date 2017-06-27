@@ -169,7 +169,6 @@
 			
 			function animate() 
 			{
-				//camera = camera.rotateX(THREE.Math.degToRad( 100 ));
 				requestAnimationFrame( animate );
 
 
@@ -336,8 +335,6 @@
 							sound.music = 0;
 
 						createGameScene();
-						//while(this.ship.render(false,1));
-
 						if(  document.getElementById("1").checked)
 						nPlayer = 1;
 						else if(document.getElementById("2").checked)
@@ -377,10 +374,8 @@
 							sound.menu_sound.pause();
 
 
-
  						startGame = true; 
  						alive = nPlayer;
-
  		
 
  						for (var i = 0; i < alive; i++)
@@ -416,7 +411,6 @@
 				var delta = clock.getDelta();
 				controlsMenu.update(delta);			
  				time += 0.005;				
- 				//shipControl.render(1.0);
  				
  				ships[0].rotateY(THREE.Math.degToRad(+0.2));
  				ships[1].rotateY(THREE.Math.degToRad(+0.2));
@@ -586,7 +580,6 @@
 						camera.position.z = players[0].getPosition().z + 10;
 
 						controls.target = players[0].getPosition();
-						//pause = true;
 						console.log("player "+playersControl[0].number+" win ");
 						document.getElementById("winner").innerHTML = "player "+playersControl[0].number+" win ";
 						document.getElementById("winner").style.display="block";
@@ -656,9 +649,6 @@
 				groundGeometry = new THREE.BoxBufferGeometry( planeWidth,1, planeHeight );
 
 				ground = new THREE.Mesh( groundGeometry, new Material(0,0xffffff,10,10).ground );
-				//ground.scale.set( 1000, 1000, 1000 );
-
-				//ground.receiveShadow = true;
 
 				gameScene.add(ground);
 
@@ -672,7 +662,7 @@
 									 prefix+"haloBELLO"+suffix,  //up
 									 prefix+"halo"+suffix,  //down
 
-							 prefix+"haloBELLO90"+suffix,  //left
+							 		prefix+"haloBELLO90"+suffix,  //left
 									 prefix+"haloBELLO90"+suffix]; //right
 			
 			var reflectionCube = new THREE.CubeTextureLoader().load( urls );
@@ -770,7 +760,6 @@ function createMenuScene()
 		new Material(50,0xffffff,0xffffff,5,1).metalDoubleSide);
 		piedistallo.position.set(px,py,pz);
 		menuScene.add(piedistallo);
-		console.log(piedistallo.position)
 	}
 
 	piedistallo(0,-2,wins[0]/2+0.5,5,-2,wins[0]/4,5);

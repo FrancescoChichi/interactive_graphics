@@ -75,7 +75,9 @@ function Material(shininess,color, rx, ry){
 	this.ground = new THREE.MeshPhongMaterial( {
 		shininess: shininess,
 		color: color,
-		map: tronTexture
+		map: tronTexture,
+				transparent: true,
+		opacity:0.8,
 	} );
 
 	this.basicTransparent = new THREE.MeshBasicMaterial( {

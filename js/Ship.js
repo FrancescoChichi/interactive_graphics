@@ -3,7 +3,7 @@ THREE.Ship = function (controls,scale) {
 	var deathAnimationFrameCounter = 0;
 	var deathAnimationFrame = 100;
 	var particleCount = 25;
-	var explosionParticleNumber = 50;
+	var explosionParticleNumber = 100;
 	var explosionParticle;
 
 	this.particlesL;
@@ -175,7 +175,6 @@ THREE.Ship = function (controls,scale) {
 			explosionParticle.render(deathAnimationFrame*explosionParticleNumber);
 		
 			this.cabin.position.y++;
-			//this.cabin.position.x++;
 			this.cabin.rotateZ(THREE.Math.degToRad(-5));
 
 			this.motorR.position.x++;
