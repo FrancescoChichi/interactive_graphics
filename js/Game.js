@@ -140,7 +140,6 @@
 
 
 				renderer = new THREE.WebGLRenderer({antialias:true});
-				//renderer.setClearColor( 0xaaccff );
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
 
@@ -148,7 +147,6 @@
 
 				createMenuScene();
 
-				//POWER UP
 					//******renderer******
 				container.innerHTML = "";
 				container.appendChild( renderer.domElement );
