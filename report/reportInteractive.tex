@@ -17,9 +17,9 @@
 \graphicspath{{img/}}
 \section{Introduction}
 	The project developed from us is a local multi player game (1-4 players), inspired to the film \textit{Tron}.\\
-	The goal of each player is to eliminate all the other players, and to do so, he have to traps them in some walls.
+	The goal of each player is to eliminate all the other, and to do so, he have to traps them in some walls.
 	When a player bump a wall or another player, he dies. At this point, the animation of the death start, and when it's ended, the ship and the relative walls disappear from the map.
-\section{List of all the libraries, tools and models used in the project but	not developed by the team}
+\section{Other libraries}
 \begin{itemize}
 	\item \textbf{Three.js:}
 		Three.js is a cross-browser JavaScript library/API used to create and display animated 3D computer graphics in a web browser exploiting the power of WebGL in an high level mode.
@@ -44,17 +44,17 @@
 	\end{wrapfigure}
 
 	
-	Each player has a ship of the choosen colour, which one is a three.js Group, composed by a \textbf{cabin} (fig. 2), a clock wise rotating \textbf{ring} (fig. 3) and two \textbf{motors} (fig. 4).\\
+	Each player has a ship of the choosen colour, which is a three.js Group composed by a \textbf{cabin} (fig. 2), a clock wise rotating \textbf{ring} (fig. 3) and two \textbf{motors} (fig. 4).\\
 	
-	The cabin is also a Group of element coloured with the player's colour, composed by a glass and a cockpit with a pointlight inside.
+	The cabin is also a Group of element, all coloured with the player's colour, composed by a glass and a cockpit with a pointlight inside.
 	The cockpit is a sphere covered with a metallic texture, the glass is a parallelepiped made by a \textit{MeshToonMaterial}, that is illuminated by the cockpit's light.\\
 	
-	Each motor is another independent Group, composed by a cylinder, an hemisphere on the top and another hemisphere with an hole, that represent the exhaust pipe, each one is covered with the metallic texture of the cabin.
-	Furthermore, at the end of the exhaust pipe, there are 50 particles of the colour of the player. The wake's length where this particles are distributed is choosen stochastically: with a probability of 80\%, the wake's length is equal to 40, with 10\% is 0 or 10.\\
+	Each motor is another independent Group, composed by a cylinder, an hemisphere on the top and another hemisphere on the bottom with an hole, that represent the exhaust pipe, each one is covered with the same metallic texture of the cabin.\\
+	Furthermore, at the end of the exhaust pipe, there are 50 particles coloured like the player. The wake's length where this particles are distributed is choosen stochastically: with a probability of 80\%, the wake's length is equal to 40, with 10\% is 0 or 10.\\
 	
-	Finally, there is a rotating ring, that is a torus coloured with the same texture of the torus which rotates around the map.
+	Finally, there is a rotating ring, that is a torus coloured with the same texture of the torus which rotates around the map (fig. 5,6).
 	
-	\begin{figure}
+	\begin{figure}[!htb]
 		\centering
 		\begin{minipage}[b]{0.25\linewidth}
 			\includegraphics[width=\linewidth]{cabin}
@@ -73,7 +73,7 @@
 		\end{minipage}
 	\end{figure}
 
-\FloatBarrier
+
 
 
 
@@ -94,7 +94,7 @@
 
 The halo object is used to simulate the day-night cycle and it is implemented in the Halo.js file.
 
-We have implemented the halo object with a group, which is composed by a torus and two spotlight, one for the sun and the other for the moon. Those spotlight are positioned in opposite part of the torus and both points to the centre of the game plane. The difference between the lights is the colour of the light.  
+We have implemented the halo object with a group, which is composed by a torus and two spotlight, one for the sun (white) and the other for the moon (blue). Those spotlight are positioned in opposite part of the torus and both points to the centre of the game plane.  
 In order to simulate the cycle we used a rander function, that will rotate the torus by 0.5 degrees each frame.
 
 The modality of the Halo can be choose in the main menu; we have:
@@ -108,7 +108,7 @@ The differences between day and night can be seen in the figure above.
 
 \subsection{Animated Light}
 
-An animated Light is a sphere that emits light and move in the space. This is implemented in the animatedLight.js file.
+An animated Light is a sphere that emits light and move in the space and is implemented in the animatedLight.js file.
 
 Each light is a point light, and is constructed by generating a set of random points in the space, delimited by the plane space, and a random colour. Then those points are interpolated using a closed loop CatmullRomCurve3, from THREE. Since the position of the light in the curve is defined in the interval from 0 and 1, we increment the position, at each frame, with a small delta, in order to simulate the movement . This is done is the render function.  	
 \begin{figure}
@@ -123,7 +123,7 @@ Each light is a point light, and is constructed by generating a set of random po
 \begin{wrapfigure}{r}{0pt}
 	\centering
 	\includegraphics[width=0.4\linewidth]{plane}
-	\caption{the plane and the red square}
+	\caption{the plane and the red square.}
 \end{wrapfigure}
 The plane is a transparent square, in which the ships can move; the material is a Phong type. Below the plane we have a red transparent flat square, that indicates the zone in which the ships cannot go. The material of the red square is a basic mash material.
 
