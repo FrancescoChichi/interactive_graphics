@@ -31,6 +31,7 @@
 		stats.min is used to show the FPS, frame per second, or the MS, the millisecond used for each render.
 		
 \end{itemize}
+\newpage
 \section{Description of all the technical aspects of the project}
 \subsection{Ship}
 	
@@ -72,7 +73,7 @@
 		\end{minipage}
 	\end{figure}
 
-
+\FloatBarrier
 
 
 
@@ -115,6 +116,7 @@ Each light is a point light, and is constructed by generating a set of random po
 	\includegraphics[width=\linewidth]{animatedLight}
 	\caption{some animated lights}
 \end{figure}
+\FloatBarrier
 
 \subsection{Plane and skybox}
 
@@ -175,60 +177,67 @@ Since the ships can move only on two coordinates, and rotate  only by 90 degrees
 
 This vector is used also to generate the walls, from the last point in which the ship turned to the current point.
 \subsection{Menu}
+\FloatBarrier
+
+
 	The game contains several menu views: The \textbf{main menu} (fig. 15), \textbf{key settings} (fig. 14), \textbf{colour settings} (fig. 16), \textbf{end game} (fig. 11,12,13), \textbf{pause} (fig. 17).\\
 	
 	The main menu allow the users to start the game, to go in the key settings menu or to the colour settings menu.
-	Furthermore, it allow to change the principal settings of the game: choose the number of playing players, decide if allow the main soundtrack and the in-game sound effect, only the last one or to play without any kind of sounds, and finally to choose between the three light modalities, \textbf{day}, \textbf{night} or \textbf{cycle}.\\
+	Furthermore, it allow to change the principal settings of the game: choose the number of playing players, decide if allow the main soundtrack and the in-game sound effect, only the last one or to play without any kind of sounds, and finally to choose between the three light modalities, \textbf{day}, \textbf{night} or \textbf{cycle}.
+	
 	Next to the main menu, there are a view of all the 4 ships, below there is a pillar representing the ranking position of the relative player (fig. 18).
-	Furthermore, the first ranked player is lit up by a spotlight.\\
+	Furthermore, the players with the higher score are lit up by a spotlight, except if they are all on the same score.\\
 	
 	The key settings menu is used in order to modify the default value of the command for each player. In the menu is shown, fore each player, the relative number of the player with the choosen colour and two button, usable to change the \textit{turn-left} and \textit{turn-right} commands values.\\
 	
-	In the colour setting menu we can find three slider fore each player, relative to the RGB colour, and a bar coloured with the result of the three component.\\
-	On the left of this menu are showed the four ships with their choosen relative colors.
+	In the colour setting menu we can find three slider fore each player, relative to the RGB colour, and a bar coloured with the result of the three component.
+	
+	On the left of this menu are showed the four ships with their chosen relative colours.
 	
 	When only one player still alive, if the initial number of player was at least 2, the end game menu is showed, in which we find a table showing the ranking of the players in game. In this table there are the numbers relative of each player, if the colour is grey, it means that the relative player is not playing, otherwise are shown the colours relative to the player.
 	Furthermore, in the same menu are shown two button, one to come back to main menu, other to play again the game.\\
 	
-	Finally there is a pause menu, where we can find three buttons: the same two button described in the end game menu and another one to show the key settings menu.\\
+	Finally there is a pause menu, where we can find three buttons: the same two button described in the end game menu and another one to show the key settings menu.
+	
+	 \begin{figure}
+	 	\centering
+	 	\begin{minipage}[b]{0.25\linewidth}
+	 		\includegraphics[width=\linewidth]{endGameMenu2}
+	 		\caption{with 2 player}
+	 		\label{fig:endGameMenu2}
+	 	\end{minipage}
+	 	\begin{minipage}[b]{0.25\linewidth}
+	 		\includegraphics[width=\linewidth]{endGameMenu3}
+	 		\caption{with 3 player}
+	 		\label{fig:endGameMenu3}
+	 	\end{minipage}
+	 	\begin{minipage}[b]{0.25\linewidth}
+	 		\includegraphics[width=\linewidth]{endGameMenu4}
+	 		\caption{with 4 player}
+	 		\label{fig:endGameMenu4}
+	 	\end{minipage}
+	 \end{figure}
 	 
-\begin{figure}
-	\centering
-	\begin{minipage}[b]{0.3005\linewidth}
-		\includegraphics[width=\linewidth]{endGameMenu2}
-		\caption{with 2 player}
-		\label{fig:endGameMenu2}
-	\end{minipage}
-	\begin{minipage}[b]{0.3015\linewidth}
-		\includegraphics[width=\linewidth]{endGameMenu3}
-		\caption{with 3 player}
-		\label{fig:endGameMenu3}
-	\end{minipage}
-	\begin{minipage}[b]{0.2955\linewidth}
-		\includegraphics[width=\linewidth]{endGameMenu4}
-		\caption{with 4 player}
-		\label{fig:endGameMenu4}
-	\end{minipage}
-\end{figure}
 
 \begin{figure}
 	\centering
-	\begin{minipage}[b]{0.29\linewidth}
+	\begin{minipage}[b]{0.25\linewidth}
 		\includegraphics[width=\linewidth]{keySettingsMenu}
 		\caption{This is the menu used to change the default controls value.}
 		\label{fig:keySett}
 	\end{minipage}
-	\begin{minipage}[b]{0.32\linewidth}
+	\begin{minipage}[b]{0.25\linewidth}
 		\includegraphics[width=\linewidth]{startMenu}
 		\caption{This is the main menu, used to start the game or to change some of the principal settings.}
 		\label{fig:startMenu}
 	\end{minipage}
+\hfill
 	\begin{minipage}[b]{0.6\linewidth}
 		\includegraphics[width=\linewidth]{colorMenu}
 		\caption{This is the menu used to change the default colours value.}
 		\label{fig:colorMenu}
 	\end{minipage}
-	\begin{minipage}[b]{0.6\linewidth}
+	\begin{minipage}[b]{0.4\linewidth}
 		\includegraphics[width=\linewidth]{pauseMenu}
 		\caption{This is the pause menu}
 		\label{fig:endGameMenu4}
@@ -239,6 +248,5 @@ This vector is used also to generate the walls, from the last point in which the
 		\label{fig:Ranking}
 	\end{minipage}
 \end{figure}
-
 
 \end{document}

@@ -341,6 +341,8 @@
 						nPlayer = 2;
 						else if(document.getElementById("3").checked)
 						nPlayer = 3;
+						else
+							nPlayer=4;	
 
 						switch ( nPlayer ) {
 							case 1:
@@ -772,23 +774,30 @@ function createMenuScene()
 
 
 	var first = 0;
-	var best = 0;
+	var max = 0;
+	var best = [];
+	var max = Math.max.apply(Math, wins);
+
 	for(var i = 0; i<wins.length; i++)
-		if (wins[i] > best)
+		if (wins[i] >= max)
 		{
-			best = wins[i];
-			first = i;
+			max = wins[i];
+			best.push(i);
+			console.log(best)
 		}
 
-	if(best>0)
-	{
-		var winnerSpotlight = new THREE.SpotLight( 0xffffff, 10 );
-		winnerSpotlight.castShadow = true;
-		winnerSpotlight.angle = 0.2;
-		winnerSpotlight.position.set( ships[first].position.x, 20, ships[first].position.z );
-		winnerSpotlight.target = ships[first];
+	if(best.length>0 && best.length<4)
+	{	
+		for(var i = 0; i < best.length; i++)
+		{
+			var winnerSpotlight = new THREE.SpotLight( 0xffffff, 10 );
+			winnerSpotlight.castShadow = true;
+			winnerSpotlight.angle = 0.2;
+			winnerSpotlight.position.set( ships[best[i]].position.x, 20, ships[best[i]].position.z );
+			winnerSpotlight.target = ships[best[i]];
 
-		menuScene.add(winnerSpotlight);
+			menuScene.add(winnerSpotlight);
+		}
 	}
 
 

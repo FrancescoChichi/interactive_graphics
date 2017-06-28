@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.6.23)  28 JUN 2017 12:28
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6210 64-bit) (preloaded format=pdflatex 2017.3.30)  28 JUN 2017 14:43
 entering extended mode
 **./reportInteractive.tex
 (reportInteractive.tex
-LaTeX2e <2017-04-15>
-Babel <3.10> and hyphenation patterns for 75 language(s) loaded.
+LaTeX2e <2017/01/01> patch level 1
+Babel <3.9r> and hyphenation patterns for 75 language(s) loaded.
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\article.cls"
 Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\size11.clo"
@@ -27,14 +27,14 @@ Package: inputenc 2015/03/17 v1.2c Input encoding file
 \inpenc@posthook=\toks15
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\utf8.def"
-File: utf8.def 2017/01/28 v1.1t UTF-8 support for inputenc
+File: utf8.def 2016/02/28 v1.1s UTF-8 support for inputenc
 Now handling font encoding OML ...
 ... no UTF-8 mapping file for font encoding OML
 Now handling font encoding T1 ...
 ... processing UTF-8 mapping file for font encoding T1
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\t1enc.dfu"
-File: t1enc.dfu 2017/01/28 v1.1t UTF-8 support for inputenc
+File: t1enc.dfu 2016/02/28 v1.1s UTF-8 support for inputenc
    defining Unicode char U+00A0 (decimal 160)
    defining Unicode char U+00A1 (decimal 161)
    defining Unicode char U+00A3 (decimal 163)
@@ -246,8 +246,6 @@ File: t1enc.dfu 2017/01/28 v1.1t UTF-8 support for inputenc
    defining Unicode char U+0219 (decimal 537)
    defining Unicode char U+021A (decimal 538)
    defining Unicode char U+021B (decimal 539)
-   defining Unicode char U+0232 (decimal 562)
-   defining Unicode char U+0233 (decimal 563)
    defining Unicode char U+1E02 (decimal 7682)
    defining Unicode char U+1E03 (decimal 7683)
    defining Unicode char U+200C (decimal 8204)
@@ -268,14 +266,12 @@ File: t1enc.dfu 2017/01/28 v1.1t UTF-8 support for inputenc
    defining Unicode char U+2039 (decimal 8249)
    defining Unicode char U+203A (decimal 8250)
    defining Unicode char U+2423 (decimal 9251)
-   defining Unicode char U+1E20 (decimal 7712)
-   defining Unicode char U+1E21 (decimal 7713)
 )
 Now handling font encoding OT1 ...
 ... processing UTF-8 mapping file for font encoding OT1
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\ot1enc.dfu"
-File: ot1enc.dfu 2017/01/28 v1.1t UTF-8 support for inputenc
+File: ot1enc.dfu 2016/02/28 v1.1s UTF-8 support for inputenc
    defining Unicode char U+00A0 (decimal 160)
    defining Unicode char U+00A1 (decimal 161)
    defining Unicode char U+00A3 (decimal 163)
@@ -316,7 +312,7 @@ Now handling font encoding OMS ...
 ... processing UTF-8 mapping file for font encoding OMS
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\omsenc.dfu"
-File: omsenc.dfu 2017/01/28 v1.1t UTF-8 support for inputenc
+File: omsenc.dfu 2016/02/28 v1.1s UTF-8 support for inputenc
    defining Unicode char U+00A7 (decimal 167)
    defining Unicode char U+00B6 (decimal 182)
    defining Unicode char U+00B7 (decimal 183)
@@ -347,7 +343,7 @@ Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \KV@toks@=\toks16
 )
 ("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ifpdf.sty"
-Package: ifpdf 2017/03/15 v3.2 Provides the ifpdf switch
+Package: ifpdf 2016/05/14 v3.1 Provides the ifpdf switch
 )
 ("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ifvtex.sty"
 Package: ifvtex 2016/05/16 v1.6 Detect VTeX and its facilities (HO)
@@ -374,7 +370,7 @@ Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphics.sty"
-Package: graphics 2017/04/14 v1.1b Standard LaTeX Graphics (DPC,SPQR)
+Package: graphics 2016/10/09 v1.0u Standard LaTeX Graphics (DPC,SPQR)
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\trig.sty"
 Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
@@ -477,7 +473,7 @@ LaTeX Font Info:    ... okay on input line 15.
 \makeMPintoPDFobject=\count97
 \everyMPtoPDFconversion=\toks20
 ) ("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\pdftexcmds.sty"
-Package: pdftexcmds 2017/03/19 v0.25 Utility functions of pdfTeX for LuaTeX (HO
+Package: pdftexcmds 2016/05/21 v0.22 Utility functions of pdfTeX for LuaTeX (HO
 )
 
 ("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ifluatex.sty"
@@ -531,201 +527,212 @@ File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 24.
+ [1
 
-<img/ship.png, id=1, 542.62724pt x 404.10976pt>
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
+<img/ship.png, id=12, 542.62724pt x 404.10976pt>
 File: img/ship.png Graphic file (type png)
  <use img/ship.png>
-Package pdftex.def Info: img/ship.png used on input line 40.
+Package pdftex.def Info: img/ship.png used on input line 41.
 (pdftex.def)             Requested size: 167.2989pt x 124.58827pt.
 
-Underfull \hbox (badness 6927) in paragraph at lines 46--47
+Underfull \hbox (badness 6927) in paragraph at lines 47--48
 \OT1/cmr/m/n/10.95 which one is a three.js Group, com-posed
  []
 
 
-Underfull \hbox (badness 2626) in paragraph at lines 46--47
+Underfull \hbox (badness 2626) in paragraph at lines 47--48
 \OT1/cmr/m/n/10.95 by a \OT1/cmr/bx/n/10.95 cabin \OT1/cmr/m/n/10.95 (fig. 2), 
 a clock wise ro-tat-
  []
 
 
-Underfull \hbox (badness 4181) in paragraph at lines 46--47
+Underfull \hbox (badness 4181) in paragraph at lines 47--48
 \OT1/cmr/m/n/10.95 ing \OT1/cmr/bx/n/10.95 ring \OT1/cmr/m/n/10.95 (fig. 3) and
  two \OT1/cmr/bx/n/10.95 mo-tors \OT1/cmr/m/n/10.95 (fig.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 46--47
+Underfull \hbox (badness 10000) in paragraph at lines 47--48
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 48--50
+Underfull \hbox (badness 10000) in paragraph at lines 49--51
 
  []
 
-[1
 
-{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map} <./img/ship.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 51--53
+Underfull \hbox (badness 10000) in paragraph at lines 52--54
 
  []
 
-<img/cabin.png, id=15, 196.93575pt x 158.39175pt>
+<img/cabin.png, id=14, 196.93575pt x 158.39175pt>
 File: img/cabin.png Graphic file (type png)
  <use img/cabin.png>
-Package pdftex.def Info: img/cabin.png used on input line 59.
+Package pdftex.def Info: img/cabin.png used on input line 60.
 (pdftex.def)             Requested size: 104.56342pt x 84.09949pt.
 
-<img/toro.png, id=16, 252.34274pt x 183.68625pt>
+<img/toro.png, id=15, 252.34274pt x 183.68625pt>
 File: img/toro.png Graphic file (type png)
  <use img/toro.png>
-Package pdftex.def Info: img/toro.png used on input line 64.
+Package pdftex.def Info: img/toro.png used on input line 65.
 (pdftex.def)             Requested size: 115.43842pt x 84.03142pt.
 
-<img/motor.png, id=17, 402.90524pt x 106.59825pt>
+<img/motor.png, id=16, 402.90524pt x 106.59825pt>
 File: img/motor.png Graphic file (type png)
  <use img/motor.png>
-Package pdftex.def Info: img/motor.png used on input line 69.
+Package pdftex.def Info: img/motor.png used on input line 70.
 (pdftex.def)             Requested size: 250.95476pt x 66.39764pt.
-
-<img/giorno.png, id=18, 478.78876pt x 444.91219pt>
+ [2 <./img/ship.png>] <img/giorno.png, id=21, 478.78876pt x 444.91219pt>
 File: img/giorno.png Graphic file (type png)
- <use img/giorno.png>
-Package pdftex.def Info: img/giorno.png used on input line 84.
-(pdftex.def)             Requested size: 188.21288pt x 174.89317pt.
 
-<img/notte.png, id=19, 478.78876pt x 444.91219pt>
-File: img/notte.png Graphic file (type png)
- <use img/notte.png>
-Package pdftex.def Info: img/notte.png used on input line 89.
+<use img/giorno.png>
+Package pdftex.def Info: img/giorno.png used on input line 85.
 (pdftex.def)             Requested size: 188.21288pt x 174.89317pt.
- [2 <./img/cabin.png> <./img/toro.png> <./img/motor.png>]
-<img/animatedLight.png, id=26, 807.7678pt x 167.87718pt>
+ <img/notte.png, id=22, 478.78876pt x 444.91219pt>
+File: img/notte.png Graphic file (type png)
+
+<use img/notte.png>
+Package pdftex.def Info: img/notte.png used on input line 90.
+(pdftex.def)             Requested size: 188.21288pt x 174.89317pt.
+ [3 <./img/cabin.png> <./img/toro.png> <./img/motor.png>]
+<img/animatedLight.png, id=29, 807.7678pt x 167.87718pt>
 File: img/animatedLight.png Graphic file (type png)
 
 <use img/animatedLight.png>
-Package pdftex.def Info: img/animatedLight.png used on input line 115.
+Package pdftex.def Info: img/animatedLight.png used on input line 116.
 (pdftex.def)             Requested size: 418.25368pt x 86.9252pt.
- <img/plane.png, id=27, 646.66594pt x 526.21594pt>
+ [4 <./img/giorno.png> <./img/notte.png> <./img/animatedLight.png>] <img/plane.
+png, id=36, 646.66594pt x 526.21594pt>
 File: img/plane.png Graphic file (type png)
 
 <use img/plane.png>
-Package pdftex.def Info: img/plane.png used on input line 123.
+Package pdftex.def Info: img/plane.png used on input line 125.
 (pdftex.def)             Requested size: 167.2989pt x 136.13844pt.
- [3 <./img/giorno.png> <./img/notte.png> <./img/plane.png>]
-[4 <./img/animatedLight.png>] [5]
-<img/collision.png, id=41, 1089.47025pt x 563.706pt>
+ [5 <./img/plane.png>] [6]
+<img/collision.png, id=44, 1089.47025pt x 563.706pt>
 File: img/collision.png Graphic file (type png)
  <use img/collision.png>
-Package pdftex.def Info: img/collision.png used on input line 163.
+Package pdftex.def Info: img/collision.png used on input line 165.
 (pdftex.def)             Requested size: 334.60422pt x 173.12997pt.
 
-<img/explosion.png, id=42, 552.26324pt x 544.434pt>
+<img/explosion.png, id=45, 552.26324pt x 544.434pt>
 File: img/explosion.png Graphic file (type png)
  <use img/explosion.png>
-Package pdftex.def Info: img/explosion.png used on input line 168.
+Package pdftex.def Info: img/explosion.png used on input line 170.
 (pdftex.def)             Requested size: 167.2989pt x 164.92647pt.
 
-[6 <./img/collision.png> <./img/explosion.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 178--179
+[7 <./img/collision.png> <./img/explosion.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 183--184
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 180--184
+Underfull \hbox (badness 10000) in paragraph at lines 185--189
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 185--186
+Underfull \hbox (badness 10000) in paragraph at lines 190--191
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 190--192
+Underfull \hbox (badness 10000) in paragraph at lines 195--197
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 193--194
-
- []
-
-<img/endGameMenu2.png, id=48, 289.08pt x 305.34074pt>
+<img/endGameMenu2.png, id=52, 289.08pt x 305.34074pt>
 File: img/endGameMenu2.png Graphic file (type png)
 
 <use img/endGameMenu2.png>
-Package pdftex.def Info: img/endGameMenu2.png used on input line 198.
-(pdftex.def)             Requested size: 83.86006pt x 88.5745pt.
+Package pdftex.def Info: img/endGameMenu2.png used on input line 202.
+(pdftex.def)             Requested size: 104.56342pt x 110.4444pt.
 
-<img/endGameMenu3.png, id=49, 289.08pt x 304.13625pt>
+Underfull \hbox (badness 2285) in paragraph at lines 203--203
+[]\OT1/cmr/m/n/10.95 Figure 11: with 2
+ []
+
+<img/endGameMenu3.png, id=53, 289.08pt x 304.13625pt>
 File: img/endGameMenu3.png Graphic file (type png)
 
 <use img/endGameMenu3.png>
-Package pdftex.def Info: img/endGameMenu3.png used on input line 203.
-(pdftex.def)             Requested size: 84.28128pt x 88.6706pt.
+Package pdftex.def Info: img/endGameMenu3.png used on input line 207.
+(pdftex.def)             Requested size: 104.56342pt x 110.00871pt.
 
-<img/endGameMenu4.png, id=50, 286.06876pt x 307.1475pt>
+Underfull \hbox (badness 2285) in paragraph at lines 208--208
+[]\OT1/cmr/m/n/10.95 Figure 12: with 3
+ []
+
+<img/endGameMenu4.png, id=54, 286.06876pt x 307.1475pt>
 File: img/endGameMenu4.png Graphic file (type png)
 
 <use img/endGameMenu4.png>
-Package pdftex.def Info: img/endGameMenu4.png used on input line 208.
-(pdftex.def)             Requested size: 81.76675pt x 87.79102pt.
+Package pdftex.def Info: img/endGameMenu4.png used on input line 212.
+(pdftex.def)             Requested size: 104.56342pt x 112.26959pt.
 
-<img/keySettingsMenu.png, id=51, 318.59026pt x 514.92375pt>
+Underfull \hbox (badness 2285) in paragraph at lines 213--213
+[]\OT1/cmr/m/n/10.95 Figure 13: with 4
+ []
+
+<img/keySettingsMenu.png, id=55, 318.59026pt x 514.92375pt>
 File: img/keySettingsMenu.png Graphic file (type png)
 
 <use img/keySettingsMenu.png>
-Package pdftex.def Info: img/keySettingsMenu.png used on input line 217.
-(pdftex.def)             Requested size: 121.29076pt x 196.03448pt.
+Package pdftex.def Info: img/keySettingsMenu.png used on input line 222.
+(pdftex.def)             Requested size: 104.56342pt x 168.99821pt.
 
-<img/startMenu.png, id=52, 392.667pt x 568.524pt>
-File: img/startMenu.png Graphic file (type png)
- <use img/startMenu.png>
-Package pdftex.def Info: img/startMenu.png used on input line 222.
-(pdftex.def)             Requested size: 133.84424pt x 193.79007pt.
-
-Underfull \hbox (badness 2111) in paragraph at lines 223--223
-\OT1/cmr/m/n/10.95 menu, used to start the
+Underfull \hbox (badness 3039) in paragraph at lines 223--223
+\OT1/cmr/m/n/10.95 the de-fault con-trols
  []
 
-<img/colorMenu.png, id=53, 519.74174pt x 380.622pt>
+<img/startMenu.png, id=56, 392.667pt x 568.524pt>
+File: img/startMenu.png Graphic file (type png)
+ <use img/startMenu.png>
+Package pdftex.def Info: img/startMenu.png used on input line 227.
+(pdftex.def)             Requested size: 104.56342pt x 151.38684pt.
+
+Underfull \hbox (badness 1412) in paragraph at lines 228--228
+\OT1/cmr/m/n/10.95 change some of the
+ []
+
+<img/colorMenu.png, id=57, 519.74174pt x 380.622pt>
 File: img/colorMenu.png Graphic file (type png)
  <use img/colorMenu.png>
-Package pdftex.def Info: img/colorMenu.png used on input line 227.
+Package pdftex.def Info: img/colorMenu.png used on input line 233.
 (pdftex.def)             Requested size: 250.95476pt x 183.78253pt.
 
-<img/pauseMenu.png, id=54, 693.792pt x 100.57574pt>
+<img/pauseMenu.png, id=58, 693.792pt x 100.57574pt>
 File: img/pauseMenu.png Graphic file (type png)
  <use img/pauseMenu.png>
-Package pdftex.def Info: img/pauseMenu.png used on input line 232.
-(pdftex.def)             Requested size: 250.95476pt x 36.3791pt.
+Package pdftex.def Info: img/pauseMenu.png used on input line 238.
+(pdftex.def)             Requested size: 167.2989pt x 24.25223pt.
 
-<img/Ranking.png, id=55, 753.41475pt x 314.3745pt>
+<img/Ranking.png, id=59, 753.41475pt x 314.3745pt>
 File: img/Ranking.png Graphic file (type png)
  <use img/Ranking.png>
-Package pdftex.def Info: img/Ranking.png used on input line 237.
+Package pdftex.def Info: img/Ranking.png used on input line 243.
 (pdftex.def)             Requested size: 250.95476pt x 104.71288pt.
 
 
-LaTeX Warning: Float too large for page by 96.79277pt on input line 241.
+LaTeX Warning: Float too large for page by 57.74487pt on input line 247.
 
-[7] [8 <./img/endGameMenu2.png> <./img/endGameMenu3.png> <./img/endGameMenu4.pn
-g>] [9 <./img/keySettingsMenu.png> <./img/startMenu.png> <./img/colorMenu.png> 
-<./img/pauseMenu.png> <./img/Ranking.png>] (reportInteractive.aux)
+[8] [9 <./img/endGameMenu2.png> <./img/endGameMenu3.png> <./img/endGameMenu4.pn
+g>] [10 <./img/keySettingsMenu.png> <./img/startMenu.png> <./img/colorMenu.png>
+ <./img/pauseMenu.png> <./img/Ranking.png>] (reportInteractive.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 2476 strings out of 493323
- 34008 string characters out of 3139066
- 102753 words of memory out of 3000000
- 5968 multiletter control sequences out of 15000+200000
+ 2472 strings out of 493333
+ 33986 string characters out of 3139197
+ 102316 words of memory out of 3000000
+ 5955 multiletter control sequences out of 15000+200000
  8798 words of font info for 31 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 39i,7n,25p,782b,276s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 39i,8n,25p,782b,278s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Fi
 les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTe
@@ -733,9 +740,9 @@ X 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fon
 ts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/
 public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/a
 msfonts/cm/cmti10.pfb>
-Output written on reportInteractive.pdf (9 pages, 8112198 bytes).
+Output written on reportInteractive.pdf (10 pages, 8224431 bytes).
 PDF statistics:
- 97 PDF objects out of 1000 (max. 8388607)
+ 100 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  91 words of extra memory for PDF output out of 10000 (max. 10000000)
 
