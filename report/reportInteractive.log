@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.6.23)  27 JUN 2017 18:26
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.6.23)  28 JUN 2017 12:12
 entering extended mode
 **./reportInteractive.tex
 (reportInteractive.tex
@@ -524,159 +524,141 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 16.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 16.
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 21.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 24.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd"
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 21.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 24.
 
 <img/ship.png, id=1, 542.62724pt x 404.10976pt>
 File: img/ship.png Graphic file (type png)
  <use img/ship.png>
-Package pdftex.def Info: img/ship.png used on input line 33.
+Package pdftex.def Info: img/ship.png used on input line 40.
 (pdftex.def)             Requested size: 167.2989pt x 124.58827pt.
 
-Underfull \hbox (badness 6927) in paragraph at lines 38--39
-\OT1/cmr/m/n/10.95 which one is a three.js Group, com-posed
- []
-
-
-Underfull \hbox (badness 2626) in paragraph at lines 38--39
-\OT1/cmr/m/n/10.95 by a \OT1/cmr/bx/n/10.95 cabin \OT1/cmr/m/n/10.95 (fig. 2), 
-a clock wise ro-tat-
- []
-
-
-Underfull \hbox (badness 4181) in paragraph at lines 38--39
-\OT1/cmr/m/n/10.95 ing \OT1/cmr/bx/n/10.95 ring \OT1/cmr/m/n/10.95 (fig. 3) and
- two \OT1/cmr/bx/n/10.95 mo-tors \OT1/cmr/m/n/10.95 (fig.
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 38--39
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 40--42
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 43--45
+Underfull \hbox (badness 10000) in paragraph at lines 45--46
 
  []
 
 [1
 
-{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map} <./img/ship.png>]
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
+Underfull \hbox (badness 10000) in paragraph at lines 47--49
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 50--52
+
+ []
+
 <img/cabin.png, id=14, 196.93575pt x 158.39175pt>
 File: img/cabin.png Graphic file (type png)
  <use img/cabin.png>
-Package pdftex.def Info: img/cabin.png used on input line 51.
+Package pdftex.def Info: img/cabin.png used on input line 58.
 (pdftex.def)             Requested size: 104.56342pt x 84.09949pt.
 
 <img/toro.png, id=15, 252.34274pt x 183.68625pt>
 File: img/toro.png Graphic file (type png)
  <use img/toro.png>
-Package pdftex.def Info: img/toro.png used on input line 56.
+Package pdftex.def Info: img/toro.png used on input line 63.
 (pdftex.def)             Requested size: 115.43842pt x 84.03142pt.
 
 <img/motor.png, id=16, 402.90524pt x 106.59825pt>
 File: img/motor.png Graphic file (type png)
  <use img/motor.png>
-Package pdftex.def Info: img/motor.png used on input line 61.
+Package pdftex.def Info: img/motor.png used on input line 68.
 (pdftex.def)             Requested size: 250.95476pt x 66.39764pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 75--76
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 77--81
-
- []
-
 
 Underfull \hbox (badness 10000) in paragraph at lines 82--83
 
  []
 
-[2 <./img/cabin.png> <./img/toro.png> <./img/motor.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 87--89
+[2 <./img/cabin.png> <./img/toro.png> <./img/motor.png> <./img/ship.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 84--88
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 90--91
+Underfull \hbox (badness 10000) in paragraph at lines 89--90
 
  []
 
-<img/endGameMenu2.png, id=23, 289.08pt x 305.34074pt>
+
+Underfull \hbox (badness 10000) in paragraph at lines 94--96
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 97--98
+
+ []
+
+<img/endGameMenu2.png, id=24, 289.08pt x 305.34074pt>
 File: img/endGameMenu2.png Graphic file (type png)
 
 <use img/endGameMenu2.png>
-Package pdftex.def Info: img/endGameMenu2.png used on input line 95.
+Package pdftex.def Info: img/endGameMenu2.png used on input line 102.
 (pdftex.def)             Requested size: 125.68797pt x 132.75691pt.
 
-<img/endGameMenu3.png, id=24, 289.08pt x 304.13625pt>
+<img/endGameMenu3.png, id=25, 289.08pt x 304.13625pt>
 File: img/endGameMenu3.png Graphic file (type png)
 
 <use img/endGameMenu3.png>
-Package pdftex.def Info: img/endGameMenu3.png used on input line 100.
+Package pdftex.def Info: img/endGameMenu3.png used on input line 107.
 (pdftex.def)             Requested size: 126.10281pt x 132.66945pt.
 
-<img/endGameMenu4.png, id=25, 286.06876pt x 307.1475pt>
+<img/endGameMenu4.png, id=26, 286.06876pt x 307.1475pt>
 File: img/endGameMenu4.png Graphic file (type png)
 
 <use img/endGameMenu4.png>
-Package pdftex.def Info: img/endGameMenu4.png used on input line 105.
+Package pdftex.def Info: img/endGameMenu4.png used on input line 112.
 (pdftex.def)             Requested size: 123.59467pt x 132.70355pt.
 
-<img/keySettingsMenu.png, id=26, 318.59026pt x 514.92375pt>
+<img/keySettingsMenu.png, id=27, 318.59026pt x 514.92375pt>
 File: img/keySettingsMenu.png Graphic file (type png)
 
 <use img/keySettingsMenu.png>
-Package pdftex.def Info: img/keySettingsMenu.png used on input line 114.
+Package pdftex.def Info: img/keySettingsMenu.png used on input line 121.
 (pdftex.def)             Requested size: 125.47737pt x 202.79944pt.
 
-<img/startMenu.png, id=27, 392.667pt x 568.524pt>
+<img/startMenu.png, id=28, 392.667pt x 568.524pt>
 File: img/startMenu.png Graphic file (type png)
  <use img/startMenu.png>
-Package pdftex.def Info: img/startMenu.png used on input line 119.
+Package pdftex.def Info: img/startMenu.png used on input line 126.
 (pdftex.def)             Requested size: 133.84424pt x 193.79007pt.
 
-Underfull \hbox (badness 2111) in paragraph at lines 120--120
+Underfull \hbox (badness 2111) in paragraph at lines 127--127
 \OT1/cmr/m/n/10.95 menu, used to start the
  []
 
-<img/colorMenu.png, id=28, 519.74174pt x 380.622pt>
+<img/colorMenu.png, id=29, 519.74174pt x 380.622pt>
 File: img/colorMenu.png Graphic file (type png)
  <use img/colorMenu.png>
-Package pdftex.def Info: img/colorMenu.png used on input line 124.
+Package pdftex.def Info: img/colorMenu.png used on input line 131.
 (pdftex.def)             Requested size: 125.47737pt x 91.89127pt.
 
-Underfull \hbox (badness 1189) in paragraph at lines 125--125
+Underfull \hbox (badness 1189) in paragraph at lines 132--132
 []\OT1/cmr/m/n/10.95 Figure 10: This is the
  []
 
-<img/pauseMenu.png, id=29, 693.792pt x 100.57574pt>
+<img/pauseMenu.png, id=30, 693.792pt x 100.57574pt>
 File: img/pauseMenu.png Graphic file (type png)
  <use img/pauseMenu.png>
-Package pdftex.def Info: img/pauseMenu.png used on input line 129.
+Package pdftex.def Info: img/pauseMenu.png used on input line 136.
 (pdftex.def)             Requested size: 250.95476pt x 36.3791pt.
 
-<img/Ranking.png, id=30, 753.41475pt x 314.3745pt>
+<img/Ranking.png, id=31, 753.41475pt x 314.3745pt>
 File: img/Ranking.png Graphic file (type png)
  <use img/Ranking.png>
-Package pdftex.def Info: img/Ranking.png used on input line 134.
+Package pdftex.def Info: img/Ranking.png used on input line 141.
 (pdftex.def)             Requested size: 250.95476pt x 104.71288pt.
 
-[3 <./img/endGameMenu2.png> <./img/endGameMenu3.png> <./img/endGameMenu4.png>]
-[4 <./img/keySettingsMenu.png> <./img/startMenu.png> <./img/colorMenu.png> <./i
-mg/pauseMenu.png> <./img/Ranking.png>] (reportInteractive.aux)
+[3] [4 <./img/endGameMenu2.png> <./img/endGameMenu3.png> <./img/endGameMenu4.pn
+g>] [5 <./img/keySettingsMenu.png> <./img/startMenu.png> <./img/colorMenu.png> 
+<./img/pauseMenu.png> <./img/Ranking.png>] (reportInteractive.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
@@ -684,7 +666,7 @@ LaTeX Warning: There were multiply-defined labels.
 Here is how much of TeX's memory you used:
  2446 strings out of 493323
  33443 string characters out of 3139066
- 100749 words of memory out of 3000000
+ 102749 words of memory out of 3000000
  5944 multiletter control sequences out of 15000+200000
  8798 words of font info for 31 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -696,9 +678,9 @@ X 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fon
 ts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/
 public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/a
 msfonts/cm/cmti10.pfb>
-Output written on reportInteractive.pdf (4 pages, 2908909 bytes).
+Output written on reportInteractive.pdf (5 pages, 2912634 bytes).
 PDF statistics:
- 68 PDF objects out of 1000 (max. 8388607)
+ 71 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  61 words of extra memory for PDF output out of 10000 (max. 10000000)
 

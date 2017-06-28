@@ -15,14 +15,21 @@
 \begin{document}
 \maketitle
 \graphicspath{{img/}}
-
+\section{Introduction}
+	The project developed from us is a local multi player game (1-4 players), inspired to the film \textit{Tron}.\\
+	The goal of each player is to eliminate all the other players, and to do so, he have to traps them in some walls.
+	When a player bump a wall or another player, he dies. At this point, the animation of the death start, and when it's ended, the ship and the relative walls disappear from the map.
 \section{List of all the libraries, tools and models used in the project but	not developed by the team}
 \begin{itemize}
 	\item \textbf{Three.js:}
 		Three.js is a cross-browser JavaScript library/API used to create and display animated 3D computer graphics in a web browser exploiting the power of WebGL in an high level mode.
 	\item \textbf{OrbitControls.js:}
+		We used OrbitControls to allow the user to move the camera in the space.
 	\item \textbf{Detector.js:}
+		Detector is necessary to verify if the user's browser support \textit{WebGL}.
 	\item \textbf{stats.min.js:}
+		stats.min is used to show the FPS, frame per second, or the MS, the millisecond used for each render.
+		
 \end{itemize}
 \section{Description of all the technical aspects of the project}
 \subsection{Ship}
@@ -38,7 +45,7 @@
 	Each player has a ship of the choosen colour, which one is a three.js Group, composed by a \textbf{cabin} (fig. 2), a clock wise rotating \textbf{ring} (fig. 3) and two \textbf{motors} (fig. 4).\\
 	
 	The cabin is also a Group of element coloured with the player's colour, composed by a glass and a cockpit with a pointlight inside.
-	The cockpit is a sphere covered with a metallic texture, the glass is a parallelepiped made by a MeshToonMaterial, that is illuminated by the cockpit's light.\\
+	The cockpit is a sphere covered with a metallic texture, the glass is a parallelepiped made by a \textit{MeshToonMaterial}, that is illuminated by the cockpit's light.\\
 	
 	Each motor is another independent Group, composed by a cylinder, an hemisphere on the top and another hemisphere with an hole, that represent the exhaust pipe, each one is covered with the metallic texture of the cabin.
 	Furthermore, at the end of the exhaust pipe, there are 50 particles of the colour of the player. The wake's length where this particles are distributed is choosen stochastically: with a probability of 80\%, the wake's length is equal to 40, with 10\% is 0 or 10.\\
@@ -49,17 +56,17 @@
 		\centering
 		\begin{minipage}[b]{0.25\linewidth}
 			\includegraphics[width=\linewidth]{cabin}
-			\caption{}
+			\caption{The cabin of the ship.}
 			\label{fig:cabin}
 		\end{minipage}
 		\begin{minipage}[b]{0.276\linewidth}
 			\includegraphics[width=\linewidth]{toro}
-			\caption{}
+			\caption{The rotating torus.}
 			\label{fig:toro}
 		\end{minipage}
 		\begin{minipage}[b]{0.6\linewidth}
 			\includegraphics[width=\linewidth]{motor}
-			\caption{}
+			\caption{A motor with the particles.}
 			\label{fig:motor}
 		\end{minipage}
 	\end{figure}
