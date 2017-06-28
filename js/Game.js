@@ -468,7 +468,6 @@
 							players.splice(i,1);
 							playersControl.splice(i,1);
 							alive--;
-							//pause = true;
 						}
 					}
 
@@ -655,15 +654,14 @@
 			//SKYBOX
 	
 
-			var prefix = "textures/halo/";
+			var prefix = "textures/skyBox/";
 			var suffix = ".jpg";
 			var urls  = [prefix+"haloBELLO"+suffix,  //back
-									 prefix+"haloBELLO"+suffix, 	//front
-									 prefix+"haloBELLO"+suffix,  //up
-									 prefix+"halo"+suffix,  //down
-
-							 		prefix+"haloBELLO90"+suffix,  //left
-									 prefix+"haloBELLO90"+suffix]; //right
+						 prefix+"haloBELLO"+suffix, 	//front
+						 prefix+"haloBELLO"+suffix,  //up
+						 prefix+"halo"+suffix,  //down
+				 		 prefix+"haloBELLO90"+suffix,  //left
+						 prefix+"haloBELLO90"+suffix]; //right
 			
 			var reflectionCube = new THREE.CubeTextureLoader().load( urls );
 			reflectionCube.format = THREE.RGBFormat;
@@ -799,7 +797,7 @@ function createMenuScene()
 //SKYBOX
 
 
-	var prefix = "textures/halo/";
+	var prefix = "textures/skybox/";
 	var suffix = ".jpg";
 	var urls  = [prefix+"haloBELLO"+suffix,  //back
 							 prefix+"haloBELLO"+suffix, 	//front

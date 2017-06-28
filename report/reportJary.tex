@@ -128,6 +128,10 @@ When the animation is over the ship and the walls will disappear from the scene.
 	\end{minipage}
 \end{figure}
 \FloatBarrier
+
+Since the ships can move only on two coordinates, and rotate  only by 90 degrees, we implemented the movement with a unitary vector of dimension 3, in which only one value is set to 1 or -1, and the other are set to 0. This value indicates the direction of the ship respect to the centre of the plane. 
+
+This vector is used also to generate the walls, from the last point in which the ship turned to the current point.
 \subsection{Menu}
 
 \subsubsection{Kyeboard settings}

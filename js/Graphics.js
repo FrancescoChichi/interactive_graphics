@@ -11,36 +11,36 @@ function Material(shininess,color, rx, ry){
 
 	var textureMetal = "textures/metal-texture256.jpg";
 	
-	var metalTexture = new THREE.TextureLoader().load( "textures/metal-texture512.jpg" );
+	var metalTexture = new THREE.TextureLoader().load( "textures/metalTexture.jpg" );
 		metalTexture.repeat.set( rx, ry );
 		metalTexture.wrapS = metalTexture.wrapT = THREE.RepeatWrapping;
 		metalTexture.magFilter = THREE.NearestFilter;
 		metalTexture.format = THREE.RGBFormat;
 
-	var haloTexture = new THREE.TextureLoader().load( "textures/halo/halo.jpg" );
+	var haloTexture = new THREE.TextureLoader().load( "textures/skybox/halo.jpg" );
 		haloTexture.repeat.set( rx, ry );
 		haloTexture.wrapS = haloTexture.wrapT = THREE.RepeatWrapping;
 		haloTexture.magFilter = THREE.NearestFilter;
 		haloTexture.format = THREE.RGBFormat;
 
-	var torusTexture = new THREE.TextureLoader().load( "textures/halo/halo.jpg" );
+	var torusTexture = new THREE.TextureLoader().load( "textures/skybox/halo.jpg" );
 		torusTexture.repeat.set( rx, ry );
 		torusTexture.wrapS = torusTexture.wrapT = THREE.RepeatWrapping;
 		torusTexture.magFilter = THREE.NearestFilter;
 		torusTexture.format = THREE.RGBFormat;
 
-	var tronTexture = new THREE.TextureLoader().load( "textures/Tron_Background256.jpg" );
+	var tronTexture = new THREE.TextureLoader().load( "textures/tronTexture.jpg" );
 	tronTexture.repeat.set( rx, ry );
 	tronTexture.wrapS = tronTexture.wrapT = THREE.RepeatWrapping;
 	tronTexture.magFilter = THREE.NearestFilter;
 	tronTexture.format = THREE.RGBFormat;
 
-	var shipTexture = new THREE.TextureLoader().load( "textures/metal-texture256.jpg" );
+	var shipTexture = new THREE.TextureLoader().load( "textures/metalTexture.jpg" );
 		shipTexture.repeat.set( 1, 1 );
 		shipTexture.wrapS = shipTexture.wrapT = THREE.RepeatWrapping;
 		shipTexture.format = THREE.RGBFormat;
 
-	this.particleTexture = new THREE.TextureLoader().load( "textures/oUBYu.png" );
+	this.particleTexture = new THREE.TextureLoader().load( "textures/motorParticle.png" );
 
 
 	this.halo = new THREE.MeshPhongMaterial( {
