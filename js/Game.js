@@ -140,6 +140,7 @@
 
 
 				renderer = new THREE.WebGLRenderer({antialias:true});
+				//renderer.setClearColor( 0xaaccff );
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
 
@@ -147,6 +148,7 @@
 
 				createMenuScene();
 
+				//POWER UP
 					//******renderer******
 				container.innerHTML = "";
 				container.appendChild( renderer.domElement );
@@ -167,7 +169,6 @@
 			
 			function animate() 
 			{
-				//camera = camera.rotateX(THREE.Math.degToRad( 100 ));
 				requestAnimationFrame( animate );
 
 
@@ -334,8 +335,6 @@
 							sound.music = 0;
 
 						createGameScene();
-						//while(this.ship.render(false,1));
-
 						if(  document.getElementById("1").checked)
 						nPlayer = 1;
 						else if(document.getElementById("2").checked)
@@ -375,10 +374,8 @@
 							sound.menu_sound.pause();
 
 
-
  						startGame = true; 
  						alive = nPlayer;
-
  		
 
  						for (var i = 0; i < alive; i++)
@@ -414,7 +411,6 @@
 				var delta = clock.getDelta();
 				controlsMenu.update(delta);			
  				time += 0.005;				
- 				//shipControl.render(1.0);
  				
  				ships[0].rotateY(THREE.Math.degToRad(+0.2));
  				ships[1].rotateY(THREE.Math.degToRad(+0.2));
@@ -472,7 +468,6 @@
 							players.splice(i,1);
 							playersControl.splice(i,1);
 							alive--;
-							//pause = true;
 						}
 					}
 
@@ -584,7 +579,6 @@
 						camera.position.z = players[0].getPosition().z + 10;
 
 						controls.target = players[0].getPosition();
-						//pause = true;
 						console.log("player "+playersControl[0].number+" win ");
 						document.getElementById("winner").innerHTML = "player "+playersControl[0].number+" win ";
 						document.getElementById("winner").style.display="block";
@@ -654,24 +648,20 @@
 				groundGeometry = new THREE.BoxBufferGeometry( planeWidth,1, planeHeight );
 
 				ground = new THREE.Mesh( groundGeometry, new Material(0,0xffffff,10,10).ground );
-				//ground.scale.set( 1000, 1000, 1000 );
-
-				//ground.receiveShadow = true;
 
 				gameScene.add(ground);
 
 			//SKYBOX
 	
 
-			var prefix = "textures/halo/";
+			var prefix = "textures/skyBox/";
 			var suffix = ".jpg";
-			var urls  = [prefix+"haloBELLO"+suffix,  //back
-									 prefix+"haloBELLO"+suffix, 	//front
-									 prefix+"haloBELLO"+suffix,  //up
-									 prefix+"halo"+suffix,  //down
-
-							 prefix+"haloBELLO90"+suffix,  //left
-									 prefix+"haloBELLO90"+suffix]; //right
+			var urls  = [prefix+"haloSky"+suffix,  //back
+						 prefix+"haloSky"+suffix, 	//front
+						 prefix+"haloSky"+suffix,  //up
+						 prefix+"halo"+suffix,  //down
+				 		 prefix+"haloSky90"+suffix,  //left
+						 prefix+"haloSky90"+suffix]; //right
 			
 			var reflectionCube = new THREE.CubeTextureLoader().load( urls );
 			reflectionCube.format = THREE.RGBFormat;
@@ -768,7 +758,6 @@ function createMenuScene()
 		new Material(50,0xffffff,0xffffff,5,1).metalDoubleSide);
 		piedistallo.position.set(px,py,pz);
 		menuScene.add(piedistallo);
-		console.log(piedistallo.position)
 	}
 
 	piedistallo(0,-2,wins[0]/2+0.5,5,-2,wins[0]/4,5);
@@ -808,15 +797,15 @@ function createMenuScene()
 //SKYBOX
 
 
-	var prefix = "textures/halo/";
+	var prefix = "textures/skybox/";
 	var suffix = ".jpg";
-	var urls  = [prefix+"haloBELLO"+suffix,  //back
-							 prefix+"haloBELLO"+suffix, 	//front
-							 prefix+"haloBELLO"+suffix,  //up
+	var urls  = [prefix+"haloSky"+suffix,  //back
+							 prefix+"haloSky"+suffix, 	//front
+							 prefix+"haloSky"+suffix,  //up
 							 prefix+"halo"+suffix,  //down
 
-					 prefix+"haloBELLO90"+suffix,  //left
-							 prefix+"haloBELLO90"+suffix]; //right
+					 prefix+"haloSky90"+suffix,  //left
+							 prefix+"haloSky90"+suffix]; //right
 	
 	var reflectionCube = new THREE.CubeTextureLoader().load( urls );
 	reflectionCube.format = THREE.RGBFormat;

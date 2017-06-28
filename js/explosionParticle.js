@@ -5,9 +5,9 @@ THREE.explosionParticle = function (particlesNumber, color,wordRotation,position
 	this.particlesDirection = [];
 	this.curveDirection = [];
 	this.curvePosition = 0;
-	this.particleScale = 1;
+	var particleScale = 0.6;
 
-	var raggio = 40;
+	var radius = 40;
 	
  	var material = new THREE.SpriteMaterial({
 				      color: color,
@@ -24,26 +24,25 @@ THREE.explosionParticle = function (particlesNumber, color,wordRotation,position
 	  	  materiale.rotation =  Math.random() * (Math.PI*2);
 	      var particle  = new THREE.Sprite(materiale);
 	      particle.position.copy(position);
-		  particle.scale.copy(new THREE.Vector3(this.particleScale,this.particleScale,this.particleScale));
+		  particle.scale.copy(new THREE.Vector3(particleScale,particleScale,particleScale));
 	      this.particles.add(particle);
 
 		  var position = this.particles.position;
 		  position.setComponent(1, 0);
-		  var x = Math.random() * raggio*2;
+		  var x = Math.random() * radius*2;
 		  var mul = Math.floor(Math.random()*2) == 1 ? 1 : -1; 
 		  x *= mul;
 
-		  var z = Math.random() * raggio*2;
+		  var z = Math.random() * radius*2;
 		  mul= Math.floor(Math.random()*2) == 1 ? 1 : -1; 
 		  z *= mul;
 
 		  var y = -5;
 		  var vec =new THREE.Vector3(x,y,z);
-		  //vec.applyMatrix4(wordRotation);
 
 		  var midPoint1 = new THREE.Vector3();
 		  midPoint1.addVectors(vec,position);
-		  midPoint1.setComponent(1, Math.random() * (raggio));
+		  midPoint1.setComponent(1, Math.random() * (radius));
 		  midPoint1.multiplyScalar (0.50);
 
 		  var curve = new  THREE.CatmullRomCurve3([position,midPoint1,vec]);
@@ -57,11 +56,9 @@ THREE.explosionParticle = function (particlesNumber, color,wordRotation,position
 			geometry.vertices.push(midPoint1);
 			geometry.vertices.push(vec);
 
-			//geometry.vertices = curve.getPoints(2);
 	 		var line = new THREE.Line(geometry,  new THREE.LineBasicMaterial({
 	        color: color,
 	    }));
-	   		 //gameScene.add(line);
 			
 		    }
 			gameScene.add(this.particles);

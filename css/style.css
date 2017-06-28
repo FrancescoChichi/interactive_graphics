@@ -9,18 +9,12 @@
 
 body, html{
   height: 100%;
-background-color: Transparent;  font-family: 'Arial', sans-serif;
+background-color: Transparent;  font-family: 'myFont', sans-serif;
 }
 
 .container{
   display: block;
   position: absolute;
-  /*margin: 40px auto;
-  height: auto;
-  width: 40%;
-  padding: 20px;
-  top:15%;
-  left: 30%;*/
   width: 35%;
   height: 100%;
   padding-top:10px;
@@ -55,11 +49,11 @@ background-color: Transparent;  font-family: 'Arial', sans-serif;
 .pause{
   display: block;
   position: absolute;  
-  left: 40%;
+  left: 25%;
   top: 30%;
   text-align: center;
   height: auto;
-  width: auto;
+  width: 50%;
   font-size: 1.35em;
   background-color: #000000;
 }
@@ -92,6 +86,8 @@ tr {
   overflow:hidden;
     background-color: rgb(0, 0, 0);
   background-color: rgba(0, 0, 0,0.5);
+    font-family: 'myFont';
+
 }
 
 .restartMenu ul{
@@ -107,7 +103,6 @@ tr {
 .container button{
   list-style: none;
   margin: 0;
-  padding: 0;
   overflow: auto;
 }
 
@@ -151,12 +146,6 @@ ul li{
   height: auto;
   width: auto;
   padding-right: auto;
-  /*float: left;
-  width: auto;
-  height: 100px;
-  border-bottom: 1px solid #333;
-  float: left;
-  margin-left: 3em;*/
 }
 
 ul li input[type=radio]{
@@ -170,7 +159,7 @@ ul li label{
   display: block;
   position: relative;
   font-weight: 300;
-  font-size: 1.35em;
+  font-size: 1.2em;
   padding: 22px 1px 1px 50px;
   margin: 10px;
   height: 30px;

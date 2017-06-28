@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.6.23)  28 JUN 2017 12:12
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.6.23)  28 JUN 2017 12:28
 entering extended mode
 **./reportInteractive.tex
 (reportInteractive.tex
@@ -538,139 +538,194 @@ File: img/ship.png Graphic file (type png)
 Package pdftex.def Info: img/ship.png used on input line 40.
 (pdftex.def)             Requested size: 167.2989pt x 124.58827pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 45--46
+Underfull \hbox (badness 6927) in paragraph at lines 46--47
+\OT1/cmr/m/n/10.95 which one is a three.js Group, com-posed
+ []
+
+
+Underfull \hbox (badness 2626) in paragraph at lines 46--47
+\OT1/cmr/m/n/10.95 by a \OT1/cmr/bx/n/10.95 cabin \OT1/cmr/m/n/10.95 (fig. 2), 
+a clock wise ro-tat-
+ []
+
+
+Underfull \hbox (badness 4181) in paragraph at lines 46--47
+\OT1/cmr/m/n/10.95 ing \OT1/cmr/bx/n/10.95 ring \OT1/cmr/m/n/10.95 (fig. 3) and
+ two \OT1/cmr/bx/n/10.95 mo-tors \OT1/cmr/m/n/10.95 (fig.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 46--47
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 48--50
 
  []
 
 [1
 
-{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 47--49
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map} <./img/ship.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 51--53
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 50--52
-
- []
-
-<img/cabin.png, id=14, 196.93575pt x 158.39175pt>
+<img/cabin.png, id=15, 196.93575pt x 158.39175pt>
 File: img/cabin.png Graphic file (type png)
  <use img/cabin.png>
-Package pdftex.def Info: img/cabin.png used on input line 58.
+Package pdftex.def Info: img/cabin.png used on input line 59.
 (pdftex.def)             Requested size: 104.56342pt x 84.09949pt.
 
-<img/toro.png, id=15, 252.34274pt x 183.68625pt>
+<img/toro.png, id=16, 252.34274pt x 183.68625pt>
 File: img/toro.png Graphic file (type png)
  <use img/toro.png>
-Package pdftex.def Info: img/toro.png used on input line 63.
+Package pdftex.def Info: img/toro.png used on input line 64.
 (pdftex.def)             Requested size: 115.43842pt x 84.03142pt.
 
-<img/motor.png, id=16, 402.90524pt x 106.59825pt>
+<img/motor.png, id=17, 402.90524pt x 106.59825pt>
 File: img/motor.png Graphic file (type png)
  <use img/motor.png>
-Package pdftex.def Info: img/motor.png used on input line 68.
+Package pdftex.def Info: img/motor.png used on input line 69.
 (pdftex.def)             Requested size: 250.95476pt x 66.39764pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 82--83
+<img/giorno.png, id=18, 478.78876pt x 444.91219pt>
+File: img/giorno.png Graphic file (type png)
+ <use img/giorno.png>
+Package pdftex.def Info: img/giorno.png used on input line 84.
+(pdftex.def)             Requested size: 188.21288pt x 174.89317pt.
+
+<img/notte.png, id=19, 478.78876pt x 444.91219pt>
+File: img/notte.png Graphic file (type png)
+ <use img/notte.png>
+Package pdftex.def Info: img/notte.png used on input line 89.
+(pdftex.def)             Requested size: 188.21288pt x 174.89317pt.
+ [2 <./img/cabin.png> <./img/toro.png> <./img/motor.png>]
+<img/animatedLight.png, id=26, 807.7678pt x 167.87718pt>
+File: img/animatedLight.png Graphic file (type png)
+
+<use img/animatedLight.png>
+Package pdftex.def Info: img/animatedLight.png used on input line 115.
+(pdftex.def)             Requested size: 418.25368pt x 86.9252pt.
+ <img/plane.png, id=27, 646.66594pt x 526.21594pt>
+File: img/plane.png Graphic file (type png)
+
+<use img/plane.png>
+Package pdftex.def Info: img/plane.png used on input line 123.
+(pdftex.def)             Requested size: 167.2989pt x 136.13844pt.
+ [3 <./img/giorno.png> <./img/notte.png> <./img/plane.png>]
+[4 <./img/animatedLight.png>] [5]
+<img/collision.png, id=41, 1089.47025pt x 563.706pt>
+File: img/collision.png Graphic file (type png)
+ <use img/collision.png>
+Package pdftex.def Info: img/collision.png used on input line 163.
+(pdftex.def)             Requested size: 334.60422pt x 173.12997pt.
+
+<img/explosion.png, id=42, 552.26324pt x 544.434pt>
+File: img/explosion.png Graphic file (type png)
+ <use img/explosion.png>
+Package pdftex.def Info: img/explosion.png used on input line 168.
+(pdftex.def)             Requested size: 167.2989pt x 164.92647pt.
+
+[6 <./img/collision.png> <./img/explosion.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 178--179
 
  []
 
-[2 <./img/cabin.png> <./img/toro.png> <./img/motor.png> <./img/ship.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 84--88
+
+Underfull \hbox (badness 10000) in paragraph at lines 180--184
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 89--90
+Underfull \hbox (badness 10000) in paragraph at lines 185--186
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 94--96
+Underfull \hbox (badness 10000) in paragraph at lines 190--192
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 97--98
+Underfull \hbox (badness 10000) in paragraph at lines 193--194
 
  []
 
-<img/endGameMenu2.png, id=24, 289.08pt x 305.34074pt>
+<img/endGameMenu2.png, id=48, 289.08pt x 305.34074pt>
 File: img/endGameMenu2.png Graphic file (type png)
 
 <use img/endGameMenu2.png>
-Package pdftex.def Info: img/endGameMenu2.png used on input line 102.
-(pdftex.def)             Requested size: 125.68797pt x 132.75691pt.
+Package pdftex.def Info: img/endGameMenu2.png used on input line 198.
+(pdftex.def)             Requested size: 83.86006pt x 88.5745pt.
 
-<img/endGameMenu3.png, id=25, 289.08pt x 304.13625pt>
+<img/endGameMenu3.png, id=49, 289.08pt x 304.13625pt>
 File: img/endGameMenu3.png Graphic file (type png)
 
 <use img/endGameMenu3.png>
-Package pdftex.def Info: img/endGameMenu3.png used on input line 107.
-(pdftex.def)             Requested size: 126.10281pt x 132.66945pt.
+Package pdftex.def Info: img/endGameMenu3.png used on input line 203.
+(pdftex.def)             Requested size: 84.28128pt x 88.6706pt.
 
-<img/endGameMenu4.png, id=26, 286.06876pt x 307.1475pt>
+<img/endGameMenu4.png, id=50, 286.06876pt x 307.1475pt>
 File: img/endGameMenu4.png Graphic file (type png)
 
 <use img/endGameMenu4.png>
-Package pdftex.def Info: img/endGameMenu4.png used on input line 112.
-(pdftex.def)             Requested size: 123.59467pt x 132.70355pt.
+Package pdftex.def Info: img/endGameMenu4.png used on input line 208.
+(pdftex.def)             Requested size: 81.76675pt x 87.79102pt.
 
-<img/keySettingsMenu.png, id=27, 318.59026pt x 514.92375pt>
+<img/keySettingsMenu.png, id=51, 318.59026pt x 514.92375pt>
 File: img/keySettingsMenu.png Graphic file (type png)
 
 <use img/keySettingsMenu.png>
-Package pdftex.def Info: img/keySettingsMenu.png used on input line 121.
-(pdftex.def)             Requested size: 125.47737pt x 202.79944pt.
+Package pdftex.def Info: img/keySettingsMenu.png used on input line 217.
+(pdftex.def)             Requested size: 121.29076pt x 196.03448pt.
 
-<img/startMenu.png, id=28, 392.667pt x 568.524pt>
+<img/startMenu.png, id=52, 392.667pt x 568.524pt>
 File: img/startMenu.png Graphic file (type png)
  <use img/startMenu.png>
-Package pdftex.def Info: img/startMenu.png used on input line 126.
+Package pdftex.def Info: img/startMenu.png used on input line 222.
 (pdftex.def)             Requested size: 133.84424pt x 193.79007pt.
 
-Underfull \hbox (badness 2111) in paragraph at lines 127--127
+Underfull \hbox (badness 2111) in paragraph at lines 223--223
 \OT1/cmr/m/n/10.95 menu, used to start the
  []
 
-<img/colorMenu.png, id=29, 519.74174pt x 380.622pt>
+<img/colorMenu.png, id=53, 519.74174pt x 380.622pt>
 File: img/colorMenu.png Graphic file (type png)
  <use img/colorMenu.png>
-Package pdftex.def Info: img/colorMenu.png used on input line 131.
-(pdftex.def)             Requested size: 125.47737pt x 91.89127pt.
+Package pdftex.def Info: img/colorMenu.png used on input line 227.
+(pdftex.def)             Requested size: 250.95476pt x 183.78253pt.
 
-Underfull \hbox (badness 1189) in paragraph at lines 132--132
-[]\OT1/cmr/m/n/10.95 Figure 10: This is the
- []
-
-<img/pauseMenu.png, id=30, 693.792pt x 100.57574pt>
+<img/pauseMenu.png, id=54, 693.792pt x 100.57574pt>
 File: img/pauseMenu.png Graphic file (type png)
  <use img/pauseMenu.png>
-Package pdftex.def Info: img/pauseMenu.png used on input line 136.
+Package pdftex.def Info: img/pauseMenu.png used on input line 232.
 (pdftex.def)             Requested size: 250.95476pt x 36.3791pt.
 
-<img/Ranking.png, id=31, 753.41475pt x 314.3745pt>
+<img/Ranking.png, id=55, 753.41475pt x 314.3745pt>
 File: img/Ranking.png Graphic file (type png)
  <use img/Ranking.png>
-Package pdftex.def Info: img/Ranking.png used on input line 141.
+Package pdftex.def Info: img/Ranking.png used on input line 237.
 (pdftex.def)             Requested size: 250.95476pt x 104.71288pt.
 
-[3] [4 <./img/endGameMenu2.png> <./img/endGameMenu3.png> <./img/endGameMenu4.pn
-g>] [5 <./img/keySettingsMenu.png> <./img/startMenu.png> <./img/colorMenu.png> 
+
+LaTeX Warning: Float too large for page by 96.79277pt on input line 241.
+
+[7] [8 <./img/endGameMenu2.png> <./img/endGameMenu3.png> <./img/endGameMenu4.pn
+g>] [9 <./img/keySettingsMenu.png> <./img/startMenu.png> <./img/colorMenu.png> 
 <./img/pauseMenu.png> <./img/Ranking.png>] (reportInteractive.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 2446 strings out of 493323
- 33443 string characters out of 3139066
- 102749 words of memory out of 3000000
- 5944 multiletter control sequences out of 15000+200000
+ 2476 strings out of 493323
+ 34008 string characters out of 3139066
+ 102753 words of memory out of 3000000
+ 5968 multiletter control sequences out of 15000+200000
  8798 words of font info for 31 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 39i,7n,25p,397b,274s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 39i,7n,25p,782b,276s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Fi
 les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTe
@@ -678,9 +733,9 @@ X 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fon
 ts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/
 public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/a
 msfonts/cm/cmti10.pfb>
-Output written on reportInteractive.pdf (5 pages, 2912634 bytes).
+Output written on reportInteractive.pdf (9 pages, 8112198 bytes).
 PDF statistics:
- 71 PDF objects out of 1000 (max. 8388607)
+ 97 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 61 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 91 words of extra memory for PDF output out of 10000 (max. 10000000)
 
